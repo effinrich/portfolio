@@ -26,6 +26,14 @@ type AuthState =
   | { status: "not-admin"; email: string }
   | { status: "admin"; email: string };
 
+type Reply = {
+  id: string;
+  submission_id: string;
+  admin_user_id: string;
+  body: string;
+  created_at: string;
+};
+
 type SortField = "created_at" | "name" | "email";
 type SortDir = "asc" | "desc";
 
@@ -39,6 +47,11 @@ function AdminPage() {
   const [loadingData, setLoadingData] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<Submission | null>(null);
+  const [replies, setReplies] = useState<Reply[]>([]);
+  const [repliesLoading, setRepliesLoading] = useState(false);
+  const [replyBody, setReplyBody] = useState("");
+  const [replySaving, setReplySaving] = useState(false);
+  const [replyError, setReplyError] = useState<string | null>(null);
 
   // Filter state
   const [query, setQuery] = useState("");
@@ -158,6 +171,70 @@ function AdminPage() {
       supabase.removeChannel(channel);
     };
   }, [auth.status, loadSubmissions]);
+
+  // Load replies whenever a submission is selected
+  useEffect(() => {
+    if (!selected) {
+      setReplies([]);
+      setReplyBody("");
+      setReplyError(null);
+      return;
+    }
+    let cancelled = false;
+    setRepliesLoading(true);
+    setReplyError(null);
+    (async () => {
+      const { data, error } = await supabase
+        .from("submission_replies")
+        .select("*")
+        .eq("submission_id", selected.id)
+        .order("created_at", { ascending: true });
+      if (cancelled) return;
+      if (error) setReplyError(error.message);
+      else setReplies(data ?? []);
+      setRepliesLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [selected]);
+
+  async function handleSendReply(e: React.FormEvent) {
+    e.preventDefault();
+    if (!selected) return;
+    const body = replyBody.trim();
+    if (body.length < 1) return;
+    setReplySaving(true);
+    setReplyError(null);
+    const { data: sessionData } = await supabase.auth.getSession();
+    const uid = sessionData.session?.user.id;
+    if (!uid) {
+      setReplyError("Not authenticated");
+      setReplySaving(false);
+      return;
+    }
+    const { data, error } = await supabase
+      .from("submission_replies")
+      .insert({ submission_id: selected.id, admin_user_id: uid, body })
+      .select()
+      .single();
+    if (error) setReplyError(error.message);
+    else if (data) {
+      setReplies((r) => [...r, data]);
+      setReplyBody("");
+    }
+    setReplySaving(false);
+  }
+
+  async function handleDeleteReply(id: string) {
+    if (!confirm("Delete this reply?")) return;
+    const { error } = await supabase.from("submission_replies").delete().eq("id", id);
+    if (error) {
+      alert(error.message);
+      return;
+    }
+    setReplies((r) => r.filter((x) => x.id !== id));
+  }
 
   async function handleDelete(id: string) {
     if (!confirm("Delete this submission permanently?")) return;
@@ -491,7 +568,7 @@ function AdminPage() {
           onClick={() => setSelected(null)}
         >
           <div
-            className="w-full max-w-lg rounded-xl border border-border bg-background p-6 shadow-xl"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-background p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
@@ -518,20 +595,80 @@ function AdminPage() {
             <p className="mt-4 whitespace-pre-wrap rounded-lg border border-border bg-surface p-4 text-sm text-foreground">
               {selected.message}
             </p>
-            <div className="mt-4 flex justify-end gap-2">
-              <a
-                href={`mailto:${selected.email}?subject=Re: your message`}
-                className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground"
-              >
-                Reply
-              </a>
-              <button
-                onClick={() => handleDelete(selected.id)}
-                className="rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-2 text-xs font-semibold text-destructive hover:bg-destructive/20"
-              >
-                Delete
-              </button>
+
+            <div className="mt-6">
+              <h3 className="mb-2 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                Replies {replies.length > 0 && `(${replies.length})`}
+              </h3>
+              {repliesLoading ? (
+                <p className="text-xs text-muted-foreground">Loading replies…</p>
+              ) : replies.length === 0 ? (
+                <p className="text-xs text-muted-foreground">No replies yet.</p>
+              ) : (
+                <ul className="space-y-2">
+                  {replies.map((r) => (
+                    <li
+                      key={r.id}
+                      className="rounded-lg border border-border bg-surface/50 p-3 text-sm"
+                    >
+                      <div className="mb-1 flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                        <span>{new Date(r.created_at).toLocaleString()}</span>
+                        <button
+                          onClick={() => handleDeleteReply(r.id)}
+                          className="text-destructive hover:underline"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                      <p className="whitespace-pre-wrap text-foreground">{r.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
+
+            <form onSubmit={handleSendReply} className="mt-4 space-y-2">
+              <label htmlFor="reply-body" className="block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                Add a reply
+              </label>
+              <textarea
+                id="reply-body"
+                value={replyBody}
+                onChange={(e) => setReplyBody(e.target.value)}
+                rows={3}
+                maxLength={5000}
+                placeholder="Write your reply…"
+                className={`${inputCls} w-full resize-y`}
+                disabled={replySaving}
+              />
+              {replyError && (
+                <p role="alert" className="text-xs text-destructive">
+                  {replyError}
+                </p>
+              )}
+              <div className="flex justify-end gap-2">
+                <a
+                  href={`mailto:${selected.email}?subject=Re: your message&body=${encodeURIComponent(replyBody)}`}
+                  className="rounded-lg border border-border bg-background px-4 py-2 text-xs font-semibold text-foreground hover:bg-surface"
+                >
+                  Open in email
+                </a>
+                <button
+                  type="submit"
+                  disabled={replySaving || replyBody.trim().length === 0}
+                  className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground disabled:opacity-60"
+                >
+                  {replySaving ? "Saving…" : "Save reply"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(selected.id)}
+                  className="rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-2 text-xs font-semibold text-destructive hover:bg-destructive/20"
+                >
+                  Delete submission
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
