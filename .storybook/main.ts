@@ -5,7 +5,11 @@ const config: StorybookConfig = {
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-themes"],
   framework: {
     name: "@storybook/react-vite",
-    options: {},
+    options: {
+      builder: {
+        viteConfigPath: ".storybook/vite.config.ts",
+      },
+    },
   },
 };
 
