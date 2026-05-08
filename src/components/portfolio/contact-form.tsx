@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { z } from "zod";
 
 const schema = z.object({
@@ -9,10 +9,16 @@ const schema = z.object({
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
+// Bots typically submit forms in well under a second.
+const MIN_SUBMIT_MS = 1500;
+
 export function ContactForm() {
   const [values, setValues] = useState({ name: "", email: "", message: "" });
+  const [website, setWebsite] = useState(""); // honeypot — must stay empty
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [formError, setFormError] = useState<string | null>(null);
+  const mountedAt = useRef<number>(Date.now());
 
   function update<K extends keyof typeof values>(key: K, value: string) {
     setValues((v) => ({ ...v, [key]: value }));
@@ -21,6 +27,21 @@ export function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setFormError(null);
+
+    // Spam check 1: honeypot field. Real users can't see it; bots fill every input.
+    if (website.trim() !== "") {
+      // Pretend success so bots don't retry, but don't actually do anything.
+      setStatus("success");
+      return;
+    }
+
+    // Spam check 2: minimum time-to-submit.
+    if (Date.now() - mountedAt.current < MIN_SUBMIT_MS) {
+      setFormError("Submission looked automated. Please try again in a moment.");
+      return;
+    }
+
     const result = schema.safeParse(values);
     if (!result.success) {
       const next: Errors = {};
@@ -59,6 +80,9 @@ export function ContactForm() {
           type="button"
           onClick={() => {
             setValues({ name: "", email: "", message: "" });
+            setWebsite("");
+            setFormError(null);
+            mountedAt.current = Date.now();
             setStatus("idle");
           }}
           className="text-sm font-medium text-primary hover:underline"
@@ -78,6 +102,20 @@ export function ContactForm() {
       noValidate
       className="flex flex-col gap-4 rounded-xl border border-border bg-background p-6"
     >
+      {/* Honeypot — hidden from real users, irresistible to bots. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+        <label htmlFor="cf-website">Website (leave blank)</label>
+        <input
+          id="cf-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
+      </div>
+
       <div className="flex flex-col gap-1.5">
         <label htmlFor="cf-name" className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
           Name
@@ -152,6 +190,12 @@ export function ContactForm() {
           </p>
         )}
       </div>
+
+      {formError && (
+        <p role="alert" className="text-sm text-destructive">
+          {formError}
+        </p>
+      )}
 
       <button
         type="submit"
