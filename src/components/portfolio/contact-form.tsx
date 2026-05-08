@@ -191,6 +191,12 @@ export function ContactForm() {
         )}
       </div>
 
+      {formError && (
+        <p role="alert" className="text-sm text-destructive">
+          {formError}
+        </p>
+      )}
+
       <button
         type="submit"
         disabled={status === "submitting"}
