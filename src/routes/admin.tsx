@@ -568,7 +568,7 @@ function AdminPage() {
           onClick={() => setSelected(null)}
         >
           <div
-            className="w-full max-w-lg rounded-xl border border-border bg-background p-6 shadow-xl"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-background p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
