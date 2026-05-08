@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -55,8 +56,16 @@ export function ContactForm() {
       return;
     }
     setStatus("submitting");
-    // Simulate async submit
-    await new Promise((r) => setTimeout(r, 700));
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: result.data.name,
+      email: result.data.email,
+      message: result.data.message,
+    });
+    if (error) {
+      setFormError("Something went wrong sending your message. Please try again.");
+      setStatus("idle");
+      return;
+    }
     setStatus("success");
   }
 
