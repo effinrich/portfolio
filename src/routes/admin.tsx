@@ -26,6 +26,14 @@ type AuthState =
   | { status: "not-admin"; email: string }
   | { status: "admin"; email: string };
 
+type Reply = {
+  id: string;
+  submission_id: string;
+  admin_user_id: string;
+  body: string;
+  created_at: string;
+};
+
 type SortField = "created_at" | "name" | "email";
 type SortDir = "asc" | "desc";
 
@@ -39,6 +47,11 @@ function AdminPage() {
   const [loadingData, setLoadingData] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<Submission | null>(null);
+  const [replies, setReplies] = useState<Reply[]>([]);
+  const [repliesLoading, setRepliesLoading] = useState(false);
+  const [replyBody, setReplyBody] = useState("");
+  const [replySaving, setReplySaving] = useState(false);
+  const [replyError, setReplyError] = useState<string | null>(null);
 
   // Filter state
   const [query, setQuery] = useState("");
