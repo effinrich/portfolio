@@ -16,21 +16,22 @@ type Project = {
   accent: Accent;
   image: string;
   imageAlt: string;
-};
-
-const featured: Project = {
-  title: "ForgeKit Figma MCP",
-  tag: "MCP · Open Source",
-  desc: "MCP server that extracts Figma variables and design tokens, generating typed theme configs for Chakra, Tailwind, and shadcn — bridging design and AI-driven codegen.",
-  metric: "5,703+ installs",
-  href: "https://www.npmjs.com/package/forgekit-figma-mcp",
-  cta: "View on npm",
-  accent: "primary",
-  image: figmaMcpImg,
-  imageAlt: "Figma MCP server extracting design tokens into a typed TypeScript theme file.",
+  badge?: string;
 };
 
 const projects: Project[] = [
+  {
+    title: "ForgeKit Figma MCP",
+    tag: "MCP · Open Source",
+    desc: "MCP server that extracts Figma variables and design tokens, generating typed theme configs for Chakra, Tailwind, and shadcn — bridging design and AI-driven codegen.",
+    metric: "5,703+ installs",
+    href: "https://www.npmjs.com/package/forgekit-figma-mcp",
+    cta: "View on npm",
+    accent: "primary",
+    image: figmaMcpImg,
+    imageAlt: "Figma MCP server extracting design tokens into a typed TypeScript theme file.",
+    badge: "Featured",
+  },
   {
     title: "ForgeKit Storybook MCP",
     tag: "MCP · Open Source",
@@ -128,47 +129,8 @@ export function Projects() {
           description="Open source MCP servers, CLIs, and product work — built around the workflows I want for myself."
         />
 
-        {/* Featured project */}
-        <a
-          href={featured.href}
-          target={featured.href.startsWith("http") ? "_blank" : undefined}
-          rel="noreferrer"
-          className="card-elevated group relative mb-5 grid overflow-hidden p-5 transition-all hover:-translate-y-1 hover:border-primary/30 md:grid-cols-2 md:gap-8 md:p-7"
-        >
-          <div
-            className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-primary opacity-30 blur-3xl transition-opacity group-hover:opacity-60"
-            aria-hidden
-          />
-          <div className="relative">
-            <ProjectMedia
-              src={featured.image}
-              alt={featured.imageAlt}
-              accent={featured.accent}
-              priority
-            />
-          </div>
-          <div className="relative mt-6 flex flex-col md:mt-0 md:justify-center">
-            <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-wider text-primary">
-              <span className="rounded-full bg-primary/10 px-2 py-0.5">Featured</span>
-              <span className="text-muted-foreground">{featured.tag}</span>
-            </div>
-            <h3 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              {featured.title}
-            </h3>
-            <p className="mt-3 text-pretty text-muted-foreground">{featured.desc}</p>
-            <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
-              <span className="font-mono text-sm text-foreground">{featured.metric}</span>
-              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                {featured.cta}
-                <ArrowIcon />
-              </span>
-            </div>
-          </div>
-        </a>
-
-        {/* Other projects */}
         <div className="grid gap-5 md:grid-cols-2">
-          {projects.map((p) => (
+          {projects.map((p, i) => (
             <a
               key={p.title}
               href={p.href}
@@ -183,11 +145,16 @@ export function Projects() {
                 aria-hidden
               />
               <div className="relative">
-                <ProjectMedia src={p.image} alt={p.imageAlt} accent={p.accent} />
+                <ProjectMedia src={p.image} alt={p.imageAlt} accent={p.accent} priority={i === 0} />
               </div>
               <div className="relative flex flex-1 flex-col px-2 pb-2 pt-6">
-                <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                  {p.tag}
+                <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  {p.badge && (
+                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-primary">
+                      {p.badge}
+                    </span>
+                  )}
+                  <span>{p.tag}</span>
                 </div>
                 <h3 className="mt-3 text-2xl font-semibold tracking-tight">{p.title}</h3>
                 <p className="mt-3 text-pretty text-muted-foreground">{p.desc}</p>
