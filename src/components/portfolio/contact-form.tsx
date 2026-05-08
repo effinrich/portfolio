@@ -80,6 +80,9 @@ export function ContactForm() {
           type="button"
           onClick={() => {
             setValues({ name: "", email: "", message: "" });
+            setWebsite("");
+            setFormError(null);
+            mountedAt.current = Date.now();
             setStatus("idle");
           }}
           className="text-sm font-medium text-primary hover:underline"
