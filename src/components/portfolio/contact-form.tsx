@@ -102,6 +102,20 @@ export function ContactForm() {
       noValidate
       className="flex flex-col gap-4 rounded-xl border border-border bg-background p-6"
     >
+      {/* Honeypot — hidden from real users, irresistible to bots. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+        <label htmlFor="cf-website">Website (leave blank)</label>
+        <input
+          id="cf-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
+      </div>
+
       <div className="flex flex-col gap-1.5">
         <label htmlFor="cf-name" className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
           Name
