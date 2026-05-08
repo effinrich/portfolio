@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { z } from "zod";
 
 const schema = z.object({
@@ -9,10 +9,16 @@ const schema = z.object({
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
+// Bots typically submit forms in well under a second.
+const MIN_SUBMIT_MS = 1500;
+
 export function ContactForm() {
   const [values, setValues] = useState({ name: "", email: "", message: "" });
+  const [website, setWebsite] = useState(""); // honeypot — must stay empty
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [formError, setFormError] = useState<string | null>(null);
+  const mountedAt = useRef<number>(Date.now());
 
   function update<K extends keyof typeof values>(key: K, value: string) {
     setValues((v) => ({ ...v, [key]: value }));
@@ -21,6 +27,21 @@ export function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setFormError(null);
+
+    // Spam check 1: honeypot field. Real users can't see it; bots fill every input.
+    if (website.trim() !== "") {
+      // Pretend success so bots don't retry, but don't actually do anything.
+      setStatus("success");
+      return;
+    }
+
+    // Spam check 2: minimum time-to-submit.
+    if (Date.now() - mountedAt.current < MIN_SUBMIT_MS) {
+      setFormError("Submission looked automated. Please try again in a moment.");
+      return;
+    }
+
     const result = schema.safeParse(values);
     if (!result.success) {
       const next: Errors = {};
