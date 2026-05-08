@@ -38,6 +38,38 @@ export type Database = {
         }
         Relationships: []
       }
+      submission_replies: {
+        Row: {
+          admin_user_id: string
+          body: string
+          created_at: string
+          id: string
+          submission_id: string
+        }
+        Insert: {
+          admin_user_id: string
+          body: string
+          created_at?: string
+          id?: string
+          submission_id: string
+        }
+        Update: {
+          admin_user_id?: string
+          body?: string
+          created_at?: string
+          id?: string
+          submission_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submission_replies_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "contact_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
