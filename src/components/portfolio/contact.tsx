@@ -1,4 +1,5 @@
 import { SectionHeading } from "./section-heading";
+import { ContactForm } from "./contact-form";
 
 const links = [
   { label: "Email", value: "richtillman@pm.me", href: "mailto:richtillman@pm.me" },
@@ -29,27 +30,29 @@ export function Contact() {
               >
                 Start a conversation →
               </a>
+
+              <ul className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border">
+                {links.map((l) => (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      target={l.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer"
+                      className="flex items-center justify-between bg-background px-5 py-4 transition-colors hover:bg-surface"
+                    >
+                      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                        {l.label}
+                      </span>
+                      <span className="text-sm font-medium text-foreground">
+                        {l.value} ↗
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <ul className="grid gap-px overflow-hidden rounded-xl border border-border bg-border">
-              {links.map((l) => (
-                <li key={l.label}>
-                  <a
-                    href={l.href}
-                    target={l.href.startsWith("http") ? "_blank" : undefined}
-                    rel="noreferrer"
-                    className="flex items-center justify-between bg-background px-5 py-4 transition-colors hover:bg-surface"
-                  >
-                    <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                      {l.label}
-                    </span>
-                    <span className="text-sm font-medium text-foreground">
-                      {l.value} ↗
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <ContactForm />
           </div>
         </div>
 
