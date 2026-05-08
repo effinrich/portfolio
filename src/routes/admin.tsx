@@ -85,6 +85,37 @@ function AdminPage() {
     };
   }, [checkAuth, loadSubmissions]);
 
+  // Subscribe to realtime changes once the user is confirmed admin.
+  useEffect(() => {
+    if (auth.status !== "admin") return;
+    const channel = supabase
+      .channel("contact_submissions_changes")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "contact_submissions" },
+        (payload) => {
+          setSubmissions((prev) => {
+            const next = payload.new as Submission;
+            if (prev.some((s) => s.id === next.id)) return prev;
+            return [next, ...prev];
+          });
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "contact_submissions" },
+        (payload) => {
+          const old = payload.old as { id: string };
+          setSubmissions((prev) => prev.filter((s) => s.id !== old.id));
+          setSelected((cur) => (cur?.id === old.id ? null : cur));
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [auth.status]);
+
   async function handleDelete(id: string) {
     if (!confirm("Delete this submission permanently?")) return;
     const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
