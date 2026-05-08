@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Rich Tillman | Portfolio" },
+      { name: "description", content: "Refero's Showcase is a dynamic developer portfolio displaying projects and skills." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Rich Tillman | Portfolio" },
+      { property: "og:description", content: "Refero's Showcase is a dynamic developer portfolio displaying projects and skills." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Rich Tillman | Portfolio" },
+      { name: "twitter:description", content: "Refero's Showcase is a dynamic developer portfolio displaying projects and skills." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png" },
     ],
     links: [
       {
