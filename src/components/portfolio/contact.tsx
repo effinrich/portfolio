@@ -1,4 +1,5 @@
 import { SectionHeading } from "./section-heading";
+import { ContactForm } from "./contact-form";
 
 const links = [
   { label: "Email", value: "richtillman@pm.me", href: "mailto:richtillman@pm.me" },
