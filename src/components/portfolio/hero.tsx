@@ -5,10 +5,12 @@ export function Hero() {
       <div className="container-x relative">
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <span className="chip">
-            <span className="pill-dot animate-float-glow" />
+          <span className="pill-dot animate-float-glow" />
             Atlanta, GA · Remote
           </span>
           <span className="chip font-mono">15+ yrs frontend</span>
+          <span className="chip font-mono">Design systems since 2016</span>
+          <span className="chip font-mono">Nx monorepos at scale</span>
           <span className="chip font-mono">5,703+ npm installs</span>
         </div>
 
@@ -20,9 +22,11 @@ export function Hero() {
 
         <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
           I&apos;m <span className="text-foreground font-medium">Rich Tillman</span> — Principal
-          Frontend Engineer &amp; Engineering Director. I architect React UI platforms,
-          design systems, and MCP-driven tooling that ships faster, scales cleaner, and
-          plays nicely with Claude, Cursor, Figma, and Storybook.
+          Frontend Engineer &amp; Engineering Director. I architect{" "}
+          <span className="text-foreground font-medium">enterprise-scale</span> React
+          platforms, Nx monorepos, and 0→1 SaaS products — and the design systems
+          (Storybook + React + Figma since 2016) that keep design, product, and
+          engineering shipping in lockstep.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
