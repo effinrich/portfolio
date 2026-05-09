@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Rich Tillman is a Principal Frontend Engineer based in Atlanta, building React design systems, MCP-driven developer tooling, and AI-native workflows. Creator of ForgeKit.",
+          "Rich Tillman is a Principal Frontend Engineer building React design systems, MCP-driven developer tooling, and AI-native workflows. Creator of ForgeKit.",
       },
       { property: "og:title", content: "Rich Tillman — Principal Frontend Engineer" },
       {

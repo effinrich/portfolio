@@ -22,7 +22,7 @@ export function Contact() {
               <SectionHeading
                 eyebrow="Let&apos;s build"
                 title="Open to Staff, Principal, and Director roles in AI dev tooling, design systems, or platform frontend."
-                description="Atlanta-based, fully remote. Happiest where engineering excellence and design rigor meet — and where the team treats AI tooling as leverage, not a gimmick."
+                description="Fully remote. Happiest where engineering excellence and design rigor meet — and where the team treats AI tooling as leverage, not a gimmick."
               />
               <a
                 href="mailto:richtillman@pm.me"
@@ -57,7 +57,7 @@ export function Contact() {
         </div>
 
         <footer className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-8 text-xs text-muted-foreground md:flex-row">
-          <div>© {new Date().getFullYear()} Rich Tillman. Atlanta, GA.</div>
+          <div>© {new Date().getFullYear()} Rich Tillman.</div>
           <div className="font-mono">Built with TanStack Start · Tailwind · ☕</div>
         </footer>
       </div>

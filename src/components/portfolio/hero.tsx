@@ -6,7 +6,7 @@ export function Hero() {
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <span className="chip">
           <span className="pill-dot animate-float-glow" />
-            Atlanta, GA · Remote
+            Remote
           </span>
           <span className="chip font-mono">15+ yrs frontend</span>
           <span className="chip font-mono">Design systems since 2016</span>
