@@ -25,8 +25,8 @@ const roles = [
     period: "Sep 2024 — Apr 2025",
     location: "Remote · Contract",
     blurb:
-      "Built a full-stack edtech platform for Boston College on Nx + Ark UI MCP, with WCAG-enforced Storybook a11y in CI.",
-    tags: ["Nx", "Ark UI MCP", "PostgreSQL", "a11y"],
+      "Enterprise greenfield build for Boston College on an Nx monorepo with Ark UI MCP, Storybook a11y enforced in CI, and a typed PostgreSQL data layer shared across apps.",
+    tags: ["Enterprise", "Nx", "Ark UI MCP", "PostgreSQL", "a11y"],
   },
   {
     company: "Redesign Health",
@@ -34,8 +34,8 @@ const roles = [
     period: "Jul 2022 — May 2024",
     location: "Remote",
     blurb:
-      "Double-promoted to ED. Led 3 cross-functional teams (15+). Built a 50+ component design system that cut dev time 30% across a 10–15 dev org.",
-    tags: ["Design System", "Storybook", "Zustand", "Chromatic"],
+      "Double-promoted to ED. Led 3 cross-functional teams (15+) launching multiple greenfield healthcare SaaS products. Built a 50+ component design system in Storybook + Chromatic that cut dev time 30% across a 10–15 dev org and unified Figma → React handoff.",
+    tags: ["0→1 SaaS", "Design System", "Storybook", "Chromatic", "Zustand"],
   },
   {
     company: "Pineapple Corporation",
@@ -43,8 +43,8 @@ const roles = [
     period: "Jan 2022 — Jul 2022",
     location: "Remote · Contract",
     blurb:
-      "Stood up an Nx monorepo for 8+ apps; cross-platform Expo/RN serving 100K+ users with 60+ Storybook-driven components.",
-    tags: ["Nx", "Expo", "NativeBase"],
+      "Stood up an Nx monorepo hosting 8+ apps; cross-platform Expo/RN serving 100K+ users with 60+ Storybook-driven components shared across web and native.",
+    tags: ["Nx Monorepo", "Expo", "NativeBase", "Storybook"],
   },
   {
     company: "PHC Global",
@@ -52,8 +52,8 @@ const roles = [
     period: "Jul 2021 — Jan 2022",
     location: "Remote",
     blurb:
-      "0→1 B2B fintech. Foundational Nx monorepo with 30+ shared libs and gRPC middleware; cut infra cost 30% and shipped 8 weeks early.",
-    tags: ["Chakra UI", "gRPC", "GCP", "Kubernetes"],
+      "0→1 enterprise B2B fintech SaaS. Architected an Nx monorepo with 30+ shared libs, gRPC middleware, and a Chakra-based design system — cut infra cost 30% and shipped 8 weeks early.",
+    tags: ["Enterprise SaaS", "Nx Monorepo", "Chakra UI", "gRPC", "GCP"],
   },
   {
     company: "Freebird",
@@ -61,8 +61,8 @@ const roles = [
     period: "Sep 2016 — Jan 2021",
     location: "Santa Monica, CA",
     blurb:
-      "Built one of the earliest production React libraries on Storybook (2016) — a 200-component system spanning B2B, B2C, and React Native.",
-    tags: ["React Native", "NestJS", "Storybook"],
+      "Built one of the earliest production React design systems on Storybook (2016) — a 200-component library spanning B2B, B2C, and React Native. Pioneered Storybook + React + Figma as a shared source of truth for design, product, and engineering well before Code Connect existed.",
+    tags: ["Design System (2016)", "Storybook", "React Native", "Figma"],
   },
   {
     company: "FaceCake Marketing Tech",
@@ -70,8 +70,8 @@ const roles = [
     period: "Oct 2010 — Sep 2016",
     location: "Los Angeles, CA",
     blurb:
-      "Pioneered browser-based AR with computer vision in JavaScript. NARS try-on app drove $400K/mo revenue lift.",
-    tags: ["WebAR", "JavaScript", "Firebase"],
+      "Pioneered browser-based AR with computer vision in JavaScript. NARS try-on app drove $400K/mo revenue lift across enterprise beauty partners.",
+    tags: ["WebAR", "JavaScript", "Enterprise"],
   },
 ];
 
