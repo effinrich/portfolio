@@ -5,10 +5,12 @@ const meta: Meta<typeof Skeleton> = {
   title: "UI/Skeleton",
   component: Skeleton,
   tags: ["autodocs"],
+  argTypes: { className: { control: "text" } },
 };
 export default meta;
+type Story = StoryObj<typeof Skeleton>;
 
-export const Default: StoryObj<typeof Skeleton> = {
+export const Default: Story = {
   render: () => (
     <div className="flex items-center gap-3">
       <Skeleton className="h-12 w-12 rounded-full" />
