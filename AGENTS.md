@@ -56,6 +56,41 @@ Don't run `npm run build` / `tsc` manually — the harness runs builds automatic
   - `moduleResolution: "Bundler"` — required for Vite + path aliases.
 - New code should aim to be clean under stricter settings even though they're disabled globally.
 
-## When in doubt
+## Enforcement & DX
 
-Prefer the new tool over a familiar old one. If oxlint/oxfmt can't express a rule you need, open a discussion before pulling ESLint/Prettier back in.
+These tools are not optional. They run automatically and gate commits/pushes.
+
+### Local loop (every change)
+
+1. Edit code.
+2. `bun run lint:fix` — autofix what oxlint can.
+3. `bun run format` — oxfmt normalizes the diff.
+4. `bun run typecheck` before opening a PR.
+
+If a file you touched still has lint errors after autofix, fix them in the same change. **Never commit with `--no-verify`** to skip lefthook. If a hook is wrong, fix the hook, not the bypass.
+
+### What each tool guards
+
+- **oxlint** — correctness + a11y + perf. Treat `correctness` errors as build-breaking. `jsx-key` is `error` (don't downgrade). a11y violations on form controls (`label`/`id`/`htmlFor`, keyboard handlers on dialogs) are non-negotiable — see `src/routes/admin.tsx` for the pattern.
+- **oxfmt** — single source of truth for whitespace, quotes, semicolons, trailing commas, line width (100). Don't hand-format. Don't add `// prettier-ignore` style pragmas; they do nothing here.
+- **lefthook** — the enforcement layer. `pre-commit` blocks unformatted/unlinted staged files; `pre-push` blocks broken types. Run `bun run prepare` once after clone.
+- **tsc (TS 6 + codecompose)** — strictness baseline. Do not loosen `tsconfig.json` to make an error go away; fix the type instead.
+- **tsdown** — only invoked when bundling internal libs. Don't wire it into the app build path.
+
+### Code style protections (don't undo these)
+
+- Imports use `verbatimModuleSyntax: false` style — plain `import { Foo }`. Don't blanket-add `import type` unless TS demands it.
+- Path alias is `@/*` only. Don't add new aliases without updating both `tsconfig.json#paths` and Vite resolution.
+- File names: kebab-case (workspace rule). oxlint won't catch this — agents must.
+- Design tokens from `src/styles.css` only; no raw color classes. Lint won't catch this either — review discipline.
+- `src/components/ui/**` is shadcn surface and lint-ignored. Keep it that way: no app logic, no business imports, no edits beyond shadcn upgrades.
+
+### Changing the rules
+
+- Loosening an oxlint rule, adding an `ignorePatterns` entry, or relaxing a `tsconfig.json` flag requires a one-line justification in the commit message.
+- Tightening is always welcome and doesn't need justification.
+- If oxlint/oxfmt genuinely can't express a rule you need, raise it before reaching for ESLint/Prettier — those stay out.
+
+### CI expectation
+
+Any CI added later MUST run, in order: `bun run format:check`, `bun run lint`, `bun run typecheck`, then build. Failing any step fails the build. Mirror lefthook so local and CI agree.
