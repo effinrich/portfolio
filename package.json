@@ -8,8 +8,13 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "format": "prettier --write .",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "typecheck": "tsc --noEmit",
+    "bundle": "tsdown",
+    "prepare": "lefthook install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -70,7 +75,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
+    "@codecompose/typescript-config": "^3.2.0",
     "@lovable.dev/vite-tanstack-config": "^1.5.1",
     "@storybook/addon-a11y": "^10.3.6",
     "@storybook/addon-docs": "^10.3.6",
@@ -80,16 +85,12 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
-    "eslint": "^9.32.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.6",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^15.15.0",
-    "prettier": "^3.7.3",
+    "lefthook": "^2.1.6",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.63.0",
     "storybook": "^10.3.6",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.56.1",
+    "tsdown": "^0.22.0",
+    "typescript": "^6.0.3",
     "vite": "^7.3.1"
   }
 }

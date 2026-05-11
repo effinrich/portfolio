@@ -1,0 +1,31 @@
+# Lefthook — https://lefthook.dev
+# Run `bun run prepare` (or `bunx lefthook install`) once after cloning to install hooks.
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: oxlint
+      run: bunx oxlint --fix {staged_files}
+      glob:
+        - "*.ts"
+        - "*.tsx"
+        - "*.js"
+        - "*.jsx"
+      stage_fixed: true
+
+    - name: oxfmt
+      run: bunx oxfmt {staged_files}
+      glob:
+        - "*.ts"
+        - "*.tsx"
+        - "*.js"
+        - "*.jsx"
+        - "*.json"
+        - "*.css"
+        - "*.md"
+      stage_fixed: true
+
+pre-push:
+  jobs:
+    - name: typecheck
+      run: bunx tsc --noEmit
