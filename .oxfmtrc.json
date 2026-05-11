@@ -1,4 +1,22 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": []
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "ignorePatterns": [
+    "dist",
+    ".output",
+    ".vinxi",
+    "node_modules",
+    "bun.lock",
+    "src/routeTree.gen.ts",
+    "src/integrations/supabase/types.ts"
+  ]
 }
