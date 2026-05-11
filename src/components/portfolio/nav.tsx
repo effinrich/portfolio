@@ -19,9 +19,7 @@ export function Nav() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "backdrop-blur-xl bg-background/70 border-b border-border"
-          : "bg-transparent"
+        scrolled ? "backdrop-blur-xl bg-background/70 border-b border-border" : "bg-transparent"
       }`}
     >
       <nav className="container-x flex h-16 items-center justify-between">
@@ -30,9 +28,7 @@ export function Nav() {
             R
             <span className="absolute -inset-px rounded-md ring-1 ring-primary/30 opacity-0 transition-opacity group-hover:opacity-100" />
           </span>
-          <span className="text-sm font-semibold tracking-tight">
-            Rich Tillman
-          </span>
+          <span className="text-sm font-semibold tracking-tight">Rich Tillman</span>
           <span className="hidden text-xs text-muted-foreground sm:inline">
             / Principal Frontend Engineer
           </span>

@@ -97,14 +97,10 @@ export function Experience() {
               </div>
               <div>
                 <div className="flex flex-wrap items-baseline gap-x-3">
-                  <h3 className="text-xl font-semibold tracking-tight">
-                    {r.role}
-                  </h3>
+                  <h3 className="text-xl font-semibold tracking-tight">{r.role}</h3>
                   <span className="text-muted-foreground">@ {r.company}</span>
                 </div>
-                <p className="mt-2 text-pretty text-muted-foreground">
-                  {r.blurb}
-                </p>
+                <p className="mt-2 text-pretty text-muted-foreground">{r.blurb}</p>
                 <ul className="mt-4 flex flex-wrap gap-1.5">
                   {r.tags.map((t) => (
                     <li
