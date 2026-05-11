@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "unicorn", "oxc", "import", "jsx-a11y"],
+  "categories": {
+    "correctness": "error",
+    "perf": "warn",
+    "suspicious": "warn",
+    "pedantic": "off",
+    "style": "off"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "off",
+    "typescript/no-unused-vars": "off",
+    "typescript/no-explicit-any": "off",
+    "react/jsx-key": "error",
+    "react/no-array-index-key": "off"
+  },
+  "ignorePatterns": [
+    "dist",
+    ".output",
+    ".vinxi",
+    "node_modules",
+    "src/routeTree.gen.ts",
+    "src/integrations/supabase/types.ts",
+    "src/components/ui/**"
+  ]
+}
