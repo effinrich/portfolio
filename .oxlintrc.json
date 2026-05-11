@@ -21,7 +21,14 @@
     "react/jsx-key": "error",
     "react/no-array-index-key": "off",
     "react/react-in-jsx-scope": "off",
-    "import/no-unassigned-import": "off"
+    "import/no-unassigned-import": "off",
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase",
+        "ignore": "^(AGENTS\\.md|README\\.md|CHANGELOG\\.md|LICENSE|__root\\.tsx|routeTree\\.gen\\.ts|\\d{14}_[a-f0-9-]+\\.sql)$"
+      }
+    ]
   },
   "ignorePatterns": [
     "dist",
