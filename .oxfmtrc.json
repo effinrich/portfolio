@@ -11,10 +11,14 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "ignorePatterns": [
+    "node_modules",
     "dist",
+    "dist-ssr",
     ".output",
     ".vinxi",
-    "node_modules",
+    ".tanstack/**",
+    ".nitro",
+    ".wrangler/",
     "bun.lock",
     "src/routeTree.gen.ts",
     "src/integrations/supabase/types.ts"
