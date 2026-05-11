@@ -360,10 +360,14 @@ function AdminPage() {
         {/* Filter bar */}
         <div className="mb-4 grid grid-cols-1 gap-3 rounded-xl border border-border bg-surface/30 p-4 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-search"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               Search
             </label>
             <input
+              id="admin-search"
               type="search"
               placeholder="Search…"
               value={query}
@@ -372,10 +376,14 @@ function AdminPage() {
             />
           </div>
           <div className="lg:col-span-2">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-search-field"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               Field
             </label>
             <select
+              id="admin-search-field"
               value={searchField}
               onChange={(e) => setSearchField(e.target.value as typeof searchField)}
               className={`${inputCls} w-full`}
@@ -386,10 +394,14 @@ function AdminPage() {
             </select>
           </div>
           <div className="lg:col-span-2">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-date-from"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               From
             </label>
             <input
+              id="admin-date-from"
               type="date"
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
@@ -397,10 +409,14 @@ function AdminPage() {
             />
           </div>
           <div className="lg:col-span-2">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-date-to"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               To
             </label>
             <input
+              id="admin-date-to"
               type="date"
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
@@ -573,12 +589,18 @@ function AdminPage() {
         <div
           role="dialog"
           aria-modal="true"
+          tabIndex={-1}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           onClick={() => setSelected(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setSelected(null);
+          }}
         >
           <div
+            role="document"
             className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-background p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
