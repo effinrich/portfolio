@@ -20,7 +20,8 @@
     "typescript/no-explicit-any": "off",
     "react/jsx-key": "error",
     "react/no-array-index-key": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "import/no-unassigned-import": "off"
   },
   "ignorePatterns": [
     "dist",
@@ -29,6 +30,8 @@
     "node_modules",
     "src/routeTree.gen.ts",
     "src/integrations/supabase/types.ts",
+    "src/integrations/supabase/client.ts",
+    "src/integrations/supabase/client.server.ts",
     "src/components/ui/**"
   ]
 }

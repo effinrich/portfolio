@@ -19,15 +19,15 @@ Conventions for AI agents (and humans) working in this repo. Keep this file shor
 
 ## Scripts (use these — don't invent new ones)
 
-| Task | Command |
-|---|---|
-| Lint | `bun run lint` (`oxlint`) |
-| Lint + autofix | `bun run lint:fix` |
-| Format | `bun run format` (`oxfmt .`) |
-| Format check | `bun run format:check` |
-| Typecheck | `bun run typecheck` (`tsc --noEmit`) |
-| Bundle internal libs | `bun run bundle` (`tsdown`) |
-| Install hooks | `bun run prepare` (auto on `bun install`) |
+| Task                 | Command                                   |
+| -------------------- | ----------------------------------------- |
+| Lint                 | `bun run lint` (`oxlint`)                 |
+| Lint + autofix       | `bun run lint:fix`                        |
+| Format               | `bun run format` (`oxfmt .`)              |
+| Format check         | `bun run format:check`                    |
+| Typecheck            | `bun run typecheck` (`tsc --noEmit`)      |
+| Bundle internal libs | `bun run bundle` (`tsdown`)               |
+| Install hooks        | `bun run prepare` (auto on `bun install`) |
 
 Don't run `npm run build` / `tsc` manually — the harness runs builds automatically.
 
