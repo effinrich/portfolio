@@ -1,8 +1,16 @@
-import { useEffect, useState } from "react";
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
+type Mode = "signin" | "signup";
+
 export const Route = createFileRoute("/login")({
+  beforeLoad: async () => {
+    // Already signed in → bounce straight to admin instead of flashing the form.
+    const { data } = await supabase.auth.getSession();
+    if (data.session) throw redirect({ to: "/admin" });
+  },
   component: LoginPage,
   head: () => ({
     meta: [{ title: "Sign in — Admin" }, { name: "robots", content: "noindex" }],
@@ -11,45 +19,52 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/admin" });
-    });
-  }, [navigate]);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setInfo(null);
-    setLoading(true);
-    try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+  const authMutation = useMutation({
+    mutationFn: async (m: Mode) => {
+      if (m === "signup") {
+        const { error: authError } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: `${window.location.origin}/admin` },
         });
-        if (error) throw error;
+        if (authError) throw authError;
+        return { kind: "signup" } as const;
+      }
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (authError) throw authError;
+      return { kind: "signin" } as const;
+    },
+    onSuccess: (result) => {
+      if (result.kind === "signup") {
         setInfo("Check your email to confirm your account, then sign in.");
         setMode("signin");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
         navigate({ to: "/admin" });
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
+    },
+  });
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setInfo(null);
+    authMutation.reset();
+    authMutation.mutate(mode);
   }
+
+  const errorMessage =
+    authMutation.error instanceof Error
+      ? authMutation.error.message
+      : authMutation.error
+        ? "Something went wrong"
+        : null;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -103,27 +118,31 @@ function LoginPage() {
               />
             </div>
 
-            {error && (
+            {errorMessage && (
               <p role="alert" className="text-sm text-destructive">
-                {error}
+                {errorMessage}
               </p>
             )}
             {info && <p className="text-sm text-primary">{info}</p>}
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={authMutation.isPending}
               className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 disabled:opacity-70"
             >
-              {loading ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
+              {authMutation.isPending
+                ? "Please wait…"
+                : mode === "signin"
+                  ? "Sign in"
+                  : "Create account"}
             </button>
 
             <button
               type="button"
               onClick={() => {
                 setMode(mode === "signin" ? "signup" : "signin");
-                setError(null);
                 setInfo(null);
+                authMutation.reset();
               }}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
