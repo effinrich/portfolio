@@ -1,13 +1,7 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { Suspense, useDeferredValue, useEffect, useRef, useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-
-export const Route = createFileRoute("/admin")({
-  component: AdminPage,
-  head: () => ({
-    meta: [{ title: "Admin — Contact Submissions" }, { name: "robots", content: "noindex" }],
-  }),
-});
 
 type Submission = {
   id: string;
@@ -16,12 +10,6 @@ type Submission = {
   message: string;
   created_at: string;
 };
-
-type AuthState =
-  | { status: "loading" }
-  | { status: "unauthenticated" }
-  | { status: "not-admin"; email: string }
-  | { status: "admin"; email: string };
 
 type Reply = {
   id: string;
@@ -33,123 +21,234 @@ type Reply = {
 
 type SortField = "created_at" | "name" | "email";
 type SortDir = "asc" | "desc";
+type SearchField = "all" | "name" | "email";
+
+type Filters = {
+  q: string;
+  field: SearchField;
+  from: string;
+  to: string;
+  sortField: SortField;
+  sortDir: SortDir;
+  pageSize: number;
+};
+
+type AuthState =
+  | { status: "unauthenticated" }
+  | { status: "not-admin"; email: string }
+  | { status: "admin"; email: string; userId: string };
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50, 100] as const;
 
-function AdminPage() {
-  const navigate = useNavigate();
-  const [auth, setAuth] = useState<AuthState>({ status: "loading" });
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [loadingData, setLoadingData] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<Submission | null>(null);
-  const [replies, setReplies] = useState<Reply[]>([]);
-  const [repliesLoading, setRepliesLoading] = useState(false);
-  const [replyBody, setReplyBody] = useState("");
-  const [replySaving, setReplySaving] = useState(false);
-  const [replyError, setReplyError] = useState<string | null>(null);
+const DEFAULT_FILTERS: Filters = {
+  q: "",
+  field: "all",
+  from: "",
+  to: "",
+  sortField: "created_at",
+  sortDir: "desc",
+  pageSize: 25,
+};
 
-  // Filter state
-  const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [searchField, setSearchField] = useState<"all" | "name" | "email">("all");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [sortField, setSortField] = useState<SortField>("created_at");
-  const [sortDir, setSortDir] = useState<SortDir>("desc");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState<number>(25);
+const INPUT_CLS =
+  "rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50";
 
-  // Debounce search input
-  useEffect(() => {
-    const t = setTimeout(() => setDebouncedQuery(query.trim()), 300);
-    return () => clearTimeout(t);
-  }, [query]);
-
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setPage(1);
-  }, [debouncedQuery, searchField, dateFrom, dateTo, sortField, sortDir, pageSize]);
-
-  const checkAuth = useCallback(async () => {
+const authQueryOptions = queryOptions({
+  queryKey: ["admin", "auth"] as const,
+  queryFn: async (): Promise<AuthState> => {
     const { data: sessionData } = await supabase.auth.getSession();
     const session = sessionData.session;
-    if (!session) {
-      setAuth({ status: "unauthenticated" });
-      return null;
-    }
-    const { data: roleRows, error: roleErr } = await supabase
+    if (!session) return { status: "unauthenticated" };
+    const { data: roleRows, error } = await supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", session.user.id);
-    if (roleErr) {
-      console.error(roleErr);
-    }
+    if (error) console.error(error);
     const isAdmin = roleRows?.some((r) => r.role === "admin") ?? false;
-    setAuth(
-      isAdmin
-        ? { status: "admin", email: session.user.email ?? "" }
-        : { status: "not-admin", email: session.user.email ?? "" },
-    );
-    return isAdmin;
-  }, []);
+    const email = session.user.email ?? "";
+    return isAdmin
+      ? { status: "admin", email, userId: session.user.id }
+      : { status: "not-admin", email };
+  },
+  staleTime: 60_000,
+});
 
-  const loadSubmissions = useCallback(async () => {
-    setLoadingData(true);
-    setError(null);
+function submissionsQueryOptions(filters: Filters, page: number) {
+  return queryOptions({
+    queryKey: ["admin", "submissions", filters, page] as const,
+    queryFn: async () => {
+      const from = (page - 1) * filters.pageSize;
+      const to = from + filters.pageSize - 1;
+      let q = supabase
+        .from("contact_submissions")
+        .select("*", { count: "exact" })
+        .order(filters.sortField, { ascending: filters.sortDir === "asc" })
+        .range(from, to);
+      const trimmed = filters.q.trim();
+      if (trimmed) {
+        const safe = trimmed.replace(/[%,()]/g, " ");
+        const pattern = `%${safe}%`;
+        if (filters.field === "name") q = q.ilike("name", pattern);
+        else if (filters.field === "email") q = q.ilike("email", pattern);
+        else q = q.or(`name.ilike.${pattern},email.ilike.${pattern},message.ilike.${pattern}`);
+      }
+      if (filters.from) q = q.gte("created_at", new Date(filters.from).toISOString());
+      if (filters.to) {
+        const end = new Date(filters.to);
+        end.setHours(23, 59, 59, 999);
+        q = q.lte("created_at", end.toISOString());
+      }
+      const { data, error, count } = await q;
+      if (error) throw error;
+      return { rows: (data ?? []) as Submission[], total: count ?? 0 };
+    },
+  });
+}
 
-    const from = (page - 1) * pageSize;
-    const to = from + pageSize - 1;
+function repliesQueryOptions(submissionId: string) {
+  return queryOptions({
+    queryKey: ["admin", "replies", submissionId] as const,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("submission_replies")
+        .select("*")
+        .eq("submission_id", submissionId)
+        .order("created_at", { ascending: true });
+      if (error) throw error;
+      return (data ?? []) as Reply[];
+    },
+  });
+}
 
-    let q = supabase
-      .from("contact_submissions")
-      .select("*", { count: "exact" })
-      .order(sortField, { ascending: sortDir === "asc" })
-      .range(from, to);
+export const Route = createFileRoute("/admin")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(authQueryOptions),
+  component: AdminPage,
+  head: () => ({
+    meta: [{ title: "Admin — Contact Submissions" }, { name: "robots", content: "noindex" }],
+  }),
+});
 
-    if (debouncedQuery) {
-      // Escape PostgREST special chars in ilike pattern
-      const safe = debouncedQuery.replace(/[%,()]/g, " ");
-      const pattern = `%${safe}%`;
-      if (searchField === "name") q = q.ilike("name", pattern);
-      else if (searchField === "email") q = q.ilike("email", pattern);
-      else q = q.or(`name.ilike.${pattern},email.ilike.${pattern},message.ilike.${pattern}`);
-    }
-    if (dateFrom) q = q.gte("created_at", new Date(dateFrom).toISOString());
-    if (dateTo) {
-      const end = new Date(dateTo);
-      end.setHours(23, 59, 59, 999);
-      q = q.lte("created_at", end.toISOString());
-    }
-
-    const { data, error, count } = await q;
-    if (error) setError(error.message);
-    else {
-      setSubmissions(data ?? []);
-      setTotalCount(count ?? 0);
-    }
-    setLoadingData(false);
-  }, [page, pageSize, sortField, sortDir, debouncedQuery, searchField, dateFrom, dateTo]);
+function AdminPage() {
+  const { data: auth } = useSuspenseQuery(authQueryOptions);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const isAdmin = await checkAuth();
-      if (!cancelled && isAdmin) await loadSubmissions();
-    })();
     const { data: sub } = supabase.auth.onAuthStateChange(() => {
-      checkAuth();
+      queryClient.invalidateQueries({ queryKey: ["admin", "auth"] });
     });
-    return () => {
-      cancelled = true;
-      sub.subscription.unsubscribe();
-    };
-  }, [checkAuth, loadSubmissions]);
+    return () => sub.subscription.unsubscribe();
+  }, [queryClient]);
 
-  // Subscribe to realtime changes once the user is confirmed admin.
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/login" });
+  }
+
+  if (auth.status === "unauthenticated") {
+    return (
+      <CenteredCard
+        title="Sign in required"
+        description="You need to sign in to view this page."
+        action={
+          <Link
+            to="/login"
+            className="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
+          >
+            Go to sign in
+          </Link>
+        }
+      />
+    );
+  }
+
+  if (auth.status === "not-admin") {
+    return (
+      <CenteredCard
+        title="Not authorized"
+        description={
+          <>
+            You&apos;re signed in as <span className="text-foreground">{auth.email}</span>, but this
+            account doesn&apos;t have admin access.
+          </>
+        }
+        action={
+          <button
+            onClick={handleSignOut}
+            className="mt-6 inline-flex items-center justify-center rounded-lg border border-border bg-background px-5 py-3 text-sm font-medium text-foreground hover:bg-surface"
+          >
+            Sign out
+          </button>
+        }
+      />
+    );
+  }
+
+  return <AdminAuthedView email={auth.email} userId={auth.userId} onSignOut={handleSignOut} />;
+}
+
+function CenteredCard({
+  title,
+  description,
+  action,
+}: {
+  title: string;
+  description: React.ReactNode;
+  action: React.ReactNode;
+}) {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-semibold text-foreground">{title}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+        {action}
+      </div>
+    </div>
+  );
+}
+
+function AdminAuthedView({
+  email,
+  userId,
+  onSignOut,
+}: {
+  email: string;
+  userId: string;
+  onSignOut: () => void;
+}) {
+  const queryClient = useQueryClient();
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
+  const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState<Submission | null>(null);
+  const deferredFilters = useDeferredValue(filters);
+
+  function updateFilters(patch: Partial<Filters>) {
+    setFilters((f) => ({ ...f, ...patch }));
+    setPage(1);
+  }
+
+  function clearFilters() {
+    setFilters(DEFAULT_FILTERS);
+    setPage(1);
+  }
+
+  function toggleSort(field: SortField) {
+    setFilters((f) => {
+      const nextDir: SortDir =
+        f.sortField === field
+          ? f.sortDir === "asc"
+            ? "desc"
+            : "asc"
+          : field === "created_at"
+            ? "desc"
+            : "asc";
+      return { ...f, sortField: field, sortDir: nextDir };
+    });
+    setPage(1);
+  }
+
+  // Realtime subscription — stable, never re-subscribes
   useEffect(() => {
-    if (auth.status !== "admin") return;
     const channel = supabase
       .channel("contact_submissions_changes")
       .on(
@@ -160,173 +259,41 @@ function AdminPage() {
             const old = payload.old as { id: string };
             setSelected((cur) => (cur?.id === old.id ? null : cur));
           }
-          loadSubmissions();
+          queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] });
         },
       )
       .subscribe();
     return () => {
-      supabase.removeChannel(channel);
+      void supabase.removeChannel(channel);
     };
-  }, [auth.status, loadSubmissions]);
+  }, [queryClient]);
 
-  // Load replies whenever a submission is selected
-  useEffect(() => {
-    if (!selected) {
-      setReplies([]);
-      setReplyBody("");
-      setReplyError(null);
-      return;
-    }
-    let cancelled = false;
-    setRepliesLoading(true);
-    setReplyError(null);
-    (async () => {
-      const { data, error } = await supabase
-        .from("submission_replies")
-        .select("*")
-        .eq("submission_id", selected.id)
-        .order("created_at", { ascending: true });
-      if (cancelled) return;
-      if (error) setReplyError(error.message);
-      else setReplies(data ?? []);
-      setRepliesLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [selected]);
+  const deleteSubmission = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
+      if (error) throw error;
+      return id;
+    },
+    onSuccess: (id) => {
+      if (selected?.id === id) setSelected(null);
+      queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] });
+    },
+    onError: (e) => alert(e instanceof Error ? e.message : "Delete failed"),
+  });
 
-  async function handleSendReply(e: React.FormEvent) {
-    e.preventDefault();
-    if (!selected) return;
-    const body = replyBody.trim();
-    if (body.length < 1) return;
-    setReplySaving(true);
-    setReplyError(null);
-    const { data: sessionData } = await supabase.auth.getSession();
-    const uid = sessionData.session?.user.id;
-    if (!uid) {
-      setReplyError("Not authenticated");
-      setReplySaving(false);
-      return;
-    }
-    const { data, error } = await supabase
-      .from("submission_replies")
-      .insert({ submission_id: selected.id, admin_user_id: uid, body })
-      .select()
-      .single();
-    if (error) setReplyError(error.message);
-    else if (data) {
-      setReplies((r) => [...r, data]);
-      setReplyBody("");
-    }
-    setReplySaving(false);
-  }
-
-  async function handleDeleteReply(id: string) {
-    if (!confirm("Delete this reply?")) return;
-    const { error } = await supabase.from("submission_replies").delete().eq("id", id);
-    if (error) {
-      alert(error.message);
-      return;
-    }
-    setReplies((r) => r.filter((x) => x.id !== id));
-  }
-
-  async function handleDelete(id: string) {
+  function handleDelete(id: string) {
     if (!confirm("Delete this submission permanently?")) return;
-    const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
-    if (error) {
-      alert(error.message);
-      return;
-    }
-    if (selected?.id === id) setSelected(null);
-    loadSubmissions();
+    deleteSubmission.mutate(id);
   }
 
-  async function handleSignOut() {
-    await supabase.auth.signOut();
-    navigate({ to: "/login" });
-  }
-
-  function toggleSort(field: SortField) {
-    if (sortField === field) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortField(field);
-      setSortDir(field === "created_at" ? "desc" : "asc");
-    }
-  }
-
-  function clearFilters() {
-    setQuery("");
-    setSearchField("all");
-    setDateFrom("");
-    setDateTo("");
-    setSortField("created_at");
-    setSortDir("desc");
-  }
-
-  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
-  const hasFilters = useMemo(
-    () => Boolean(debouncedQuery || dateFrom || dateTo || searchField !== "all"),
-    [debouncedQuery, dateFrom, dateTo, searchField],
-  );
-  const rangeStart = totalCount === 0 ? 0 : (page - 1) * pageSize + 1;
-  const rangeEnd = Math.min(page * pageSize, totalCount);
-
-  if (auth.status === "loading") {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
-        Loading…
-      </div>
-    );
-  }
-
-  if (auth.status === "unauthenticated") {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background px-4">
-        <div className="max-w-md text-center">
-          <h1 className="text-xl font-semibold text-foreground">Sign in required</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            You need to sign in to view this page.
-          </p>
-          <Link
-            to="/login"
-            className="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
-          >
-            Go to sign in
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  if (auth.status === "not-admin") {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background px-4">
-        <div className="max-w-md text-center">
-          <h1 className="text-xl font-semibold text-foreground">Not authorized</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            You're signed in as <span className="text-foreground">{auth.email}</span>, but this
-            account doesn't have admin access.
-          </p>
-          <button
-            onClick={handleSignOut}
-            className="mt-6 inline-flex items-center justify-center rounded-lg border border-border bg-background px-5 py-3 text-sm font-medium text-foreground hover:bg-surface"
-          >
-            Sign out
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const hasFilters =
+    Boolean(filters.q.trim()) ||
+    filters.from !== "" ||
+    filters.to !== "" ||
+    filters.field !== "all";
 
   const sortIndicator = (field: SortField) =>
-    sortField === field ? (sortDir === "asc" ? " ↑" : " ↓") : "";
-
-  const inputCls =
-    "rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50";
+    filters.sortField === field ? (filters.sortDir === "asc" ? " ↑" : " ↓") : "";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -340,14 +307,14 @@ function AdminPage() {
               ← Site
             </Link>
             <span className="text-sm font-semibold">Contact submissions</span>
-            <span className="rounded-full bg-surface px-2 py-0.5 text-xs text-muted-foreground">
-              {totalCount}
-            </span>
+            <Suspense fallback={null}>
+              <SubmissionCountBadge filters={deferredFilters} page={page} />
+            </Suspense>
           </div>
           <div className="flex items-center gap-3">
-            <span className="hidden text-xs text-muted-foreground sm:inline">{auth.email}</span>
+            <span className="hidden text-xs text-muted-foreground sm:inline">{email}</span>
             <button
-              onClick={handleSignOut}
+              onClick={onSignOut}
               className="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-surface"
             >
               Sign out
@@ -357,355 +324,505 @@ function AdminPage() {
       </header>
 
       <main className="mx-auto max-w-6xl px-6 py-8">
-        {/* Filter bar */}
-        <div className="mb-4 grid grid-cols-1 gap-3 rounded-xl border border-border bg-surface/30 p-4 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <label
-              htmlFor="admin-search"
-              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
-            >
-              Search
-            </label>
-            <input
-              id="admin-search"
-              type="search"
-              placeholder="Search…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className={`${inputCls} w-full`}
-            />
-          </div>
-          <div className="lg:col-span-2">
-            <label
-              htmlFor="admin-search-field"
-              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
-            >
-              Field
-            </label>
-            <select
-              id="admin-search-field"
-              value={searchField}
-              onChange={(e) => setSearchField(e.target.value as typeof searchField)}
-              className={`${inputCls} w-full`}
-            >
-              <option value="all">All fields</option>
-              <option value="name">Name</option>
-              <option value="email">Email</option>
-            </select>
-          </div>
-          <div className="lg:col-span-2">
-            <label
-              htmlFor="admin-date-from"
-              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
-            >
-              From
-            </label>
-            <input
-              id="admin-date-from"
-              type="date"
-              value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
-              className={`${inputCls} w-full`}
-            />
-          </div>
-          <div className="lg:col-span-2">
-            <label
-              htmlFor="admin-date-to"
-              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
-            >
-              To
-            </label>
-            <input
-              id="admin-date-to"
-              type="date"
-              value={dateTo}
-              onChange={(e) => setDateTo(e.target.value)}
-              className={`${inputCls} w-full`}
-            />
-          </div>
-          <div className="flex items-end gap-2 lg:col-span-1">
-            <button
-              onClick={loadSubmissions}
-              disabled={loadingData}
-              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-foreground hover:bg-surface disabled:opacity-60"
-              title="Refresh"
-            >
-              {loadingData ? "…" : "↻"}
-            </button>
-          </div>
-          {hasFilters && (
-            <div className="lg:col-span-12">
-              <button
-                onClick={clearFilters}
-                className="text-xs font-medium text-primary hover:underline"
-              >
-                Clear filters
-              </button>
-            </div>
-          )}
-        </div>
+        <FilterBar
+          filters={filters}
+          onUpdate={updateFilters}
+          onRefresh={() => queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] })}
+          onClear={clearFilters}
+          hasFilters={hasFilters}
+        />
 
-        {error && (
-          <p
-            role="alert"
-            className="mb-4 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
-          >
-            {error}
-          </p>
-        )}
-
-        {!loadingData && submissions.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-border p-12 text-center">
-            <p className="text-sm text-muted-foreground">
-              {totalCount === 0 && !hasFilters
-                ? "No submissions yet. They'll appear here as they arrive."
-                : "No submissions match your filters."}
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-hidden rounded-xl border border-border">
-            <table className="w-full text-sm">
-              <thead className="bg-surface text-xs uppercase tracking-wider text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3 text-left font-medium">
-                    <button onClick={() => toggleSort("name")} className="hover:text-foreground">
-                      Name{sortIndicator("name")}
-                    </button>
-                  </th>
-                  <th className="px-4 py-3 text-left font-medium">
-                    <button onClick={() => toggleSort("email")} className="hover:text-foreground">
-                      Email{sortIndicator("email")}
-                    </button>
-                  </th>
-                  <th className="hidden px-4 py-3 text-left font-medium md:table-cell">Message</th>
-                  <th className="px-4 py-3 text-left font-medium">
-                    <button
-                      onClick={() => toggleSort("created_at")}
-                      className="hover:text-foreground"
-                    >
-                      Received{sortIndicator("created_at")}
-                    </button>
-                  </th>
-                  <th className="px-4 py-3 text-right font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border bg-background">
-                {submissions.map((s) => (
-                  <tr key={s.id} className="hover:bg-surface/50">
-                    <td className="px-4 py-3 font-medium text-foreground">{s.name}</td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      <a
-                        href={`mailto:${s.email}`}
-                        className="hover:text-foreground hover:underline"
-                      >
-                        {s.email}
-                      </a>
-                    </td>
-                    <td className="hidden max-w-md px-4 py-3 text-muted-foreground md:table-cell">
-                      <span className="line-clamp-1">{s.message}</span>
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-xs text-muted-foreground">
-                      {new Date(s.created_at).toLocaleString()}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-right">
-                      <button
-                        onClick={() => setSelected(s)}
-                        className="mr-2 text-xs font-medium text-primary hover:underline"
-                      >
-                        View
-                      </button>
-                      <button
-                        onClick={() => handleDelete(s.id)}
-                        className="text-xs font-medium text-destructive hover:underline"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {/* Pagination */}
-        <div className="mt-4 flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span>
-              {rangeStart}–{rangeEnd} of {totalCount}
-            </span>
-            <label className="flex items-center gap-2">
-              Rows
-              <select
-                value={pageSize}
-                onChange={(e) => setPageSize(Number(e.target.value))}
-                className={`${inputCls} py-1`}
-              >
-                {PAGE_SIZE_OPTIONS.map((n) => (
-                  <option key={n} value={n}>
-                    {n}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setPage(1)}
-              disabled={page <= 1 || loadingData}
-              className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
-            >
-              «
-            </button>
-            <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page <= 1 || loadingData}
-              className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
-            >
-              ‹ Prev
-            </button>
-            <span className="text-xs text-muted-foreground">
-              Page {page} of {totalPages}
-            </span>
-            <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page >= totalPages || loadingData}
-              className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
-            >
-              Next ›
-            </button>
-            <button
-              onClick={() => setPage(totalPages)}
-              disabled={page >= totalPages || loadingData}
-              className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
-            >
-              »
-            </button>
-          </div>
-        </div>
+        <Suspense fallback={<TableSkeleton />}>
+          <SubmissionsTable
+            filters={deferredFilters}
+            page={page}
+            onPageChange={setPage}
+            onPageSizeChange={(pageSize) => updateFilters({ pageSize })}
+            onSelect={setSelected}
+            onDelete={handleDelete}
+            toggleSort={toggleSort}
+            sortIndicator={sortIndicator}
+            hasFilters={hasFilters}
+          />
+        </Suspense>
       </main>
 
       {selected && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          tabIndex={-1}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-          onClick={() => setSelected(null)}
-          onKeyDown={(e) => {
-            if (e.key === "Escape") setSelected(null);
-          }}
+        <SubmissionDialog
+          submission={selected}
+          userId={userId}
+          onClose={() => setSelected(null)}
+          onDelete={() => handleDelete(selected.id)}
+        />
+      )}
+    </div>
+  );
+}
+
+function SubmissionCountBadge({ filters, page }: { filters: Filters; page: number }) {
+  const { data } = useSuspenseQuery(submissionsQueryOptions(filters, page));
+  return (
+    <span className="rounded-full bg-surface px-2 py-0.5 text-xs text-muted-foreground">
+      {data.total}
+    </span>
+  );
+}
+
+function FilterBar({
+  filters,
+  onUpdate,
+  onRefresh,
+  onClear,
+  hasFilters,
+}: {
+  filters: Filters;
+  onUpdate: (patch: Partial<Filters>) => void;
+  onRefresh: () => void;
+  onClear: () => void;
+  hasFilters: boolean;
+}) {
+  return (
+    <div className="mb-4 grid grid-cols-1 gap-3 rounded-xl border border-border bg-surface/30 p-4 sm:grid-cols-2 lg:grid-cols-12">
+      <label className="lg:col-span-5">
+        <span className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+          Search
+        </span>
+        <input
+          type="search"
+          placeholder="Search…"
+          value={filters.q}
+          onChange={(e) => onUpdate({ q: e.target.value })}
+          className={`${INPUT_CLS} w-full`}
+        />
+      </label>
+      <label className="lg:col-span-2">
+        <span className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+          Field
+        </span>
+        <select
+          value={filters.field}
+          onChange={(e) => onUpdate({ field: e.target.value as SearchField })}
+          className={`${INPUT_CLS} w-full`}
         >
-          <div
-            role="document"
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-background p-6 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-lg font-semibold text-foreground">{selected.name}</h2>
-                <a
-                  href={`mailto:${selected.email}`}
-                  className="text-sm text-muted-foreground hover:text-foreground hover:underline"
-                >
-                  {selected.email}
-                </a>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {new Date(selected.created_at).toLocaleString()}
-                </p>
-              </div>
-              <button
-                onClick={() => setSelected(null)}
-                className="rounded-md p-1 text-muted-foreground hover:bg-surface hover:text-foreground"
-                aria-label="Close"
-              >
-                ✕
-              </button>
-            </div>
-            <p className="mt-4 whitespace-pre-wrap rounded-lg border border-border bg-surface p-4 text-sm text-foreground">
-              {selected.message}
-            </p>
-
-            <div className="mt-6">
-              <h3 className="mb-2 text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                Replies {replies.length > 0 && `(${replies.length})`}
-              </h3>
-              {repliesLoading ? (
-                <p className="text-xs text-muted-foreground">Loading replies…</p>
-              ) : replies.length === 0 ? (
-                <p className="text-xs text-muted-foreground">No replies yet.</p>
-              ) : (
-                <ul className="space-y-2">
-                  {replies.map((r) => (
-                    <li
-                      key={r.id}
-                      className="rounded-lg border border-border bg-surface/50 p-3 text-sm"
-                    >
-                      <div className="mb-1 flex items-center justify-between gap-2 text-xs text-muted-foreground">
-                        <span>{new Date(r.created_at).toLocaleString()}</span>
-                        <button
-                          onClick={() => handleDeleteReply(r.id)}
-                          className="text-destructive hover:underline"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                      <p className="whitespace-pre-wrap text-foreground">{r.body}</p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
-            <form onSubmit={handleSendReply} className="mt-4 space-y-2">
-              <label
-                htmlFor="reply-body"
-                className="block text-xs font-mono uppercase tracking-wider text-muted-foreground"
-              >
-                Add a reply
-              </label>
-              <textarea
-                id="reply-body"
-                value={replyBody}
-                onChange={(e) => setReplyBody(e.target.value)}
-                rows={3}
-                maxLength={5000}
-                placeholder="Write your reply…"
-                className={`${inputCls} w-full resize-y`}
-                disabled={replySaving}
-              />
-              {replyError && (
-                <p role="alert" className="text-xs text-destructive">
-                  {replyError}
-                </p>
-              )}
-              <div className="flex justify-end gap-2">
-                <a
-                  href={`mailto:${selected.email}?subject=Re: your message&body=${encodeURIComponent(replyBody)}`}
-                  className="rounded-lg border border-border bg-background px-4 py-2 text-xs font-semibold text-foreground hover:bg-surface"
-                >
-                  Open in email
-                </a>
-                <button
-                  type="submit"
-                  disabled={replySaving || replyBody.trim().length === 0}
-                  className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground disabled:opacity-60"
-                >
-                  {replySaving ? "Saving…" : "Save reply"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(selected.id)}
-                  className="rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-2 text-xs font-semibold text-destructive hover:bg-destructive/20"
-                >
-                  Delete submission
-                </button>
-              </div>
-            </form>
-          </div>
+          <option value="all">All fields</option>
+          <option value="name">Name</option>
+          <option value="email">Email</option>
+        </select>
+      </label>
+      <label className="lg:col-span-2">
+        <span className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+          From
+        </span>
+        <input
+          type="date"
+          value={filters.from}
+          onChange={(e) => onUpdate({ from: e.target.value })}
+          className={`${INPUT_CLS} w-full`}
+        />
+      </label>
+      <label className="lg:col-span-2">
+        <span className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+          To
+        </span>
+        <input
+          type="date"
+          value={filters.to}
+          onChange={(e) => onUpdate({ to: e.target.value })}
+          className={`${INPUT_CLS} w-full`}
+        />
+      </label>
+      <div className="flex items-end gap-2 lg:col-span-1">
+        <button
+          onClick={onRefresh}
+          className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-foreground hover:bg-surface"
+          title="Refresh"
+        >
+          ↻
+        </button>
+      </div>
+      {hasFilters && (
+        <div className="lg:col-span-12">
+          <button onClick={onClear} className="text-xs font-medium text-primary hover:underline">
+            Clear filters
+          </button>
         </div>
       )}
     </div>
+  );
+}
+
+function TableSkeleton() {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border">
+      <div className="h-64 animate-pulse bg-surface/30" />
+    </div>
+  );
+}
+
+function SubmissionsTable({
+  filters,
+  page,
+  onPageChange,
+  onPageSizeChange,
+  onSelect,
+  onDelete,
+  toggleSort,
+  sortIndicator,
+  hasFilters,
+}: {
+  filters: Filters;
+  page: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+  onSelect: (s: Submission) => void;
+  onDelete: (id: string) => void;
+  toggleSort: (f: SortField) => void;
+  sortIndicator: (f: SortField) => string;
+  hasFilters: boolean;
+}) {
+  const { data } = useSuspenseQuery(submissionsQueryOptions(filters, page));
+  const { rows, total } = data;
+  const totalPages = Math.max(1, Math.ceil(total / filters.pageSize));
+  const rangeStart = total === 0 ? 0 : (page - 1) * filters.pageSize + 1;
+  const rangeEnd = Math.min(page * filters.pageSize, total);
+
+  return (
+    <>
+      {rows.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border p-12 text-center">
+          <p className="text-sm text-muted-foreground">
+            {total === 0 && !hasFilters
+              ? "No submissions yet. They'll appear here as they arrive."
+              : "No submissions match your filters."}
+          </p>
+        </div>
+      ) : (
+        <div className="overflow-hidden rounded-xl border border-border">
+          <table className="w-full text-sm">
+            <thead className="bg-surface text-xs uppercase tracking-wider text-muted-foreground">
+              <tr>
+                <th className="px-4 py-3 text-left font-medium">
+                  <button onClick={() => toggleSort("name")} className="hover:text-foreground">
+                    Name{sortIndicator("name")}
+                  </button>
+                </th>
+                <th className="px-4 py-3 text-left font-medium">
+                  <button onClick={() => toggleSort("email")} className="hover:text-foreground">
+                    Email{sortIndicator("email")}
+                  </button>
+                </th>
+                <th className="hidden px-4 py-3 text-left font-medium md:table-cell">Message</th>
+                <th className="px-4 py-3 text-left font-medium">
+                  <button
+                    onClick={() => toggleSort("created_at")}
+                    className="hover:text-foreground"
+                  >
+                    Received{sortIndicator("created_at")}
+                  </button>
+                </th>
+                <th className="px-4 py-3 text-right font-medium">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border bg-background">
+              {rows.map((s) => (
+                <tr key={s.id} className="hover:bg-surface/50">
+                  <td className="px-4 py-3 font-medium text-foreground">{s.name}</td>
+                  <td className="px-4 py-3 text-muted-foreground">
+                    <a href={`mailto:${s.email}`} className="hover:text-foreground hover:underline">
+                      {s.email}
+                    </a>
+                  </td>
+                  <td className="hidden max-w-md px-4 py-3 text-muted-foreground md:table-cell">
+                    <span className="line-clamp-1">{s.message}</span>
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-3 text-xs text-muted-foreground">
+                    {new Date(s.created_at).toLocaleString()}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-3 text-right">
+                    <button
+                      onClick={() => onSelect(s)}
+                      className="mr-2 text-xs font-medium text-primary hover:underline"
+                    >
+                      View
+                    </button>
+                    <button
+                      onClick={() => onDelete(s.id)}
+                      className="text-xs font-medium text-destructive hover:underline"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <div className="mt-4 flex flex-col items-center justify-between gap-3 sm:flex-row">
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <span>
+            {rangeStart}–{rangeEnd} of {total}
+          </span>
+          <label className="flex items-center gap-2">
+            Rows
+            <select
+              value={filters.pageSize}
+              onChange={(e) => onPageSizeChange(Number(e.target.value))}
+              className={`${INPUT_CLS} py-1`}
+            >
+              {PAGE_SIZE_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onPageChange(1)}
+            disabled={page <= 1}
+            className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
+          >
+            «
+          </button>
+          <button
+            onClick={() => onPageChange(Math.max(1, page - 1))}
+            disabled={page <= 1}
+            className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
+          >
+            ‹ Prev
+          </button>
+          <span className="text-xs text-muted-foreground">
+            Page {page} of {totalPages}
+          </span>
+          <button
+            onClick={() => onPageChange(Math.min(totalPages, page + 1))}
+            disabled={page >= totalPages}
+            className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
+          >
+            Next ›
+          </button>
+          <button
+            onClick={() => onPageChange(totalPages)}
+            disabled={page >= totalPages}
+            className="rounded-md border border-border bg-background px-2 py-1 text-xs hover:bg-surface disabled:opacity-40"
+          >
+            »
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function SubmissionDialog({
+  submission,
+  userId,
+  onClose,
+  onDelete,
+}: {
+  submission: Submission;
+  userId: string;
+  onClose: () => void;
+  onDelete: () => void;
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <button
+        type="button"
+        aria-label="Close dialog"
+        onClick={onClose}
+        className="absolute inset-0 bg-black/60"
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="submission-dialog-title"
+        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-background p-6 shadow-xl"
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 id="submission-dialog-title" className="text-lg font-semibold text-foreground">
+              {submission.name}
+            </h2>
+            <a
+              href={`mailto:${submission.email}`}
+              className="text-sm text-muted-foreground hover:text-foreground hover:underline"
+            >
+              {submission.email}
+            </a>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {new Date(submission.created_at).toLocaleString()}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="rounded-md p-1 text-muted-foreground hover:bg-surface hover:text-foreground"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <p className="mt-4 whitespace-pre-wrap rounded-lg border border-border bg-surface p-4 text-sm text-foreground">
+          {submission.message}
+        </p>
+
+        <Suspense fallback={<p className="mt-6 text-xs text-muted-foreground">Loading replies…</p>}>
+          <RepliesPanel submission={submission} userId={userId} onDelete={onDelete} />
+        </Suspense>
+      </div>
+    </div>
+  );
+}
+
+function RepliesPanel({
+  submission,
+  userId,
+  onDelete,
+}: {
+  submission: Submission;
+  userId: string;
+  onDelete: () => void;
+}) {
+  const queryClient = useQueryClient();
+  const { data: replies } = useSuspenseQuery(repliesQueryOptions(submission.id));
+  const [body, setBody] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const addReply = useMutation({
+    mutationFn: async (text: string) => {
+      const { data, error: dbError } = await supabase
+        .from("submission_replies")
+        .insert({ submission_id: submission.id, admin_user_id: userId, body: text })
+        .select()
+        .single();
+      if (dbError) throw dbError;
+      return data as Reply;
+    },
+    onSuccess: (newReply) => {
+      queryClient.setQueryData(
+        repliesQueryOptions(submission.id).queryKey,
+        (prev: Reply[] | undefined) => [...(prev ?? []), newReply],
+      );
+      setBody("");
+      textareaRef.current?.focus();
+    },
+    onError: (e) => setError(e instanceof Error ? e.message : "Save failed"),
+  });
+
+  const deleteReply = useMutation({
+    mutationFn: async (id: string) => {
+      const { error: dbError } = await supabase.from("submission_replies").delete().eq("id", id);
+      if (dbError) throw dbError;
+      return id;
+    },
+    onSuccess: (id) => {
+      queryClient.setQueryData(
+        repliesQueryOptions(submission.id).queryKey,
+        (prev: Reply[] | undefined) => (prev ?? []).filter((r) => r.id !== id),
+      );
+    },
+    onError: (e) => alert(e instanceof Error ? e.message : "Delete failed"),
+  });
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = body.trim();
+    if (trimmed.length < 1) return;
+    setError(null);
+    addReply.mutate(trimmed);
+  }
+
+  function handleDeleteReply(id: string) {
+    if (!confirm("Delete this reply?")) return;
+    deleteReply.mutate(id);
+  }
+
+  return (
+    <>
+      <div className="mt-6">
+        <h3 className="mb-2 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+          Replies {replies.length > 0 && `(${replies.length})`}
+        </h3>
+        {replies.length === 0 ? (
+          <p className="text-xs text-muted-foreground">No replies yet.</p>
+        ) : (
+          <ul className="space-y-2">
+            {replies.map((r) => (
+              <li key={r.id} className="rounded-lg border border-border bg-surface/50 p-3 text-sm">
+                <div className="mb-1 flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                  <span>{new Date(r.created_at).toLocaleString()}</span>
+                  <button
+                    onClick={() => handleDeleteReply(r.id)}
+                    className="text-destructive hover:underline"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <p className="whitespace-pre-wrap text-foreground">{r.body}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <form onSubmit={handleSubmit} className="mt-4 space-y-2">
+        <label
+          htmlFor="reply-body"
+          className="block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+        >
+          Add a reply
+        </label>
+        <textarea
+          ref={textareaRef}
+          id="reply-body"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          rows={3}
+          maxLength={5000}
+          placeholder="Write your reply…"
+          className={`${INPUT_CLS} w-full resize-y`}
+          disabled={addReply.isPending}
+        />
+        {error && (
+          <p role="alert" className="text-xs text-destructive">
+            {error}
+          </p>
+        )}
+        <div className="flex justify-end gap-2">
+          <a
+            href={`mailto:${submission.email}?subject=Re: your message&body=${encodeURIComponent(body)}`}
+            className="rounded-lg border border-border bg-background px-4 py-2 text-xs font-semibold text-foreground hover:bg-surface"
+          >
+            Open in email
+          </a>
+          <button
+            type="submit"
+            disabled={addReply.isPending || body.trim().length === 0}
+            className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground disabled:opacity-60"
+          >
+            {addReply.isPending ? "Saving…" : "Save reply"}
+          </button>
+          <button
+            type="button"
+            onClick={onDelete}
+            className="rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-2 text-xs font-semibold text-destructive hover:bg-destructive/20"
+          >
+            Delete submission
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
