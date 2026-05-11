@@ -16,6 +16,12 @@ dist-ssr
 .nitro
 *.local
 
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+
+# Cursor IDE hook state (per-machine)
+.cursor/hooks/state/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
