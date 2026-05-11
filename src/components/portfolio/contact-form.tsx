@@ -3,9 +3,21 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 
 const schema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Enter a valid email").max(255, "Email must be less than 255 characters"),
-  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters"),
+  name: z
+    .string()
+    .trim()
+    .min(1, "Name is required")
+    .max(100, "Name must be less than 100 characters"),
+  email: z
+    .string()
+    .trim()
+    .email("Enter a valid email")
+    .max(255, "Email must be less than 255 characters"),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Message must be at least 10 characters")
+    .max(1000, "Message must be less than 1000 characters"),
 });
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
@@ -82,7 +94,8 @@ export function ContactForm() {
         <div>
           <h3 className="text-lg font-semibold text-foreground">Message sent</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Thanks, {values.name.split(" ")[0]}. I&apos;ll get back to you at {values.email} shortly.
+            Thanks, {values.name.split(" ")[0]}. I&apos;ll get back to you at {values.email}{" "}
+            shortly.
           </p>
         </div>
         <button
@@ -112,7 +125,10 @@ export function ContactForm() {
       className="flex flex-col gap-4 rounded-xl border border-border bg-background p-6"
     >
       {/* Honeypot — hidden from real users, irresistible to bots. */}
-      <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+      >
         <label htmlFor="cf-website">Website (leave blank)</label>
         <input
           id="cf-website"
@@ -126,7 +142,10 @@ export function ContactForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="cf-name" className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+        <label
+          htmlFor="cf-name"
+          className="text-xs font-mono uppercase tracking-wider text-muted-foreground"
+        >
           Name
         </label>
         <input
@@ -149,7 +168,10 @@ export function ContactForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="cf-email" className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+        <label
+          htmlFor="cf-email"
+          className="text-xs font-mono uppercase tracking-wider text-muted-foreground"
+        >
           Email
         </label>
         <input
@@ -174,7 +196,10 @@ export function ContactForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="cf-message" className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+        <label
+          htmlFor="cf-message"
+          className="text-xs font-mono uppercase tracking-wider text-muted-foreground"
+        >
           Message
         </label>
         <textarea
@@ -186,7 +211,7 @@ export function ContactForm() {
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "cf-message-err" : "cf-message-hint"}
           className={`${inputBase} resize-y ${errors.message ? "border-destructive" : "border-border"}`}
-          placeholder="Tell me about the role, team, or problem you&apos;re working on…"
+          placeholder="Tell me about the role, team, or problem you're working on…"
           maxLength={1000}
         />
         {errors.message ? (

@@ -5,7 +5,7 @@ export function Hero() {
       <div className="container-x relative">
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <span className="chip">
-          <span className="pill-dot animate-float-glow" />
+            <span className="pill-dot animate-float-glow" />
             Remote
           </span>
           <span className="chip font-mono">15+ yrs frontend</span>
@@ -15,18 +15,16 @@ export function Hero() {
         </div>
 
         <h1 className="mt-6 text-balance text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
-          Building the bridge between{" "}
-          <span className="text-gradient">design systems</span> and{" "}
+          Building the bridge between <span className="text-gradient">design systems</span> and{" "}
           <span className="text-gradient">AI-native</span> developer tooling.
         </h1>
 
         <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
           I&apos;m <span className="text-foreground font-medium">Rich Tillman</span> — Principal
           Frontend Engineer &amp; Engineering Director. I architect{" "}
-          <span className="text-foreground font-medium">enterprise-scale</span> React
-          platforms, Nx monorepos, and 0→1 SaaS products — and the design systems
-          (Storybook + React + Figma since 2016) that keep design, product, and
-          engineering shipping in lockstep.
+          <span className="text-foreground font-medium">enterprise-scale</span> React platforms, Nx
+          monorepos, and 0→1 SaaS products — and the design systems (Storybook + React + Figma since
+          2016) that keep design, product, and engineering shipping in lockstep.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -35,8 +33,20 @@ export function Hero() {
             className="group inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--glow-primary)] transition-transform hover:-translate-y-0.5"
           >
             See selected work
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-0.5">
-              <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="transition-transform group-hover:translate-x-0.5"
+            >
+              <path
+                d="M5 12h14M13 5l7 7-7 7"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
           <a

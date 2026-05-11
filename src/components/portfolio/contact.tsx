@@ -14,13 +14,19 @@ export function Contact() {
     <section id="contact" className="relative py-24 md:py-32">
       <div className="container-x">
         <div className="card-elevated relative overflow-hidden p-8 md:p-14">
-          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl" aria-hidden />
-          <div className="absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-accent/15 blur-3xl" aria-hidden />
+          <div
+            className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-accent/15 blur-3xl"
+            aria-hidden
+          />
 
           <div className="relative grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-end">
             <div>
               <SectionHeading
-                eyebrow="Let&apos;s build"
+                eyebrow="Let's build"
                 title="Open to Staff, Principal, and Director roles in AI dev tooling, design systems, or platform frontend."
                 description="Fully remote. Happiest where engineering excellence and design rigor meet — and where the team treats AI tooling as leverage, not a gimmick."
               />
@@ -43,9 +49,7 @@ export function Contact() {
                       <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
                         {l.label}
                       </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {l.value} ↗
-                      </span>
+                      <span className="text-sm font-medium text-foreground">{l.value} ↗</span>
                     </a>
                   </li>
                 ))}

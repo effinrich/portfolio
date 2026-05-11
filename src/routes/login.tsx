@@ -5,10 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/login")({
   component: LoginPage,
   head: () => ({
-    meta: [
-      { title: "Sign in — Admin" },
-      { name: "robots", content: "noindex" },
-    ],
+    meta: [{ title: "Sign in — Admin" }, { name: "robots", content: "noindex" }],
   }),
 });
 
@@ -57,20 +54,24 @@ function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
-        <Link to="/" className="text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground">
+        <Link
+          to="/"
+          className="text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground"
+        >
           ← Back to site
         </Link>
         <div className="mt-4 rounded-xl border border-border bg-surface p-8">
           <h1 className="text-2xl font-semibold text-foreground">
             {mode === "signin" ? "Sign in" : "Create account"}
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Admin access to contact submissions.
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Admin access to contact submissions.</p>
 
           <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+              <label
+                htmlFor="email"
+                className="text-xs font-mono uppercase tracking-wider text-muted-foreground"
+              >
                 Email
               </label>
               <input
@@ -84,7 +85,10 @@ function LoginPage() {
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="password" className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+              <label
+                htmlFor="password"
+                className="text-xs font-mono uppercase tracking-wider text-muted-foreground"
+              >
                 Password
               </label>
               <input
@@ -99,7 +103,11 @@ function LoginPage() {
               />
             </div>
 
-            {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
+            {error && (
+              <p role="alert" className="text-sm text-destructive">
+                {error}
+              </p>
+            )}
             {info && <p className="text-sm text-primary">{info}</p>}
 
             <button

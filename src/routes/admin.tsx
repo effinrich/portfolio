@@ -5,10 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
   head: () => ({
-    meta: [
-      { title: "Admin — Contact Submissions" },
-      { name: "robots", content: "noindex" },
-    ],
+    meta: [{ title: "Admin — Contact Submissions" }, { name: "robots", content: "noindex" }],
   }),
 });
 
@@ -93,7 +90,7 @@ function AdminPage() {
     setAuth(
       isAdmin
         ? { status: "admin", email: session.user.email ?? "" }
-        : { status: "not-admin", email: session.user.email ?? "" }
+        : { status: "not-admin", email: session.user.email ?? "" },
     );
     return isAdmin;
   }, []);
@@ -164,7 +161,7 @@ function AdminPage() {
             setSelected((cur) => (cur?.id === old.id ? null : cur));
           }
           loadSubmissions();
-        }
+        },
       )
       .subscribe();
     return () => {
@@ -273,7 +270,7 @@ function AdminPage() {
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
   const hasFilters = useMemo(
     () => Boolean(debouncedQuery || dateFrom || dateTo || searchField !== "all"),
-    [debouncedQuery, dateFrom, dateTo, searchField]
+    [debouncedQuery, dateFrom, dateTo, searchField],
   );
   const rangeStart = totalCount === 0 ? 0 : (page - 1) * pageSize + 1;
   const rangeEnd = Math.min(page * pageSize, totalCount);
@@ -311,8 +308,8 @@ function AdminPage() {
         <div className="max-w-md text-center">
           <h1 className="text-xl font-semibold text-foreground">Not authorized</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            You're signed in as <span className="text-foreground">{auth.email}</span>, but this account
-            doesn't have admin access.
+            You're signed in as <span className="text-foreground">{auth.email}</span>, but this
+            account doesn't have admin access.
           </p>
           <button
             onClick={handleSignOut}
@@ -336,7 +333,10 @@ function AdminPage() {
       <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <div className="flex items-center gap-3">
-            <Link to="/" className="text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground">
+            <Link
+              to="/"
+              className="text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground"
+            >
               ← Site
             </Link>
             <span className="text-sm font-semibold">Contact submissions</span>
@@ -360,10 +360,14 @@ function AdminPage() {
         {/* Filter bar */}
         <div className="mb-4 grid grid-cols-1 gap-3 rounded-xl border border-border bg-surface/30 p-4 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-search"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               Search
             </label>
             <input
+              id="admin-search"
               type="search"
               placeholder="Search…"
               value={query}
@@ -372,10 +376,14 @@ function AdminPage() {
             />
           </div>
           <div className="lg:col-span-2">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-search-field"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               Field
             </label>
             <select
+              id="admin-search-field"
               value={searchField}
               onChange={(e) => setSearchField(e.target.value as typeof searchField)}
               className={`${inputCls} w-full`}
@@ -386,10 +394,14 @@ function AdminPage() {
             </select>
           </div>
           <div className="lg:col-span-2">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-date-from"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               From
             </label>
             <input
+              id="admin-date-from"
               type="date"
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
@@ -397,10 +409,14 @@ function AdminPage() {
             />
           </div>
           <div className="lg:col-span-2">
-            <label className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+            <label
+              htmlFor="admin-date-to"
+              className="mb-1 block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+            >
               To
             </label>
             <input
+              id="admin-date-to"
               type="date"
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
@@ -430,7 +446,10 @@ function AdminPage() {
         </div>
 
         {error && (
-          <p role="alert" className="mb-4 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+          <p
+            role="alert"
+            className="mb-4 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+          >
             {error}
           </p>
         )}
@@ -460,7 +479,10 @@ function AdminPage() {
                   </th>
                   <th className="hidden px-4 py-3 text-left font-medium md:table-cell">Message</th>
                   <th className="px-4 py-3 text-left font-medium">
-                    <button onClick={() => toggleSort("created_at")} className="hover:text-foreground">
+                    <button
+                      onClick={() => toggleSort("created_at")}
+                      className="hover:text-foreground"
+                    >
                       Received{sortIndicator("created_at")}
                     </button>
                   </th>
@@ -472,7 +494,10 @@ function AdminPage() {
                   <tr key={s.id} className="hover:bg-surface/50">
                     <td className="px-4 py-3 font-medium text-foreground">{s.name}</td>
                     <td className="px-4 py-3 text-muted-foreground">
-                      <a href={`mailto:${s.email}`} className="hover:text-foreground hover:underline">
+                      <a
+                        href={`mailto:${s.email}`}
+                        className="hover:text-foreground hover:underline"
+                      >
                         {s.email}
                       </a>
                     </td>
@@ -564,12 +589,18 @@ function AdminPage() {
         <div
           role="dialog"
           aria-modal="true"
+          tabIndex={-1}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           onClick={() => setSelected(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setSelected(null);
+          }}
         >
           <div
+            role="document"
             className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-background p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -628,7 +659,10 @@ function AdminPage() {
             </div>
 
             <form onSubmit={handleSendReply} className="mt-4 space-y-2">
-              <label htmlFor="reply-body" className="block text-xs font-mono uppercase tracking-wider text-muted-foreground">
+              <label
+                htmlFor="reply-body"
+                className="block text-xs font-mono uppercase tracking-wider text-muted-foreground"
+              >
                 Add a reply
               </label>
               <textarea

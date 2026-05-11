@@ -3,7 +3,14 @@ import { SectionHeading } from "./section-heading";
 const groups = [
   {
     label: "Frontend",
-    items: ["React 18+", "TypeScript (strict)", "Next.js", "TanStack Start", "React Native", "Expo"],
+    items: [
+      "React 18+",
+      "TypeScript (strict)",
+      "Next.js",
+      "TanStack Start",
+      "React Native",
+      "Expo",
+    ],
   },
   {
     label: "Design Systems",
@@ -15,7 +22,13 @@ const groups = [
   },
   {
     label: "Monorepo & DX",
-    items: ["Nx + Nx Agents", "Turborepo", "pnpm workspaces", "Module Federation", "GitHub Actions"],
+    items: [
+      "Nx + Nx Agents",
+      "Turborepo",
+      "pnpm workspaces",
+      "Module Federation",
+      "GitHub Actions",
+    ],
   },
   {
     label: "Data & State",

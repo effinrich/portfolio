@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within, screen, waitFor } from "storybook/test";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
 const meta: Meta<typeof Tooltip> = {
@@ -38,8 +33,6 @@ export const ShowsOnHover: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.hover(canvas.getByRole("button", { name: /hover me/i }));
-    await waitFor(() =>
-      expect(screen.getAllByText("Add to library").length).toBeGreaterThan(0),
-    );
+    await waitFor(() => expect(screen.getAllByText("Add to library").length).toBeGreaterThan(0));
   },
 };

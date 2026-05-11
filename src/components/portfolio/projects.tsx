@@ -125,7 +125,7 @@ export function Projects() {
       <div className="container-x">
         <SectionHeading
           eyebrow="Selected Projects"
-          title="Tools I&apos;ve shipped that other developers actually install."
+          title="Tools I've shipped that other developers actually install."
           description="Open source MCP servers, CLIs, and product work — built around the workflows I want for myself."
         />
 
