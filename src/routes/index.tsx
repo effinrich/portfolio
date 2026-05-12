@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/portfolio/nav";
 import { Hero } from "@/components/portfolio/hero";
 import { Marquee } from "@/components/portfolio/marquee";
+import { Testimonial } from "@/components/portfolio/testimonial";
 import { Experience } from "@/components/portfolio/experience";
 import { Projects } from "@/components/portfolio/projects";
 import { Stack } from "@/components/portfolio/stack";
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "15+ years shipping React UI platforms, design systems, and AI developer tooling. Creator of ForgeKit MCP servers (5,703+ installs).",
+          "Shipping React UI platforms, design systems, and AI developer tooling. Creator of ForgeKit MCP servers (5,703+ installs).",
       },
     ],
   }),
@@ -34,6 +35,7 @@ function Index() {
       <main>
         <Hero />
         <Marquee />
+        <Testimonial />
         <Experience />
         <Projects />
         <Stack />

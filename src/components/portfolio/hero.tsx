@@ -8,8 +8,8 @@ export function Hero() {
             <span className="pill-dot animate-float-glow" />
             Remote
           </span>
-          <span className="chip font-mono">15+ yrs frontend</span>
-          <span className="chip font-mono">Design systems since 2016</span>
+          <span className="chip font-mono">React + TypeScript</span>
+          <span className="chip font-mono">Storybook · Chromatic</span>
           <span className="chip font-mono">Nx monorepos at scale</span>
           <span className="chip font-mono">5,703+ npm installs</span>
         </div>
@@ -21,10 +21,10 @@ export function Hero() {
 
         <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
           I&apos;m <span className="text-foreground font-medium">Rich Tillman</span> — Principal
-          Frontend Engineer &amp; Engineering Director. I architect{" "}
+          Frontend Engineer. I architect{" "}
           <span className="text-foreground font-medium">enterprise-scale</span> React platforms, Nx
-          monorepos, and 0→1 SaaS products — and the design systems (Storybook + React + Figma since
-          2016) that keep design, product, and engineering shipping in lockstep.
+          monorepos, and 0→1 SaaS products — and the design systems (Storybook + React + Figma) that
+          keep design, product, and engineering shipping in lockstep.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
