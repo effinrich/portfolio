@@ -10,7 +10,7 @@ Personal portfolio site. Public portfolio at `/`, authenticated admin inbox at `
 - **Styling:** Tailwind v4
 - **Data:** Supabase (Postgres, RLS, Realtime)
 - **Runtime:** Cloudflare Workers via Wrangler
-- **Tooling:** Bun, oxlint, oxfmt, lefthook, Storybook 8
+- **Tooling:** Bun, oxlint, oxfmt, lefthook, Storybook 10+
 - **Language:** TypeScript (strict)
 
 ## Architecture
