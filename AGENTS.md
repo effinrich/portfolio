@@ -9,11 +9,12 @@ Conventions for AI agents (and humans) working in this repo. Keep this file shor
 - **Formatter**: [oxfmt](https://oxc.rs/docs/guide/usage/formatter) via `.oxfmtrc.json`.
 - **Git hooks**: [lefthook](https://lefthook.dev) via `lefthook.yml`.
 - **Library bundler**: [tsdown](https://tsdown.dev) via `tsdown.config.ts` (app itself still builds with Vite for the Cloudflare Worker target).
+- **Deployment**: [Cloudflare Workers](https://developers.cloudflare.com/workers/) via [Wrangler](https://developers.cloudflare.com/workers/wrangler/) — `wrangler.jsonc` points at `src/server.ts` as the Worker entry. **Not Vercel** — skip Vercel-specific CLI / CI/CD guidance.
 
 ## Hard rules
 
 - **NEVER** reintroduce ESLint, Prettier, Husky, or lint-staged. They were removed deliberately. No `eslint.config.*`, `.prettierrc*`, `.husky/`, or `lint-staged` config in `package.json`.
-- **NEVER** edit `src/routeTree.gen.ts`, `src/integrations/supabase/client.ts`, `src/integrations/supabase/types.ts`, or `.env`.
+- **NEVER** edit `src/routeTree.gen.ts`, `src/integrations/supabase/client.ts`, `src/integrations/supabase/client.server.ts`, `src/integrations/supabase/types.ts`, or `.env` — all carry generated-file headers.
 - **NEVER** rename `.env.example` back to `.env copy`.
 - **NEVER** downgrade TypeScript below 6.x or remove the `@codecompose/typescript-config` extends.
 
@@ -51,10 +52,21 @@ Don't run `npm run build` / `tsc` manually — the harness runs builds automatic
 ## TypeScript
 
 - Strict base from codecompose. Local overrides in `tsconfig.json` are intentional; touch only with reason:
-  - `verbatimModuleSyntax: false` — keeps existing `import` style working.
-  - `noUncheckedIndexedAccess: false` — opt-in later, file-by-file.
-  - `moduleResolution: "Bundler"` — required for Vite + path aliases.
+- `verbatimModuleSyntax: false` — keeps existing `import` style working.
+- `noUncheckedIndexedAccess: false` — opt-in later, file-by-file.
+- `moduleResolution: "Bundler"` — required for Vite + path aliases.
 - New code should aim to be clean under stricter settings even though they're disabled globally.
+
+## Data fetching & React 19
+
+The app runs React 19 + TanStack Router + TanStack Query. New code follows these patterns — don't reintroduce `useState + useEffect + fetch` chains.
+
+- Reads: route `loader` calls `context.queryClient.ensureQueryData(...)`; components call `useSuspenseQuery` inside `<Suspense>` boundaries.
+- Writes: `useMutation` (use `isPending` / `error` / `setQueryData` / `invalidateQueries`). Don't hand-roll `loading` / `error` state machines.
+- Auth-gated routes: redirect in `beforeLoad` (`throw redirect({ to: "..." })`), not in a `useEffect` after render — avoids flashing the wrong view.
+- Input debouncing: `useDeferredValue`, not `setTimeout`.
+- `use(promise)` / `use(context)` unwrap values during render; **not** a replacement for `useEffect`. True side effects (subscriptions, logging, DOM sync) still belong in `useEffect`.
+- Realtime / external subscriptions: a `useEffect` that subscribes once and calls `queryClient.invalidateQueries(...)` on event — never re-subscribe on filter/state changes.
 
 ## Enforcement & DX
 

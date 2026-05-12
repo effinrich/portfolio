@@ -12,21 +12,12 @@ const roles = [
   },
   {
     company: "micro1",
-    role: "Senior Frontend & AI Expert",
+    role: "Senior Frontend Engineer · AI Training & Evals",
     period: "Nov 2025 — Jan 2026",
     location: "Remote · Contract",
     blurb:
       "Designed evaluation prompts and UI for AI coding agents. Advised eng teams on Claude Code & Cursor adoption in production.",
     tags: ["TanStack Start", "Chakra UI", "Prompt Eng"],
-  },
-  {
-    company: "Verizon",
-    role: "Principal Engineer",
-    period: "Sep 2024 — Apr 2025",
-    location: "Remote · Contract",
-    blurb:
-      "Enterprise greenfield build for Boston College on an Nx monorepo with Ark UI MCP, Storybook a11y enforced in CI, and a typed PostgreSQL data layer shared across apps.",
-    tags: ["Enterprise", "Nx", "Ark UI MCP", "PostgreSQL", "a11y"],
   },
   {
     company: "Redesign Health",
@@ -64,15 +55,6 @@ const roles = [
       "Built one of the earliest production React design systems on Storybook (2016) — a 200-component library spanning B2B, B2C, and React Native. Pioneered Storybook + React + Figma as a shared source of truth for design, product, and engineering well before Code Connect existed.",
     tags: ["Design System (2016)", "Storybook", "React Native", "Figma"],
   },
-  {
-    company: "FaceCake Marketing Tech",
-    role: "Lead Web Developer",
-    period: "Oct 2010 — Sep 2016",
-    location: "Los Angeles, CA",
-    blurb:
-      "Pioneered browser-based AR with computer vision in JavaScript. NARS try-on app drove $400K/mo revenue lift across enterprise beauty partners.",
-    tags: ["WebAR", "JavaScript", "Enterprise"],
-  },
 ];
 
 export function Experience() {
@@ -81,8 +63,8 @@ export function Experience() {
       <div className="container-x">
         <SectionHeading
           eyebrow="Experience"
-          title="A 15-year arc through frontend, design systems, and AI tooling."
-          description="From early WebAR experiments to leading orgs and shipping MCP servers — each role traded velocity, scale, and depth in different combinations."
+          title="Frontend, design systems, and AI-native tooling."
+          description="Each role traded velocity, scale, and depth in different combinations — from 0→1 design systems to shipping MCP servers used in production by external teams."
         />
 
         <ol className="relative space-y-4">

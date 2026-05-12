@@ -27,7 +27,7 @@ export function Contact() {
             <div>
               <SectionHeading
                 eyebrow="Let's build"
-                title="Open to Staff, Principal, and Director roles in AI dev tooling, design systems, or platform frontend."
+                title="Open to Staff and Principal roles in AI developer tooling, design systems, or platform frontend."
                 description="Fully remote. Happiest where engineering excellence and design rigor meet — and where the team treats AI tooling as leverage, not a gimmick."
               />
               <a
