@@ -1,5 +1,5 @@
-import { SectionHeading } from "./section-heading";
-import { ContactForm } from "./contact-form";
+import { SectionHeading } from "./section-heading"
+import { ContactForm } from "./contact-form"
 
 const links = [
   { label: "Email", value: "richtillman@pm.me", href: "mailto:richtillman@pm.me" },
@@ -7,7 +7,7 @@ const links = [
   { label: "LinkedIn", value: "in/effinrich", href: "https://linkedin.com/in/effinrich" },
   { label: "npm", value: "~effinrich", href: "https://npmjs.com/~effinrich" },
   { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" },
-];
+]
 
 export function Contact() {
   return (
@@ -66,5 +66,5 @@ export function Contact() {
         </footer>
       </div>
     </section>
-  );
+  )
 }

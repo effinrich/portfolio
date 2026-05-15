@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
-import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
+import { useRef, useState } from "react"
+import { z } from "zod"
+import { supabase } from "@/integrations/supabase/client"
 
 const schema = z.object({
   name: z
@@ -18,73 +18,72 @@ const schema = z.object({
     .trim()
     .min(10, "Message must be at least 10 characters")
     .max(1000, "Message must be less than 1000 characters"),
-});
+})
 
-type Errors = Partial<Record<"name" | "email" | "message", string>>;
+type Errors = Partial<Record<"name" | "email" | "message", string>>
 
 // Bots typically submit forms in well under a second.
-const MIN_SUBMIT_MS = 1500;
+const MIN_SUBMIT_MS = 1500
 
 export function ContactForm() {
-  const [values, setValues] = useState({ name: "", email: "", message: "" });
-  const [website, setWebsite] = useState(""); // honeypot — must stay empty
-  const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
-  const [formError, setFormError] = useState<string | null>(null);
-  const mountedAt = useRef<number>(Date.now());
+  const [values, setValues] = useState({ name: "", email: "", message: "" })
+  const [website, setWebsite] = useState("") // honeypot — must stay empty
+  const [errors, setErrors] = useState<Errors>({})
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle")
+  const [formError, setFormError] = useState<string | null>(null)
+  const mountedAt = useRef<number>(Date.now())
 
   function update<K extends keyof typeof values>(key: K, value: string) {
-    setValues((v) => ({ ...v, [key]: value }));
-    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
+    setValues((v) => ({ ...v, [key]: value }))
+    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }))
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setFormError(null);
+    e.preventDefault()
+    setFormError(null)
 
     // Spam check 1: honeypot field. Real users can't see it; bots fill every input.
     if (website.trim() !== "") {
       // Pretend success so bots don't retry, but don't actually do anything.
-      setStatus("success");
-      return;
+      setStatus("success")
+      return
     }
 
     // Spam check 2: minimum time-to-submit.
     if (Date.now() - mountedAt.current < MIN_SUBMIT_MS) {
-      setFormError("Submission looked automated. Please try again in a moment.");
-      return;
+      setFormError("Submission looked automated. Please try again in a moment.")
+      return
     }
 
-    const result = schema.safeParse(values);
+    const result = schema.safeParse(values)
     if (!result.success) {
-      const next: Errors = {};
+      const next: Errors = {}
       for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof Errors;
-        if (!next[key]) next[key] = issue.message;
+        const key = issue.path[0] as keyof Errors
+        if (!next[key]) next[key] = issue.message
       }
-      setErrors(next);
-      const firstKey = (["name", "email", "message"] as const).find((k) => next[k]);
-      if (firstKey) document.getElementById(`cf-${firstKey}`)?.focus();
-      return;
+      setErrors(next)
+      const firstKey = (["name", "email", "message"] as const).find((k) => next[k])
+      if (firstKey) document.getElementById(`cf-${firstKey}`)?.focus()
+      return
     }
-    setStatus("submitting");
+    setStatus("submitting")
     const { error } = await supabase.from("contact_submissions").insert({
       name: result.data.name,
       email: result.data.email,
       message: result.data.message,
-    });
+    })
     if (error) {
-      setFormError("Something went wrong sending your message. Please try again.");
-      setStatus("idle");
-      return;
+      setFormError("Something went wrong sending your message. Please try again.")
+      setStatus("idle")
+      return
     }
-    setStatus("success");
+    setStatus("success")
   }
 
   if (status === "success") {
     return (
-      <div
-        role="status"
+      <output
         aria-live="polite"
         className="flex h-full flex-col items-start justify-center gap-4 rounded-xl border border-border bg-background p-6"
       >
@@ -101,22 +100,22 @@ export function ContactForm() {
         <button
           type="button"
           onClick={() => {
-            setValues({ name: "", email: "", message: "" });
-            setWebsite("");
-            setFormError(null);
-            mountedAt.current = Date.now();
-            setStatus("idle");
+            setValues({ name: "", email: "", message: "" })
+            setWebsite("")
+            setFormError(null)
+            mountedAt.current = Date.now()
+            setStatus("idle")
           }}
           className="text-sm font-medium text-primary hover:underline"
         >
           Send another message
         </button>
-      </div>
-    );
+      </output>
+    )
   }
 
   const inputBase =
-    "w-full rounded-lg border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors";
+    "w-full rounded-lg border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors"
 
   return (
     <form
@@ -246,5 +245,5 @@ export function ContactForm() {
         )}
       </button>
     </form>
-  );
+  )
 }

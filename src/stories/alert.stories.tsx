@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Terminal, AlertTriangle } from "lucide-react";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, within } from "storybook/test"
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+import { Terminal, AlertTriangle } from "lucide-react"
 
 const meta: Meta<typeof Alert> = {
   title: "UI/Alert",
@@ -11,9 +11,9 @@ const meta: Meta<typeof Alert> = {
   argTypes: {
     variant: { control: "radio", options: ["default", "destructive"] },
   },
-};
-export default meta;
-type Story = StoryObj<typeof Alert>;
+}
+export default meta
+type Story = StoryObj<typeof Alert>
 
 export const Default: Story = {
   render: (args) => (
@@ -24,10 +24,10 @@ export const Default: Story = {
     </Alert>
   ),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByText("Heads up!")).toBeInTheDocument();
+    const canvas = within(canvasElement)
+    await expect(canvas.getByText("Heads up!")).toBeInTheDocument()
   },
-};
+}
 
 export const Destructive: Story = {
   args: { variant: "destructive" },
@@ -38,4 +38,4 @@ export const Destructive: Story = {
       <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
     </Alert>
   ),
-};
+}

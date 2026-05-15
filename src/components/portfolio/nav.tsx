@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 const links = [
   { href: "#work", label: "Work" },
   { href: "#projects", label: "Projects" },
   { href: "#stack", label: "Stack" },
   { href: "#contact", label: "Contact" },
-];
+]
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   return (
     <header
@@ -55,5 +55,5 @@ export function Nav() {
         </a>
       </nav>
     </header>
-  );
+  )
 }

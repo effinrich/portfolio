@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
   Outlet,
   Link,
@@ -7,9 +7,9 @@ import {
   useRouter,
   HeadContent,
   Scripts,
-} from "@tanstack/react-router";
+} from "@tanstack/react-router"
 
-import appCss from "../styles.css?url";
+import appCss from "../styles.css?url"
 
 function NotFoundComponent() {
   return (
@@ -30,15 +30,15 @@ function NotFoundComponent() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-    console.error(error);
-  }, [error]);
+    console.error(error)
+  }, [error])
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -52,8 +52,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
-              router.invalidate();
-              reset();
+              router.invalidate()
+              reset()
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
@@ -68,7 +68,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
@@ -120,7 +120,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
-});
+})
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
@@ -133,15 +133,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient } = Route.useRouteContext()
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
     </QueryClientProvider>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, within } from "storybook/test"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const meta: Meta<typeof Avatar> = {
   title: "UI/Avatar",
@@ -9,9 +9,9 @@ const meta: Meta<typeof Avatar> = {
   argTypes: {
     className: { control: "text" },
   },
-};
-export default meta;
-type Story = StoryObj<typeof Avatar>;
+}
+export default meta
+type Story = StoryObj<typeof Avatar>
 
 export const Default: Story = {
   render: (args) => (
@@ -20,7 +20,7 @@ export const Default: Story = {
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
   ),
-};
+}
 
 export const FallbackOnly: Story = {
   render: (args) => (
@@ -29,7 +29,7 @@ export const FallbackOnly: Story = {
     </Avatar>
   ),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByText("RT")).toBeInTheDocument();
+    const canvas = within(canvasElement)
+    await expect(canvas.getByText("RT")).toBeInTheDocument()
   },
-};
+}

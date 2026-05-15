@@ -1,23 +1,23 @@
-import { SectionHeading } from "./section-heading";
-import figmaMcpImg from "@/assets/project-figma-mcp.jpg";
-import storybookMcpImg from "@/assets/project-storybook-mcp.jpg";
-import forgekitCliImg from "@/assets/project-forgekit-cli.jpg";
-import tidyAppImg from "@/assets/project-tidy-app.jpg";
+import { SectionHeading } from "./section-heading"
+import figmaMcpImg from "@/assets/project-figma-mcp.jpg"
+import storybookMcpImg from "@/assets/project-storybook-mcp.jpg"
+import forgekitCliImg from "@/assets/project-forgekit-cli.jpg"
+import tidyAppImg from "@/assets/project-tidy-app.jpg"
 
-type Accent = "primary" | "accent";
+type Accent = "primary" | "accent"
 
 type Project = {
-  title: string;
-  tag: string;
-  desc: string;
-  metric: string;
-  href: string;
-  cta: string;
-  accent: Accent;
-  image: string;
-  imageAlt: string;
-  badge?: string;
-};
+  title: string
+  tag: string
+  desc: string
+  metric: string
+  href: string
+  cta: string
+  accent: Accent
+  image: string
+  imageAlt: string
+  badge?: string
+}
 
 const projects: Project[] = [
   {
@@ -65,7 +65,7 @@ const projects: Project[] = [
     image: tidyAppImg,
     imageAlt: "Tidy iOS app showing task list and calendar views on two iPhones.",
   },
-];
+]
 
 function ArrowIcon() {
   return (
@@ -85,7 +85,7 @@ function ArrowIcon() {
         strokeLinejoin="round"
       />
     </svg>
-  );
+  )
 }
 
 function ProjectMedia({
@@ -94,10 +94,10 @@ function ProjectMedia({
   accent,
   priority = false,
 }: {
-  src: string;
-  alt: string;
-  accent: Accent;
-  priority?: boolean;
+  src: string
+  alt: string
+  accent: Accent
+  priority?: boolean
 }) {
   return (
     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-border bg-muted/30">
@@ -116,7 +116,7 @@ function ProjectMedia({
         aria-hidden
       />
     </div>
-  );
+  )
 }
 
 export function Projects() {
@@ -172,5 +172,5 @@ export function Projects() {
         </div>
       </div>
     </section>
-  );
+  )
 }

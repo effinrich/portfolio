@@ -83,5 +83,5 @@ export function Hero() {
         </dl>
       </div>
     </section>
-  );
+  )
 }

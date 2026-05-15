@@ -1,12 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Nav } from "@/components/portfolio/nav";
-import { Hero } from "@/components/portfolio/hero";
-import { Marquee } from "@/components/portfolio/marquee";
-import { Testimonial } from "@/components/portfolio/testimonial";
-import { Experience } from "@/components/portfolio/experience";
-import { Projects } from "@/components/portfolio/projects";
-import { Stack } from "@/components/portfolio/stack";
-import { Contact } from "@/components/portfolio/contact";
+import { createFileRoute } from "@tanstack/react-router"
+import { Nav } from "@/components/portfolio/nav"
+import { Hero } from "@/components/portfolio/hero"
+import { Marquee } from "@/components/portfolio/marquee"
+import { Testimonial } from "@/components/portfolio/testimonial"
+import { Experience } from "@/components/portfolio/experience"
+import { Projects } from "@/components/portfolio/projects"
+import { Stack } from "@/components/portfolio/stack"
+import { Contact } from "@/components/portfolio/contact"
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-});
+})
 
 function Index() {
   return (
@@ -42,5 +42,5 @@ function Index() {
         <Contact />
       </main>
     </div>
-  );
+  )
 }

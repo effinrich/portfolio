@@ -1,4 +1,4 @@
-import { defineConfig } from "tsdown";
+import { defineConfig } from "tsdown"
 
 /**
  * tsdown — https://tsdown.dev
@@ -16,4 +16,4 @@ export default defineConfig({
   sourcemap: true,
   target: "es2022",
   outDir: "dist",
-});
+})
