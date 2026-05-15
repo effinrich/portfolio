@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Slider } from "@/components/ui/slider";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { Slider } from "@/components/ui/slider"
 
 const meta: Meta<typeof Slider> = {
   title: "UI/Slider",
@@ -12,9 +12,9 @@ const meta: Meta<typeof Slider> = {
     disabled: { control: "boolean" },
   },
   render: (args) => <Slider {...args} className="w-[300px]" />,
-};
-export default meta;
-type Story = StoryObj<typeof Slider>;
+}
+export default meta
+type Story = StoryObj<typeof Slider>
 
-export const Default: Story = {};
-export const Stepped: Story = { args: { defaultValue: [25], step: 25 } };
+export const Default: Story = {}
+export const Stepped: Story = { args: { defaultValue: [25], step: 25 } }

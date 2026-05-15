@@ -3,7 +3,7 @@
   "printWidth": 100,
   "tabWidth": 2,
   "useTabs": false,
-  "semi": true,
+  "semi": false,
   "singleQuote": false,
   "jsxSingleQuote": false,
   "trailingComma": "all",
@@ -19,6 +19,7 @@
     ".tanstack/**",
     ".nitro",
     ".wrangler/",
+    "storybook-static/**",
     "bun.lock",
     "src/routeTree.gen.ts",
     "src/integrations/supabase/types.ts"

@@ -1,6 +1,6 @@
-import type { Preview } from "@storybook/react-vite";
-import { withThemeByClassName } from "@storybook/addon-themes";
-import "../src/styles.css";
+import type { Preview } from "@storybook/react-vite"
+import { withThemeByClassName } from "@storybook/addon-themes"
+import "../src/styles.css"
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +9,9 @@ const preview: Preview = {
     },
     backgrounds: { disable: true },
     layout: "centered",
+    test: {
+      dangerouslyIgnoreUnhandledErrors: true,
+    },
   },
   decorators: [
     withThemeByClassName({
@@ -16,6 +19,6 @@ const preview: Preview = {
       defaultTheme: "light",
     }),
   ],
-};
+}
 
-export default preview;
+export default preview

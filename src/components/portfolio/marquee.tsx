@@ -22,10 +22,10 @@ const items = [
   "Playwright",
   "Vitest",
   "Supabase",
-];
+]
 
 export function Marquee() {
-  const row = [...items, ...items];
+  const row = [...items, ...items]
   return (
     <section className="border-y border-border bg-surface/40 py-5">
       <div className="ticker overflow-hidden">
@@ -39,5 +39,5 @@ export function Marquee() {
         </ul>
       </div>
     </section>
-  );
+  )
 }

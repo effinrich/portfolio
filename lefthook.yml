@@ -1,11 +1,13 @@
 # Lefthook — https://lefthook.dev
 # Run `bun run prepare` (or `bunx lefthook install`) once after cloning to install hooks.
+# This repo is bun-only (see AGENTS.md). Don't reintroduce an npx fallback —
+# bun's shell trips on multi-line POSIX `if … fi` constructs.
 
 pre-commit:
   parallel: true
   jobs:
     - name: oxlint
-      run: if command -v bun >/dev/null 2>&1; then bun x oxlint --fix {staged_files}; elif command -v npx >/dev/null 2>&1; then npx oxlint --fix {staged_files}; else echo "Neither bun nor npx found" >&2; exit 127; fi
+      run: bunx oxlint --fix {staged_files}
       glob:
         - "*.ts"
         - "*.tsx"
@@ -14,7 +16,7 @@ pre-commit:
       stage_fixed: true
 
     - name: oxfmt
-      run: if command -v bun >/dev/null 2>&1; then bun x oxfmt {staged_files}; elif command -v npx >/dev/null 2>&1; then npx oxfmt {staged_files}; else echo "Neither bun nor npx found" >&2; exit 127; fi
+      run: bunx oxfmt {staged_files}
       glob:
         - "*.ts"
         - "*.tsx"
@@ -28,4 +30,4 @@ pre-commit:
 pre-push:
   jobs:
     - name: typecheck
-      run: if command -v bun >/dev/null 2>&1; then bun x tsc --noEmit; elif command -v npx >/dev/null 2>&1; then npx tsc --noEmit; else echo "Neither bun nor npx found" >&2; exit 127; fi
+      run: bunx tsc --noEmit

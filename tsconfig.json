@@ -4,6 +4,7 @@
     "types": ["vite/client", "node"],
     "rootDir": ".",
     "moduleResolution": "Bundler",
+    "noEmit": true,
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false,
     "noUncheckedIndexedAccess": false,

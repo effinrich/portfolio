@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, within } from "storybook/test"
 import {
   Card,
   CardContent,
@@ -7,17 +7,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 const meta: Meta<typeof Card> = {
   title: "UI/Card",
   component: Card,
   tags: ["autodocs"],
   argTypes: { className: { control: "text" } },
-};
-export default meta;
-type Story = StoryObj<typeof Card>;
+}
+export default meta
+type Story = StoryObj<typeof Card>
 
 export const Default: Story = {
   render: (args) => (
@@ -36,8 +36,8 @@ export const Default: Story = {
     </Card>
   ),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByText("Project")).toBeInTheDocument();
-    await expect(canvas.getByRole("button", { name: /deploy/i })).toBeInTheDocument();
+    const canvas = within(canvasElement)
+    await expect(canvas.getByText("Project")).toBeInTheDocument()
+    await expect(canvas.getByRole("button", { name: /deploy/i })).toBeInTheDocument()
   },
-};
+}

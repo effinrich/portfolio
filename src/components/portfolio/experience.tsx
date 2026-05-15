@@ -1,4 +1,4 @@
-import { SectionHeading } from "./section-heading";
+import { SectionHeading } from "./section-heading"
 
 const roles = [
   {
@@ -55,7 +55,7 @@ const roles = [
       "Built one of the earliest production React design systems on Storybook (2016) — a 200-component library spanning B2B, B2C, and React Native. Pioneered Storybook + React + Figma as a shared source of truth for design, product, and engineering well before Code Connect existed.",
     tags: ["Design System (2016)", "Storybook", "React Native", "Figma"],
   },
-];
+]
 
 export function Experience() {
   return (
@@ -99,5 +99,5 @@ export function Experience() {
         </ol>
       </div>
     </section>
-  );
+  )
 }

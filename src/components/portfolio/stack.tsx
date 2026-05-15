@@ -1,4 +1,4 @@
-import { SectionHeading } from "./section-heading";
+import { SectionHeading } from "./section-heading"
 
 const groups = [
   {
@@ -38,7 +38,7 @@ const groups = [
     label: "Testing & a11y",
     items: ["Vitest", "Jest", "Playwright", "RTL", "Storybook a11y", "WCAG 2.1 AA"],
   },
-];
+]
 
 export function Stack() {
   return (
@@ -69,5 +69,5 @@ export function Stack() {
         </div>
       </div>
     </section>
-  );
+  )
 }

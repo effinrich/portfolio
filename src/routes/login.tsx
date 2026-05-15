@@ -1,28 +1,28 @@
-import { useState } from "react";
-import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
-import { useMutation } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react"
+import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router"
+import { useMutation } from "@tanstack/react-query"
+import { supabase } from "@/integrations/supabase/client"
 
-type Mode = "signin" | "signup";
+type Mode = "signin" | "signup"
 
 export const Route = createFileRoute("/login")({
   beforeLoad: async () => {
     // Already signed in → bounce straight to admin instead of flashing the form.
-    const { data } = await supabase.auth.getSession();
-    if (data.session) throw redirect({ to: "/admin" });
+    const { data } = await supabase.auth.getSession()
+    if (data.session) throw redirect({ to: "/admin" })
   },
   component: LoginPage,
   head: () => ({
     meta: [{ title: "Sign in — Admin" }, { name: "robots", content: "noindex" }],
   }),
-});
+})
 
 function LoginPage() {
-  const navigate = useNavigate();
-  const [mode, setMode] = useState<Mode>("signin");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [info, setInfo] = useState<string | null>(null);
+  const navigate = useNavigate()
+  const [mode, setMode] = useState<Mode>("signin")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [info, setInfo] = useState<string | null>(null)
 
   const authMutation = useMutation({
     mutationFn: async (m: Mode) => {
@@ -31,32 +31,32 @@ function LoginPage() {
           email,
           password,
           options: { emailRedirectTo: `${window.location.origin}/admin` },
-        });
-        if (authError) throw authError;
-        return { kind: "signup" } as const;
+        })
+        if (authError) throw authError
+        return { kind: "signup" } as const
       }
       const { error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
-      });
-      if (authError) throw authError;
-      return { kind: "signin" } as const;
+      })
+      if (authError) throw authError
+      return { kind: "signin" } as const
     },
     onSuccess: (result) => {
       if (result.kind === "signup") {
-        setInfo("Check your email to confirm your account, then sign in.");
-        setMode("signin");
+        setInfo("Check your email to confirm your account, then sign in.")
+        setMode("signin")
       } else {
-        navigate({ to: "/admin" });
+        navigate({ to: "/admin" })
       }
     },
-  });
+  })
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setInfo(null);
-    authMutation.reset();
-    authMutation.mutate(mode);
+    e.preventDefault()
+    setInfo(null)
+    authMutation.reset()
+    authMutation.mutate(mode)
   }
 
   const errorMessage =
@@ -64,7 +64,7 @@ function LoginPage() {
       ? authMutation.error.message
       : authMutation.error
         ? "Something went wrong"
-        : null;
+        : null
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -140,9 +140,9 @@ function LoginPage() {
             <button
               type="button"
               onClick={() => {
-                setMode(mode === "signin" ? "signup" : "signin");
-                setInfo(null);
-                authMutation.reset();
+                setMode(mode === "signin" ? "signup" : "signin")
+                setInfo(null)
+                authMutation.reset()
               }}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
@@ -152,5 +152,5 @@ function LoginPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

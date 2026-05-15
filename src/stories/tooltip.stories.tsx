@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within, screen, waitFor } from "storybook/test";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, within, screen, waitFor } from "storybook/test"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button"
 
 const meta: Meta<typeof Tooltip> = {
   title: "UI/Tooltip",
@@ -11,9 +11,9 @@ const meta: Meta<typeof Tooltip> = {
   argTypes: {
     delayDuration: { control: { type: "number", min: 0, max: 1000, step: 50 } },
   },
-};
-export default meta;
-type Story = StoryObj<typeof Tooltip>;
+}
+export default meta
+type Story = StoryObj<typeof Tooltip>
 
 export const Default: Story = {
   render: (args) => (
@@ -26,13 +26,13 @@ export const Default: Story = {
       </Tooltip>
     </TooltipProvider>
   ),
-};
+}
 
 export const ShowsOnHover: Story = {
   render: Default.render,
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await userEvent.hover(canvas.getByRole("button", { name: /hover me/i }));
-    await waitFor(() => expect(screen.getAllByText("Add to library").length).toBeGreaterThan(0));
+    const canvas = within(canvasElement)
+    await userEvent.hover(canvas.getByRole("button", { name: /hover me/i }))
+    await waitFor(() => expect(screen.getAllByText("Add to library").length).toBeGreaterThan(0))
   },
-};
+}
