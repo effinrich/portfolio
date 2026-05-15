@@ -83,6 +83,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Refero's Showcase is a dynamic developer portfolio displaying projects and skills.",
       },
       { name: "author", content: "Lovable" },
+      {
+        name: "google-site-verification",
+        content: "0QrQ6qf8RzeNY4c8FnIZ1K9o7kPfbXRr39oQ3nNoPSw",
+      },
       { property: "og:title", content: "Rich Tillman | Portfolio" },
       {
         property: "og:description",
