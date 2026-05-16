@@ -4,11 +4,6 @@ run-name: ${{ github.event.inputs['display-title'] }}
 on:
   workflow_dispatch:
     inputs:
-      # Used to send this scan's results back to Stark.
-      token:
-        description: 'Stark token'
-        required: true
-        type: string
       # Allows Stark to identify this scan.
       display-title:
         description: 'Display title'
@@ -40,14 +35,14 @@ jobs:
         with:
           # [Optional; only required when used with Stark Projects]
           # The token used by the action to send an audit report back to Stark.
-          token: ${{ github.event.inputs.token }}
+          token: ${{ secrets.STARK_TOKEN }}
 
           # [Optional] Shell commands for setting up the container.
           # You can use this to install tools, export variables, etc.
           # Example: 'nvm install 16 && nvm use 16'
           setup: ''
 
-          # [Optional] Shell comamnds to run before the app is built.
+          # [Optional] Shell commands to run before the app is built.
           # Run any prebuild steps, cd into subdirectories, etc.
           prebuild: ''
 
