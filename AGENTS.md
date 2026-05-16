@@ -18,6 +18,7 @@ Conventions for AI agents (and humans) working in this repo. Keep this file shor
 - **NEVER** rename `.env.example` back to `.env copy`.
 - **NEVER** downgrade TypeScript below 6.x or remove the `@codecompose/typescript-config` extends.
 - **NEVER** stage or commit `storybook-static/` — it's Storybook's minified build output. Stays in `.gitignore` and in `ignorePatterns` for both `.oxlintrc.json` / `.oxfmtrc.json`; staging it floods oxlint with thousands of false positives on chunk bundles.
+- **NEVER** commit placeholder action refs (for example `FULL_40_CHARACTER_COMMIT_SHA_FOR_THE_INTENDED_V11_RELEASE`). For CI/tooling changes, preserve the last-known-good working ref unless the replacement is verified.
 
 ## Scripts (use these — don't invent new ones)
 
