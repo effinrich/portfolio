@@ -80,6 +80,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
     "@codecompose/typescript-config": "^3.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "chromatic": "^11.0.0",
     "@storybook/addon-a11y": "^10.3.6",
     "@storybook/addon-docs": "^10.3.6",
