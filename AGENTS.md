@@ -120,3 +120,21 @@ If a file you touched still has lint errors after autofix, fix them in the same 
 ### CI expectation
 
 Any CI added later MUST run, in order: `bun run format:check`, `bun run lint`, `bun run typecheck`, then build. Failing any step fails the build. Mirror lefthook so local and CI agree.
+
+## Cursor Cloud specific instructions
+
+### Services
+
+| Service         | Port | Command             | Notes                                                         |
+| --------------- | ---- | ------------------- | ------------------------------------------------------------- |
+| Vite dev server | 5173 | `bun run dev`       | Main app — TanStack Start SSR on Cloudflare Workers emulation |
+| Storybook       | 6006 | `bun run storybook` | Component sandbox (optional)                                  |
+
+### Gotchas
+
+- **Bun must be installed first.** The VM image ships Node but not Bun. The update script handles this — see `curl -fsSL https://bun.sh/install | bash`.
+- **lefthook install requires `--force`** in Cloud Agent VMs because Cursor sets `core.hooksPath` locally. Run `bunx lefthook install --force` instead of plain `bun run prepare`.
+- **`.env` is a generated file** (per Hard Rules) and must not be edited or committed. The repo ships `.env.example`; the real `.env` is pre-populated in the VM with Supabase credentials.
+- **Supabase is hosted** — no local Supabase CLI or Docker required. The app connects to the remote Supabase project via env vars.
+- **`bun run format:check` may fail on files you didn't touch** — run `bun run format` to auto-fix before committing.
+- The dev server emits a harmless `punycode` deprecation warning from Node — ignore it.
