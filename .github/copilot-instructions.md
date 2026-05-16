@@ -18,4 +18,4 @@
 - Run `bunx run lint:fix && bunx test` after making changes
 - Commit messages follow conventional commits format
 - Create feature branches from `main`
-- Never commit placeholder GitHub Action refs; keep last-known-good CI/tooling refs unless the replacement has been verified.
+- Never commit placeholder GitHub Action refs (for example TODO markers, incomplete SHAs, or temporary values); keep last-known-good CI/tooling refs unless the replacement has been verified.
