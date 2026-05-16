@@ -17,6 +17,7 @@ Conventions for AI agents (and humans) working in this repo. Keep this file shor
 - **NEVER** edit `src/routeTree.gen.ts`, `src/integrations/supabase/client.ts`, `src/integrations/supabase/client.server.ts`, `src/integrations/supabase/types.ts`, or `.env` — all carry generated-file headers.
 - **NEVER** rename `.env.example` back to `.env copy`.
 - **NEVER** downgrade TypeScript below 6.x or remove the `@codecompose/typescript-config` extends.
+- **NEVER** stage or commit `storybook-static/` — it's Storybook's minified build output. Stays in `.gitignore` and in `ignorePatterns` for both `.oxlintrc.json` / `.oxfmtrc.json`; staging it floods oxlint with thousands of false positives on chunk bundles.
 
 ## Scripts (use these — don't invent new ones)
 
@@ -35,14 +36,16 @@ Don't run `npm run build` / `tsc` manually — the harness runs builds automatic
 ## Editing the lint/format configs
 
 - Disable rules in `.oxlintrc.json` only with a one-line justification in the PR/commit, never silently.
-- Keep `ignorePatterns` in `.oxlintrc.json` and `.oxfmtrc.json` in sync for generated files (`src/routeTree.gen.ts`, `src/integrations/supabase/types.ts`, `dist`, `.output`, `.vinxi`).
+- Keep `ignorePatterns` in `.oxlintrc.json` and `.oxfmtrc.json` in sync for generated files (`src/routeTree.gen.ts`, `src/integrations/supabase/types.ts`, `dist`, `.output`, `.vinxi`, `storybook-static`).
 - `src/components/ui/**` is lint-ignored (shadcn surface). Don't add app logic there.
 
 ## lefthook
 
 - `pre-commit`: `oxlint --fix` + `oxfmt` on staged files (parallel, `stage_fixed: true`).
-- `pre-push`: `tsc --noEmit`.
+- `pre-push`: `tsc --noEmit`. This regenerates `tsconfig.tsbuildinfo` on every push — that file must stay **untracked** (it's in `.gitignore`). If it ever shows up as a tracked modification, run `git rm --cached tsconfig.tsbuildinfo` and commit; `.gitignore` alone can't fix an already-tracked file.
 - If you add a hook, keep it fast (<2s typical) and scoped to staged files via `{staged_files}`.
+- Always pass `--no-error-on-unmatched-pattern` to `oxlint` and `oxfmt` in hooks. When every staged file matches an `ignorePatterns` entry (e.g. only `src/components/ui/**` changed), the tool otherwise exits 1 with zero inputs and breaks the commit.
+- Don't use multi-line POSIX `if … then … fi` blocks in `run:` commands — lefthook on Windows dispatches through bun's shell, which can't parse them. Call `bun x <tool>` directly; this repo is bun-only, so the conditional fallback to `npx` was never reachable anyway.
 
 ## tsdown
 
@@ -67,6 +70,12 @@ The app runs React 19 + TanStack Router + TanStack Query. New code follows these
 - Input debouncing: `useDeferredValue`, not `setTimeout`.
 - `use(promise)` / `use(context)` unwrap values during render; **not** a replacement for `useEffect`. True side effects (subscriptions, logging, DOM sync) still belong in `useEffect`.
 - Realtime / external subscriptions: a `useEffect` that subscribes once and calls `queryClient.invalidateQueries(...)` on event — never re-subscribe on filter/state changes.
+
+## Storybook
+
+- Storybook test parameters like `dangerouslyIgnoreUnhandledErrors` live in `.storybook/preview.ts` under `parameters.test` — **not** in `.storybook/vite.config.ts`. Vite's `UserConfig` has no `test` key.
+- For stories that mock `onClick` with `fn()`, route the handler through `meta.render` so React's `SyntheticEvent` is never recorded — Storybook's postMessage serializer can't cross origins to read `Window.toJSON` on `event.view`, which surfaces as `SecurityError: Failed to read a named property 'toJSON' from 'Window'`. Pattern: `render: ({ onClick, ...args }) => <Button {...args} onClick={() => onClick?.()} />`.
+- For `userEvent.click()` against elements with `disabled:pointer-events-none` (any shadcn `Button` etc.), pass `{ pointerEventsCheck: 0 }` so the click can be dispatched and the "does not fire" assertion can run.
 
 ## Enforcement & DX
 
