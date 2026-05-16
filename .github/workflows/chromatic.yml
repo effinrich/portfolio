@@ -1,10 +1,24 @@
 name: "Chromatic"
 
-on: push
+# Run on PRs only, and only when files that can actually affect visual output
+# have changed. `ready_for_review` is listed so flipping a draft to ready
+# triggers a fresh run; the job-level `if:` keeps it off draft PRs entirely
+# (paths alone don't gate on draft state).
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "src/**"
+      - ".storybook/**"
+      - "chromatic.config.json"
+      - "package.json"
+      - "bun.lock"
+      - ".github/workflows/chromatic.yml"
 
 jobs:
   chromatic:
     name: Run Chromatic
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
