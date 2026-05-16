@@ -9,6 +9,9 @@ const preview: Preview = {
     },
     backgrounds: { disable: true },
     layout: "centered",
+    a11y: {
+      test: "error",
+    },
     test: {
       dangerouslyIgnoreUnhandledErrors: true,
     },
