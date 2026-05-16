@@ -62,7 +62,7 @@ export const DisabledDoesNotFire: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement)
     const button = canvas.getByRole("button")
-    await userEvent.click(button)
+    await userEvent.click(button, { pointerEventsCheck: 0 })
     await expect(args.onClick).not.toHaveBeenCalled()
   },
 }

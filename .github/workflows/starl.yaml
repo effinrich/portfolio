@@ -8,10 +8,19 @@ on:
       token:
         description: 'Stark token'
         required: true
+        type: string
       # Allows Stark to identify this scan.
       display-title:
         description: 'Display title'
         required: true
+        type: string
+      # Required by stark-contrast/accessibility-check-action. One URL per line.
+      # The GitHub UI renders this as a single-line text box, but newlines pasted
+      # into it are preserved and the action accepts the resulting multi-line string.
+      urls:
+        description: 'URL(s) to scan, one per line (e.g. https://example.com)'
+        required: true
+        type: string
 
 jobs:
   accessibility-audit:
@@ -68,7 +77,7 @@ jobs:
           #
           #          http://localhost:3000/help
           #          '
-          urls: ''
+          urls: ${{ github.event.inputs.urls }}
 
           # [Optional] If a url scan failed, scans the next one without failing the action.
           # Defaults to false
