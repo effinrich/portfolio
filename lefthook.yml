@@ -1,13 +1,21 @@
 # Lefthook — https://lefthook.dev
 # Run `bun run prepare` (or `bunx lefthook install`) once after cloning to install hooks.
+#
 # This repo is bun-only (see AGENTS.md). Don't reintroduce an npx fallback —
 # bun's shell trips on multi-line POSIX `if … fi` constructs.
+#
+# `--no-error-on-unmatched-pattern` is critical: when the only staged files
+# matching the glob are paths covered by .oxlintrc.json / .oxfmtrc.json
+# `ignorePatterns` (e.g. src/components/ui/**, src/routeTree.gen.ts), oxlint
+# and oxfmt receive a non-empty argv but resolve it to zero lintable files
+# and would otherwise exit 1. The flag makes that case a no-op instead of a
+# pre-commit failure.
 
 pre-commit:
   parallel: true
   jobs:
     - name: oxlint
-      run: bunx oxlint --fix {staged_files}
+      run: bunx oxlint --no-error-on-unmatched-pattern --fix {staged_files}
       glob:
         - "*.ts"
         - "*.tsx"
@@ -16,7 +24,7 @@ pre-commit:
       stage_fixed: true
 
     - name: oxfmt
-      run: bunx oxfmt {staged_files}
+      run: bunx oxfmt --no-error-on-unmatched-pattern {staged_files}
       glob:
         - "*.ts"
         - "*.tsx"
