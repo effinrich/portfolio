@@ -22,17 +22,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
         with:
           # Required by Chromatic so it can compare against the full git history
           # (baseline detection / TurboSnap). Don't lower this.
           fetch-depth: 0
       - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
       - name: Install dependencies
         run: bun install --frozen-lockfile
       - name: Run Chromatic
-        uses: chromaui/action@v11
+        uses: chromaui/action@FULL_40_CHARACTER_COMMIT_SHA_FOR_THE_INTENDED_V11_RELEASE # v11
         with:
           # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
