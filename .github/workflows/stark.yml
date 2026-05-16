@@ -1,5 +1,5 @@
 name: Stark Web Audit
-run-name: ${{ github.event.inputs.display-title }}
+run-name: ${{ github.event.inputs['display-title'] }}
 
 on:
   workflow_dispatch:
