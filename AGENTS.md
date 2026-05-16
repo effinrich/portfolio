@@ -75,7 +75,7 @@ The app runs React 19 + TanStack Router + TanStack Query. New code follows these
 
 - Storybook test parameters like `dangerouslyIgnoreUnhandledErrors` live in `.storybook/preview.ts` under `parameters.test` — **not** in `.storybook/vite.config.ts`. Vite's `UserConfig` has no `test` key.
 - For stories that mock `onClick` with `fn()`, route the handler through `meta.render` so React's `SyntheticEvent` is never recorded — Storybook's postMessage serializer can't cross origins to read `Window.toJSON` on `event.view`, which surfaces as `SecurityError: Failed to read a named property 'toJSON' from 'Window'`. Pattern: `render: ({ onClick, ...args }) => <Button {...args} onClick={() => onClick?.()} />`.
-- For `userEvent.click()` against elements with `disabled:pointer-events-none` (any shadcn `Button` etc.), pass `{ pointerEventsCheck: 0 }` so the click can be dispatched and the "does not fire" assertion can run.
+- For `userEvent.click()` against elements with `disabled:pointer-events-none` (any shadcn `Button` etc.), pass `{ pointerEventsCheck: PointerEventsCheckLevel.Never }` (import from `@testing-library/user-event`) so the click can be dispatched and the "does not fire" assertion can run.
 
 ## Enforcement & DX
 
