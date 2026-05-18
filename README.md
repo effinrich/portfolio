@@ -50,8 +50,6 @@ VITE_SUPABASE_PROJECT_ID
 
 | Script                    | Purpose                                      |
 | ------------------------- | -------------------------------------------- |
-| Script                    | Purpose                                      |
-| ---                       | ---                                          |
 | `bun run dev`             | Local dev server                             |
 | `bun run build`           | Production build (Cloudflare Workers target) |
 | `bun run lint`            | oxlint                                       |
