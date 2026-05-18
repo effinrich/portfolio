@@ -35,6 +35,7 @@ export const Route = createFileRoute("/")({
 })
 
 function Index() {
+  const { contact } = Route.useSearch()
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
@@ -45,7 +46,7 @@ function Index() {
         <Experience />
         <Projects />
         <Stack />
-        <Contact />
+        <Contact submissionStatus={contact} />
       </main>
     </div>
   )

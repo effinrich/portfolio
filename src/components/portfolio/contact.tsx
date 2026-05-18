@@ -9,7 +9,11 @@ const links = [
   { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" },
 ]
 
-export function Contact() {
+export function Contact({
+  submissionStatus,
+}: {
+  submissionStatus?: "ok" | "error" | "invalid"
+}) {
   return (
     <section id="contact" className="relative py-24 md:py-32">
       <div className="container-x">
@@ -56,7 +60,7 @@ export function Contact() {
               </ul>
             </div>
 
-            <ContactForm />
+            <ContactForm initialStatus={submissionStatus} />
           </div>
         </div>
 
