@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { z } from "zod"
 import { Nav } from "@/components/portfolio/nav"
 import { Hero } from "@/components/portfolio/hero"
 import { Marquee } from "@/components/portfolio/marquee"
@@ -8,7 +9,12 @@ import { Projects } from "@/components/portfolio/projects"
 import { Stack } from "@/components/portfolio/stack"
 import { Contact } from "@/components/portfolio/contact"
 
+const searchSchema = z.object({
+  contact: z.enum(["ok", "error", "invalid"]).optional(),
+})
+
 export const Route = createFileRoute("/")({
+  validateSearch: searchSchema,
   component: Index,
   head: () => ({
     meta: [
