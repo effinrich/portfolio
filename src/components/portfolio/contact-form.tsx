@@ -25,11 +25,7 @@ type Errors = Partial<Record<"name" | "email" | "message", string>>
 // Bots typically submit forms in well under a second.
 const MIN_SUBMIT_MS = 1500
 
-export function ContactForm({
-  initialStatus,
-}: {
-  initialStatus?: "ok" | "error" | "invalid"
-}) {
+export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" | "invalid" }) {
   const [values, setValues] = useState({ name: "", email: "", message: "" })
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [errors, setErrors] = useState<Errors>({})
@@ -248,7 +244,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--glow-primary)] transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
+        className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-(--glow-primary) transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
       >
         {status === "submitting" ? (
           <>
