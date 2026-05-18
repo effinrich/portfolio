@@ -25,12 +25,24 @@ type Errors = Partial<Record<"name" | "email" | "message", string>>
 // Bots typically submit forms in well under a second.
 const MIN_SUBMIT_MS = 1500
 
-export function ContactForm() {
+export function ContactForm({
+  initialStatus,
+}: {
+  initialStatus?: "ok" | "error" | "invalid"
+}) {
   const [values, setValues] = useState({ name: "", email: "", message: "" })
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [errors, setErrors] = useState<Errors>({})
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle")
-  const [formError, setFormError] = useState<string | null>(null)
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">(
+    initialStatus === "ok" ? "success" : "idle",
+  )
+  const [formError, setFormError] = useState<string | null>(
+    initialStatus === "error"
+      ? "Something went wrong sending your message. Please try again."
+      : initialStatus === "invalid"
+        ? "Please check your entries and try again."
+        : null,
+  )
   const mountedAt = useRef<number>(Date.now())
 
   function update<K extends keyof typeof values>(key: K, value: string) {
