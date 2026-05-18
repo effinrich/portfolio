@@ -19,6 +19,7 @@ Conventions for AI agents (and humans) working in this repo. Keep this file shor
 - **NEVER** downgrade TypeScript below 6.x or remove the `@codecompose/typescript-config` extends.
 - **NEVER** stage or commit `storybook-static/` — it's Storybook's minified build output. Stays in `.gitignore` and in `ignorePatterns` for both `.oxlintrc.json` / `.oxfmtrc.json`; staging it floods oxlint with thousands of false positives on chunk bundles.
 - **NEVER** commit placeholder action refs (for example TODO markers, incomplete SHAs, or temporary values). For CI/tooling changes, preserve the last-known-good working ref unless the replacement is verified.
+- **NEVER** create `.cursor/settings.json` — Cursor is a VS Code fork and reads workspace editor settings from `.vscode/settings.json` only. The `.cursor/` directory is reserved for things Cursor actually consumes (`rules/`, `mcp.json`, `environment.json`, `sandbox.json`); a `.cursor/settings.json` is silently ignored and just shadow-confuses readers vs. the real `.vscode` values.
 
 ## Scripts (use these — don't invent new ones)
 
@@ -33,6 +34,11 @@ Conventions for AI agents (and humans) working in this repo. Keep this file shor
 | Install hooks        | `bun run prepare` (auto on `bun install`) |
 
 Don't run `npm run build` / `tsc` manually — the harness runs builds automatically.
+
+## Editor settings
+
+- Workspace editor config lives in `.vscode/settings.json` (see Hard Rules — don't fork it into `.cursor/`).
+- The `oxc-vscode` extension only contributes `oxc.enable`, `oxc.lint.*`, `oxc.fmt.*`, `oxc.path.*`, `oxc.configPath`, `oxc.fixKind`, and `oxc.trace.server`. Keys like `oxc.codeAction.*`, `oxc.options`, and `oxc.validate` are ESLint carryover — they produce "Unknown Configuration Setting" warnings and do nothing. Editor-side keys (`editor.defaultFormatter: "oxc.oxc-vscode"`, `source.format.oxc`, `source.fixAll.oxc`) are valid VS Code keys, not extension config, so they're fine.
 
 ## Editing the lint/format configs
 
@@ -121,6 +127,11 @@ If a file you touched still has lint errors after autofix, fix them in the same 
 ### CI expectation
 
 Any CI added later MUST run, in order: `bun run format:check`, `bun run lint`, `bun run typecheck`, then build. Failing any step fails the build. Mirror lefthook so local and CI agree.
+
+### Chromatic
+
+- Visual regression runs on `pull_request` only — **never** `on: push`. The workflow at `.github/workflows/chromatic.yml` uses `types: [opened, synchronize, reopened, ready_for_review]`, a `paths:` filter (`src/**`, `.storybook/**`, `chromatic.config.json`, `package.json`, `bun.lock`, the workflow file itself), and a job-level `if: github.event.pull_request.draft == false`. Don't reintroduce a push trigger or remove the draft gate.
+- `CHROMATIC_PROJECT_TOKEN` is read from env: CI gets it via `${{ secrets.CHROMATIC_PROJECT_TOKEN }}` in the workflow, the local `chromatic` script picks it up from the shell. Never hard-code the token in `package.json`, and never use `${{ secrets.X }}` syntax outside workflow files — it only interpolates inside GitHub Actions.
 
 ## Cursor Cloud specific instructions
 
