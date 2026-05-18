@@ -25,12 +25,24 @@ type Errors = Partial<Record<"name" | "email" | "message", string>>
 // Bots typically submit forms in well under a second.
 const MIN_SUBMIT_MS = 1500
 
-export function ContactForm() {
+export function ContactForm({
+  initialStatus,
+}: {
+  initialStatus?: "ok" | "error" | "invalid"
+}) {
   const [values, setValues] = useState({ name: "", email: "", message: "" })
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [errors, setErrors] = useState<Errors>({})
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle")
-  const [formError, setFormError] = useState<string | null>(null)
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">(
+    initialStatus === "ok" ? "success" : "idle",
+  )
+  const [formError, setFormError] = useState<string | null>(
+    initialStatus === "error"
+      ? "Something went wrong sending your message. Please try again."
+      : initialStatus === "invalid"
+        ? "Please check your entries and try again."
+        : null,
+  )
   const mountedAt = useRef<number>(Date.now())
 
   function update<K extends keyof typeof values>(key: K, value: string) {
@@ -93,8 +105,9 @@ export function ContactForm() {
         <div>
           <h3 className="text-lg font-semibold text-foreground">Message sent</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Thanks, {values.name.split(" ")[0]}. I&apos;ll get back to you at {values.email}{" "}
-            shortly.
+            {values.name
+              ? `Thanks, ${values.name.split(" ")[0]}. I'll get back to you at ${values.email} shortly.`
+              : "Thanks for reaching out — I'll get back to you shortly."}
           </p>
         </div>
         <button
@@ -119,6 +132,8 @@ export function ContactForm() {
 
   return (
     <form
+      action="/api/contact"
+      method="POST"
       onSubmit={handleSubmit}
       noValidate
       className="flex flex-col gap-4 rounded-xl border border-border bg-background p-6"
