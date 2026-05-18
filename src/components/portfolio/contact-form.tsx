@@ -131,6 +131,8 @@ export function ContactForm({
 
   return (
     <form
+      action="/api/contact"
+      method="POST"
       onSubmit={handleSubmit}
       noValidate
       className="flex flex-col gap-4 rounded-xl border border-border bg-background p-6"
