@@ -105,8 +105,9 @@ export function ContactForm({
         <div>
           <h3 className="text-lg font-semibold text-foreground">Message sent</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Thanks, {values.name.split(" ")[0]}. I&apos;ll get back to you at {values.email}{" "}
-            shortly.
+            {values.name
+              ? `Thanks, ${values.name.split(" ")[0]}. I'll get back to you at ${values.email} shortly.`
+              : "Thanks for reaching out — I'll get back to you shortly."}
           </p>
         </div>
         <button
