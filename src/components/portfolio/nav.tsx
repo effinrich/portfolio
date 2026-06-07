@@ -17,11 +17,7 @@ export function Nav() {
   }, [])
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "backdrop-blur-xl bg-background/70 border-b border-border" : "bg-transparent"
-      }`}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/70 backdrop-blur-xl">
       <nav className="container-x flex h-16 items-center justify-between">
         <a href="#top" className="group flex items-center gap-2.5">
           <span className="relative grid h-8 w-8 place-items-center rounded-md border border-border bg-surface font-mono text-sm font-bold text-primary">

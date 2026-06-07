@@ -19,6 +19,7 @@
     ".tanstack/**",
     ".nitro",
     ".wrangler/",
+    "storybook-static/**",
     "bun.lock",
     "src/routeTree.gen.ts",
     "src/integrations/supabase/types.ts"

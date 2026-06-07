@@ -645,8 +645,7 @@ function SubmissionDialog({
         onClick={onClose}
         className="absolute inset-0 bg-black/60"
       />
-      <div
-        role="dialog"
+      <dialog
         aria-modal="true"
         aria-labelledby="submission-dialog-title"
         className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-background p-6 shadow-xl"
@@ -681,7 +680,7 @@ function SubmissionDialog({
         <Suspense fallback={<p className="mt-6 text-xs text-muted-foreground">Loading replies…</p>}>
           <RepliesPanel submission={submission} userId={userId} onDelete={onDelete} />
         </Suspense>
-      </div>
+      </dialog>
     </div>
   )
 }
