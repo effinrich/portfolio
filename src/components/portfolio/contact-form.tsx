@@ -19,9 +19,21 @@ import {
   type ContactValues
 } from "./contact-schema"
 
-export function ContactForm() {
+export function ContactForm({
+  initialStatus
+}: {
+  initialStatus?: "ok" | "error" | "invalid"
+} = {}) {
   const antiSpam = useAntiSpam()
   const [sentTo, setSentTo] = useState<ContactValues | null>(null)
+  const [showInitialSuccess, setShowInitialSuccess] = useState(initialStatus === "ok")
+  const [initialError, setInitialError] = useState<string | null>(
+    initialStatus === "error"
+      ? "Something went wrong sending your message. Please try again."
+      : initialStatus === "invalid"
+        ? "Please check your entries and try again."
+        : null
+  )
 
   const form = useForm<ContactValues>({
     resolver: zodResolver(contactSchema),
@@ -42,6 +54,8 @@ export function ContactForm() {
   })
 
   function onSubmit(values: ContactValues) {
+    setShowInitialSuccess(false)
+    setInitialError(null)
     form.clearErrors("root")
     switch (antiSpam.evaluate()) {
       case "bot":
@@ -63,6 +77,19 @@ export function ContactForm() {
     antiSpam.reset()
     mutation.reset()
     setSentTo(null)
+    setShowInitialSuccess(false)
+    setInitialError(null)
+  }
+
+  if (showInitialSuccess) {
+    return (
+      <FormSuccessCard
+        title="Message sent"
+        description="Thanks for reaching out — I'll get back to you shortly."
+        actionLabel="Send another message"
+        onAction={reset}
+      />
+    )
   }
 
   if (sentTo) {
@@ -81,7 +108,7 @@ export function ContactForm() {
     )
   }
 
-  const rootError = form.formState.errors.root?.message
+  const rootError = form.formState.errors.root?.message ?? initialError
 
   return (
     <Form {...form}>
