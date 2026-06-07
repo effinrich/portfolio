@@ -1,47 +1,47 @@
-import { SectionHeading } from "./section-heading";
-import figmaMcpImg from "@/assets/project-figma-mcp.jpg";
-import storybookMcpImg from "@/assets/project-storybook-mcp.jpg";
-import forgekitCliImg from "@/assets/project-forgekit-cli.jpg";
-import tidyAppImg from "@/assets/project-tidy-app.jpg";
+import { SectionHeading } from "./section-heading"
+import figmaMcpImg from "@/assets/project-figma-mcp.jpg"
+import storybookMcpImg from "@/assets/project-storybook-mcp.jpg"
+import forgekitCliImg from "@/assets/project-forgekit-cli.jpg"
+import tidyAppImg from "@/assets/project-tidy-app.jpg"
 
-type Accent = "primary" | "accent";
+type Accent = "primary" | "accent"
 
 type Project = {
-  title: string;
-  tag: string;
-  desc: string;
-  metric: string;
-  href: string;
-  cta: string;
-  accent: Accent;
-  image: string;
-  imageAlt: string;
-  badge?: string;
-};
+  title: string
+  tag: string
+  desc: string
+  metric: string
+  href: string
+  cta: string
+  accent: Accent
+  image: string
+  imageAlt: string
+  badge?: string
+}
 
 const projects: Project[] = [
   {
     title: "ForgeKit Figma MCP",
     tag: "MCP · Open Source",
-    desc: "MCP server that extracts Figma variables and design tokens, generating typed theme configs for Chakra, Tailwind, and shadcn — bridging design and AI-driven codegen.",
-    metric: "5,703+ installs",
+    desc: "MCP server that extracts Figma variables and design tokens, generating typed theme configs for Radix/shadcn, Tailwind, and Chakra — bridging design and AI-driven codegen.",
+    metric: "Figma tokens → code",
     href: "https://www.npmjs.com/package/forgekit-figma-mcp",
     cta: "View on npm",
     accent: "primary",
     image: figmaMcpImg,
     imageAlt: "Figma MCP server extracting design tokens into a typed TypeScript theme file.",
-    badge: "Featured",
+    badge: "Featured"
   },
   {
     title: "ForgeKit Storybook MCP",
     tag: "MCP · Open Source",
     desc: "Exposes Storybook metadata and argTypes to AI coding agents — automating story generation, docs scaffolding, and component testing across design systems.",
-    metric: "Active production use",
+    metric: "5,703+ npm downloads",
     href: "https://www.npmjs.com/package/forgekit-storybook-mcp",
     cta: "View on npm",
     accent: "accent",
     image: storybookMcpImg,
-    imageAlt: "Storybook MCP scaffolding component stories from metadata.",
+    imageAlt: "Storybook MCP scaffolding component stories from metadata."
   },
   {
     title: "ForgeKit Core CLI",
@@ -52,7 +52,7 @@ const projects: Project[] = [
     cta: "forgekit.cloud",
     accent: "primary",
     image: forgekitCliImg,
-    imageAlt: "ForgeKit interactive CLI scaffolding a new monorepo project.",
+    imageAlt: "ForgeKit interactive CLI scaffolding a new monorepo project."
   },
   {
     title: "Tidy App",
@@ -63,9 +63,9 @@ const projects: Project[] = [
     cta: "Case study soon",
     accent: "accent",
     image: tidyAppImg,
-    imageAlt: "Tidy iOS app showing task list and calendar views on two iPhones.",
-  },
-];
+    imageAlt: "Tidy iOS app showing task list and calendar views on two iPhones."
+  }
+]
 
 function ArrowIcon() {
   return (
@@ -85,19 +85,19 @@ function ArrowIcon() {
         strokeLinejoin="round"
       />
     </svg>
-  );
+  )
 }
 
 function ProjectMedia({
   src,
   alt,
   accent,
-  priority = false,
+  priority = false
 }: {
-  src: string;
-  alt: string;
-  accent: Accent;
-  priority?: boolean;
+  src: string
+  alt: string
+  accent: Accent
+  priority?: boolean
 }) {
   return (
     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-border bg-muted/30">
@@ -116,7 +116,7 @@ function ProjectMedia({
         aria-hidden
       />
     </div>
-  );
+  )
 }
 
 export function Projects() {
@@ -172,5 +172,5 @@ export function Projects() {
         </div>
       </div>
     </section>
-  );
+  )
 }

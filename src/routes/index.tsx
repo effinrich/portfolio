@@ -1,32 +1,37 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Nav } from "@/components/portfolio/nav";
-import { Hero } from "@/components/portfolio/hero";
-import { Marquee } from "@/components/portfolio/marquee";
-import { Testimonial } from "@/components/portfolio/testimonial";
-import { Experience } from "@/components/portfolio/experience";
-import { Projects } from "@/components/portfolio/projects";
-import { Stack } from "@/components/portfolio/stack";
-import { Contact } from "@/components/portfolio/contact";
+import { createFileRoute } from "@tanstack/react-router"
+import { Nav } from "@/components/portfolio/nav"
+import { Hero } from "@/components/portfolio/hero"
+import { Marquee } from "@/components/portfolio/marquee"
+import { Testimonial } from "@/components/portfolio/testimonial"
+import { Experience } from "@/components/portfolio/experience"
+import { Projects } from "@/components/portfolio/projects"
+import { Stack } from "@/components/portfolio/stack"
+import { Contact } from "@/components/portfolio/contact"
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Rich Tillman — Principal Frontend Engineer & Design Systems Architect" },
+      {
+        title: "Rich Tillman — Senior Frontend Engineer · Design Systems & Accessibility"
+      },
       {
         name: "description",
         content:
-          "Rich Tillman is a Principal Frontend Engineer building React design systems, MCP-driven developer tooling, and AI-native workflows. Creator of ForgeKit.",
+          "Rich Tillman is a Senior/Staff Frontend Engineer building accessible React interfaces on Radix, design systems, and design-to-code tooling. Creator of ForgeKit."
       },
-      { property: "og:title", content: "Rich Tillman — Principal Frontend Engineer" },
+      {
+        property: "og:title",
+        content: "Rich Tillman — Senior Frontend Engineer"
+      },
       {
         property: "og:description",
         content:
-          "Shipping React UI platforms, design systems, and AI developer tooling. Creator of ForgeKit MCP servers (5,703+ installs).",
-      },
-    ],
-  }),
-});
+          "Accessible React interfaces on Radix, design systems, and design-to-code tooling. Creator of ForgeKit MCP servers (5,703+ npm downloads)."
+      }
+    ]
+  })
+})
 
 function Index() {
   return (
@@ -42,5 +47,5 @@ function Index() {
         <Contact />
       </main>
     </div>
-  );
+  )
 }

@@ -1,11 +1,11 @@
 export function SectionHeading({
   eyebrow,
   title,
-  description,
+  description
 }: {
-  eyebrow: string;
-  title: string;
-  description?: string;
+  eyebrow: string
+  title: string
+  description?: string
 }) {
   return (
     <div className="mb-12 max-w-2xl">
@@ -18,5 +18,5 @@ export function SectionHeading({
       </h2>
       {description ? <p className="mt-3 text-pretty text-muted-foreground">{description}</p> : null}
     </div>
-  );
+  )
 }

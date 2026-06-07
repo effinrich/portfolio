@@ -1,13 +1,21 @@
-import { SectionHeading } from "./section-heading";
-import { ContactForm } from "./contact-form";
+import { SectionHeading } from "./section-heading"
+import { ContactForm } from "./contact-form"
 
 const links = [
-  { label: "Email", value: "richtillman@pm.me", href: "mailto:richtillman@pm.me" },
+  {
+    label: "Email",
+    value: "richtillman@pm.me",
+    href: "mailto:richtillman@pm.me"
+  },
   { label: "Phone", value: "843-834-0041", href: "tel:+18438340041" },
-  { label: "LinkedIn", value: "in/effinrich", href: "https://linkedin.com/in/effinrich" },
+  {
+    label: "LinkedIn",
+    value: "in/effinrich",
+    href: "https://linkedin.com/in/effinrich"
+  },
   { label: "npm", value: "~effinrich", href: "https://npmjs.com/~effinrich" },
-  { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" },
-];
+  { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" }
+]
 
 export function Contact() {
   return (
@@ -27,7 +35,7 @@ export function Contact() {
             <div>
               <SectionHeading
                 eyebrow="Let's build"
-                title="Open to Staff and Principal roles in AI developer tooling, design systems, or platform frontend."
+                title="Open to senior frontend roles in design systems, accessibility, and developer tooling."
                 description="Fully remote. Happiest where engineering excellence and design rigor meet — and where the team treats AI tooling as leverage, not a gimmick."
               />
               <a
@@ -66,5 +74,5 @@ export function Contact() {
         </footer>
       </div>
     </section>
-  );
+  )
 }

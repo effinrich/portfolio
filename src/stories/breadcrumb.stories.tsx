@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, within } from "storybook/test"
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb"
 
 const meta: Meta<typeof Breadcrumb> = {
   title: "UI/Breadcrumb",
   component: Breadcrumb,
-  tags: ["autodocs"],
-};
-export default meta;
-type Story = StoryObj<typeof Breadcrumb>;
+  tags: ["autodocs"]
+}
+export default meta
+type Story = StoryObj<typeof Breadcrumb>
 
 export const Default: Story = {
   render: () => (
@@ -36,8 +36,8 @@ export const Default: Story = {
     </Breadcrumb>
   ),
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await expect(canvas.getByRole("link", { name: "Home" })).toBeInTheDocument();
-    await expect(canvas.getByText("Breadcrumb")).toHaveAttribute("aria-current", "page");
-  },
-};
+    const canvas = within(canvasElement)
+    await expect(canvas.getByRole("link", { name: "Home" })).toBeInTheDocument()
+    await expect(canvas.getByText("Breadcrumb")).toHaveAttribute("aria-current", "page")
+  }
+}

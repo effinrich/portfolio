@@ -1,44 +1,31 @@
-import { SectionHeading } from "./section-heading";
+import { SectionHeading } from "./section-heading"
 
 const groups = [
   {
     label: "Frontend",
-    items: [
-      "React 18+",
-      "TypeScript (strict)",
-      "Next.js",
-      "TanStack Start",
-      "React Native",
-      "Expo",
-    ],
+    items: ["React 19", "TypeScript (strict)", "Next.js", "TanStack Start", "React Native", "Expo"]
   },
   {
     label: "Design Systems",
-    items: ["Storybook 8+", "Chromatic", "Chakra UI", "shadcn/ui", "Tamagui", "Ark UI", "Radix UI"],
+    items: ["Radix UI", "shadcn/ui", "Storybook 10", "Chromatic", "Chakra UI", "Ark UI", "Tamagui"]
   },
   {
     label: "AI & MCP",
-    items: ["Model Context Protocol", "Claude Code", "Cursor", "v0", "Lovable", "Figma MCP"],
+    items: ["Model Context Protocol", "Claude Code", "Cursor", "v0", "Lovable", "Figma MCP"]
   },
   {
     label: "Monorepo & DX",
-    items: [
-      "Nx + Nx Agents",
-      "Turborepo",
-      "pnpm workspaces",
-      "Module Federation",
-      "GitHub Actions",
-    ],
+    items: ["Nx + Nx Agents", "Turborepo", "pnpm workspaces", "Module Federation", "GitHub Actions"]
   },
   {
     label: "Data & State",
-    items: ["TanStack Query", "Zustand", "Redux", "tRPC", "Supabase", "PostgreSQL", "gRPC"],
+    items: ["TanStack Query", "Zustand", "Redux", "tRPC", "Supabase", "PostgreSQL", "gRPC"]
   },
   {
     label: "Testing & a11y",
-    items: ["Vitest", "Jest", "Playwright", "RTL", "Storybook a11y", "WCAG 2.1 AA"],
-  },
-];
+    items: ["Vitest", "Jest", "Playwright", "RTL", "ARIA patterns", "Storybook a11y", "WCAG 2.1 AA"]
+  }
+]
 
 export function Stack() {
   return (
@@ -69,5 +56,5 @@ export function Stack() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, fn, userEvent, within } from "storybook/test";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, fn, userEvent, within } from "storybook/test"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
 
 const meta: Meta<typeof RadioGroup> = {
   title: "UI/RadioGroup",
@@ -11,11 +11,11 @@ const meta: Meta<typeof RadioGroup> = {
   argTypes: {
     disabled: { control: "boolean" },
     defaultValue: { control: "radio", options: ["default", "comfortable", "compact"] },
-    onValueChange: { action: "changed" },
-  },
-};
-export default meta;
-type Story = StoryObj<typeof RadioGroup>;
+    onValueChange: { action: "changed" }
+  }
+}
+export default meta
+type Story = StoryObj<typeof RadioGroup>
 
 export const Default: Story = {
   render: (args) => (
@@ -29,14 +29,14 @@ export const Default: Story = {
         </div>
       ))}
     </RadioGroup>
-  ),
-};
+  )
+}
 
 export const SelectInteraction: Story = {
   render: Default.render,
   play: async ({ canvasElement, args }) => {
-    const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByLabelText("Compact"));
-    await expect(args.onValueChange).toHaveBeenCalledWith("compact");
-  },
-};
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByLabelText("Compact"))
+    await expect(args.onValueChange).toHaveBeenCalledWith("compact")
+  }
+}

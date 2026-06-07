@@ -37,3 +37,4 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 .env
+resume

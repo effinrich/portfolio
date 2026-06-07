@@ -1,44 +1,44 @@
-import { Suspense, useDeferredValue, useEffect, useRef, useState } from "react";
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { Suspense, useDeferredValue, useEffect, useRef, useState } from "react"
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router"
+import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
+import { supabase } from "@/integrations/supabase/client"
 
 type Submission = {
-  id: string;
-  name: string;
-  email: string;
-  message: string;
-  created_at: string;
-};
+  id: string
+  name: string
+  email: string
+  message: string
+  created_at: string
+}
 
 type Reply = {
-  id: string;
-  submission_id: string;
-  admin_user_id: string;
-  body: string;
-  created_at: string;
-};
+  id: string
+  submission_id: string
+  admin_user_id: string
+  body: string
+  created_at: string
+}
 
-type SortField = "created_at" | "name" | "email";
-type SortDir = "asc" | "desc";
-type SearchField = "all" | "name" | "email";
+type SortField = "created_at" | "name" | "email"
+type SortDir = "asc" | "desc"
+type SearchField = "all" | "name" | "email"
 
 type Filters = {
-  q: string;
-  field: SearchField;
-  from: string;
-  to: string;
-  sortField: SortField;
-  sortDir: SortDir;
-  pageSize: number;
-};
+  q: string
+  field: SearchField
+  from: string
+  to: string
+  sortField: SortField
+  sortDir: SortDir
+  pageSize: number
+}
 
 type AuthState =
   | { status: "unauthenticated" }
   | { status: "not-admin"; email: string }
-  | { status: "admin"; email: string; userId: string };
+  | { status: "admin"; email: string; userId: string }
 
-const PAGE_SIZE_OPTIONS = [10, 25, 50, 100] as const;
+const PAGE_SIZE_OPTIONS = [10, 25, 50, 100] as const
 
 const DEFAULT_FILTERS: Filters = {
   q: "",
@@ -47,62 +47,62 @@ const DEFAULT_FILTERS: Filters = {
   to: "",
   sortField: "created_at",
   sortDir: "desc",
-  pageSize: 25,
-};
+  pageSize: 25
+}
 
 const INPUT_CLS =
-  "rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50";
+  "rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
 
 const authQueryOptions = queryOptions({
   queryKey: ["admin", "auth"] as const,
   queryFn: async (): Promise<AuthState> => {
-    const { data: sessionData } = await supabase.auth.getSession();
-    const session = sessionData.session;
-    if (!session) return { status: "unauthenticated" };
+    const { data: sessionData } = await supabase.auth.getSession()
+    const session = sessionData.session
+    if (!session) return { status: "unauthenticated" }
     const { data: roleRows, error } = await supabase
       .from("user_roles")
       .select("role")
-      .eq("user_id", session.user.id);
-    if (error) console.error(error);
-    const isAdmin = roleRows?.some((r) => r.role === "admin") ?? false;
-    const email = session.user.email ?? "";
+      .eq("user_id", session.user.id)
+    if (error) console.error(error)
+    const isAdmin = roleRows?.some((r) => r.role === "admin") ?? false
+    const email = session.user.email ?? ""
     return isAdmin
       ? { status: "admin", email, userId: session.user.id }
-      : { status: "not-admin", email };
+      : { status: "not-admin", email }
   },
-  staleTime: 60_000,
-});
+  staleTime: 60_000
+})
 
 function submissionsQueryOptions(filters: Filters, page: number) {
   return queryOptions({
     queryKey: ["admin", "submissions", filters, page] as const,
     queryFn: async () => {
-      const from = (page - 1) * filters.pageSize;
-      const to = from + filters.pageSize - 1;
+      const from = (page - 1) * filters.pageSize
+      const to = from + filters.pageSize - 1
       let q = supabase
         .from("contact_submissions")
         .select("*", { count: "exact" })
         .order(filters.sortField, { ascending: filters.sortDir === "asc" })
-        .range(from, to);
-      const trimmed = filters.q.trim();
+        .range(from, to)
+      const trimmed = filters.q.trim()
       if (trimmed) {
-        const safe = trimmed.replace(/[%,()]/g, " ");
-        const pattern = `%${safe}%`;
-        if (filters.field === "name") q = q.ilike("name", pattern);
-        else if (filters.field === "email") q = q.ilike("email", pattern);
-        else q = q.or(`name.ilike.${pattern},email.ilike.${pattern},message.ilike.${pattern}`);
+        const safe = trimmed.replace(/[%,()]/g, " ")
+        const pattern = `%${safe}%`
+        if (filters.field === "name") q = q.ilike("name", pattern)
+        else if (filters.field === "email") q = q.ilike("email", pattern)
+        else q = q.or(`name.ilike.${pattern},email.ilike.${pattern},message.ilike.${pattern}`)
       }
-      if (filters.from) q = q.gte("created_at", new Date(filters.from).toISOString());
+      if (filters.from) q = q.gte("created_at", new Date(filters.from).toISOString())
       if (filters.to) {
-        const end = new Date(filters.to);
-        end.setHours(23, 59, 59, 999);
-        q = q.lte("created_at", end.toISOString());
+        const end = new Date(filters.to)
+        end.setHours(23, 59, 59, 999)
+        q = q.lte("created_at", end.toISOString())
       }
-      const { data, error, count } = await q;
-      if (error) throw error;
-      return { rows: (data ?? []) as Submission[], total: count ?? 0 };
-    },
-  });
+      const { data, error, count } = await q
+      if (error) throw error
+      return { rows: (data ?? []) as Submission[], total: count ?? 0 }
+    }
+  })
 }
 
 function repliesQueryOptions(submissionId: string) {
@@ -113,36 +113,36 @@ function repliesQueryOptions(submissionId: string) {
         .from("submission_replies")
         .select("*")
         .eq("submission_id", submissionId)
-        .order("created_at", { ascending: true });
-      if (error) throw error;
-      return (data ?? []) as Reply[];
-    },
-  });
+        .order("created_at", { ascending: true })
+      if (error) throw error
+      return (data ?? []) as Reply[]
+    }
+  })
 }
 
 export const Route = createFileRoute("/admin")({
   loader: ({ context }) => context.queryClient.ensureQueryData(authQueryOptions),
   component: AdminPage,
   head: () => ({
-    meta: [{ title: "Admin — Contact Submissions" }, { name: "robots", content: "noindex" }],
-  }),
-});
+    meta: [{ title: "Admin — Contact Submissions" }, { name: "robots", content: "noindex" }]
+  })
+})
 
 function AdminPage() {
-  const { data: auth } = useSuspenseQuery(authQueryOptions);
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { data: auth } = useSuspenseQuery(authQueryOptions)
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange(() => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "auth"] });
-    });
-    return () => sub.subscription.unsubscribe();
-  }, [queryClient]);
+      queryClient.invalidateQueries({ queryKey: ["admin", "auth"] })
+    })
+    return () => sub.subscription.unsubscribe()
+  }, [queryClient])
 
   async function handleSignOut() {
-    await supabase.auth.signOut();
-    navigate({ to: "/login" });
+    await supabase.auth.signOut()
+    navigate({ to: "/login" })
   }
 
   if (auth.status === "unauthenticated") {
@@ -159,7 +159,7 @@ function AdminPage() {
           </Link>
         }
       />
-    );
+    )
   }
 
   if (auth.status === "not-admin") {
@@ -181,20 +181,20 @@ function AdminPage() {
           </button>
         }
       />
-    );
+    )
   }
 
-  return <AdminAuthedView email={auth.email} userId={auth.userId} onSignOut={handleSignOut} />;
+  return <AdminAuthedView email={auth.email} userId={auth.userId} onSignOut={handleSignOut} />
 }
 
 function CenteredCard({
   title,
   description,
-  action,
+  action
 }: {
-  title: string;
-  description: React.ReactNode;
-  action: React.ReactNode;
+  title: string
+  description: React.ReactNode
+  action: React.ReactNode
 }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -204,32 +204,32 @@ function CenteredCard({
         {action}
       </div>
     </div>
-  );
+  )
 }
 
 function AdminAuthedView({
   email,
   userId,
-  onSignOut,
+  onSignOut
 }: {
-  email: string;
-  userId: string;
-  onSignOut: () => void;
+  email: string
+  userId: string
+  onSignOut: () => void
 }) {
-  const queryClient = useQueryClient();
-  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
-  const [page, setPage] = useState(1);
-  const [selected, setSelected] = useState<Submission | null>(null);
-  const deferredFilters = useDeferredValue(filters);
+  const queryClient = useQueryClient()
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
+  const [page, setPage] = useState(1)
+  const [selected, setSelected] = useState<Submission | null>(null)
+  const deferredFilters = useDeferredValue(filters)
 
   function updateFilters(patch: Partial<Filters>) {
-    setFilters((f) => ({ ...f, ...patch }));
-    setPage(1);
+    setFilters((f) => ({ ...f, ...patch }))
+    setPage(1)
   }
 
   function clearFilters() {
-    setFilters(DEFAULT_FILTERS);
-    setPage(1);
+    setFilters(DEFAULT_FILTERS)
+    setPage(1)
   }
 
   function toggleSort(field: SortField) {
@@ -241,10 +241,10 @@ function AdminAuthedView({
             : "asc"
           : field === "created_at"
             ? "desc"
-            : "asc";
-      return { ...f, sortField: field, sortDir: nextDir };
-    });
-    setPage(1);
+            : "asc"
+      return { ...f, sortField: field, sortDir: nextDir }
+    })
+    setPage(1)
   }
 
   // Realtime subscription — stable, never re-subscribes
@@ -256,44 +256,41 @@ function AdminAuthedView({
         { event: "*", schema: "public", table: "contact_submissions" },
         (payload) => {
           if (payload.eventType === "DELETE") {
-            const old = payload.old as { id: string };
-            setSelected((cur) => (cur?.id === old.id ? null : cur));
+            const old = payload.old as { id: string }
+            setSelected((cur) => (cur?.id === old.id ? null : cur))
           }
-          queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] });
-        },
+          queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] })
+        }
       )
-      .subscribe();
+      .subscribe()
     return () => {
-      void supabase.removeChannel(channel);
-    };
-  }, [queryClient]);
+      void supabase.removeChannel(channel)
+    }
+  }, [queryClient])
 
   const deleteSubmission = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
-      if (error) throw error;
-      return id;
+      const { error } = await supabase.from("contact_submissions").delete().eq("id", id)
+      if (error) throw error
+      return id
     },
     onSuccess: (id) => {
-      if (selected?.id === id) setSelected(null);
-      queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] });
+      if (selected?.id === id) setSelected(null)
+      queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] })
     },
-    onError: (e) => alert(e instanceof Error ? e.message : "Delete failed"),
-  });
+    onError: (e) => alert(e instanceof Error ? e.message : "Delete failed")
+  })
 
   function handleDelete(id: string) {
-    if (!confirm("Delete this submission permanently?")) return;
-    deleteSubmission.mutate(id);
+    if (!confirm("Delete this submission permanently?")) return
+    deleteSubmission.mutate(id)
   }
 
   const hasFilters =
-    Boolean(filters.q.trim()) ||
-    filters.from !== "" ||
-    filters.to !== "" ||
-    filters.field !== "all";
+    Boolean(filters.q.trim()) || filters.from !== "" || filters.to !== "" || filters.field !== "all"
 
   const sortIndicator = (field: SortField) =>
-    filters.sortField === field ? (filters.sortDir === "asc" ? " ↑" : " ↓") : "";
+    filters.sortField === field ? (filters.sortDir === "asc" ? " ↑" : " ↓") : ""
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -327,7 +324,11 @@ function AdminAuthedView({
         <FilterBar
           filters={filters}
           onUpdate={updateFilters}
-          onRefresh={() => queryClient.invalidateQueries({ queryKey: ["admin", "submissions"] })}
+          onRefresh={() =>
+            queryClient.invalidateQueries({
+              queryKey: ["admin", "submissions"]
+            })
+          }
           onClear={clearFilters}
           hasFilters={hasFilters}
         />
@@ -356,16 +357,16 @@ function AdminAuthedView({
         />
       )}
     </div>
-  );
+  )
 }
 
 function SubmissionCountBadge({ filters, page }: { filters: Filters; page: number }) {
-  const { data } = useSuspenseQuery(submissionsQueryOptions(filters, page));
+  const { data } = useSuspenseQuery(submissionsQueryOptions(filters, page))
   return (
     <span className="rounded-full bg-surface px-2 py-0.5 text-xs text-muted-foreground">
       {data.total}
     </span>
-  );
+  )
 }
 
 function FilterBar({
@@ -373,13 +374,13 @@ function FilterBar({
   onUpdate,
   onRefresh,
   onClear,
-  hasFilters,
+  hasFilters
 }: {
-  filters: Filters;
-  onUpdate: (patch: Partial<Filters>) => void;
-  onRefresh: () => void;
-  onClear: () => void;
-  hasFilters: boolean;
+  filters: Filters
+  onUpdate: (patch: Partial<Filters>) => void
+  onRefresh: () => void
+  onClear: () => void
+  hasFilters: boolean
 }) {
   return (
     <div className="mb-4 grid grid-cols-1 gap-3 rounded-xl border border-border bg-surface/30 p-4 sm:grid-cols-2 lg:grid-cols-12">
@@ -448,7 +449,7 @@ function FilterBar({
         </div>
       )}
     </div>
-  );
+  )
 }
 
 function TableSkeleton() {
@@ -456,7 +457,7 @@ function TableSkeleton() {
     <div className="overflow-hidden rounded-xl border border-border">
       <div className="h-64 animate-pulse bg-surface/30" />
     </div>
-  );
+  )
 }
 
 function SubmissionsTable({
@@ -468,23 +469,23 @@ function SubmissionsTable({
   onDelete,
   toggleSort,
   sortIndicator,
-  hasFilters,
+  hasFilters
 }: {
-  filters: Filters;
-  page: number;
-  onPageChange: (page: number) => void;
-  onPageSizeChange: (size: number) => void;
-  onSelect: (s: Submission) => void;
-  onDelete: (id: string) => void;
-  toggleSort: (f: SortField) => void;
-  sortIndicator: (f: SortField) => string;
-  hasFilters: boolean;
+  filters: Filters
+  page: number
+  onPageChange: (page: number) => void
+  onPageSizeChange: (size: number) => void
+  onSelect: (s: Submission) => void
+  onDelete: (id: string) => void
+  toggleSort: (f: SortField) => void
+  sortIndicator: (f: SortField) => string
+  hasFilters: boolean
 }) {
-  const { data } = useSuspenseQuery(submissionsQueryOptions(filters, page));
-  const { rows, total } = data;
-  const totalPages = Math.max(1, Math.ceil(total / filters.pageSize));
-  const rangeStart = total === 0 ? 0 : (page - 1) * filters.pageSize + 1;
-  const rangeEnd = Math.min(page * filters.pageSize, total);
+  const { data } = useSuspenseQuery(submissionsQueryOptions(filters, page))
+  const { rows, total } = data
+  const totalPages = Math.max(1, Math.ceil(total / filters.pageSize))
+  const rangeStart = total === 0 ? 0 : (page - 1) * filters.pageSize + 1
+  const rangeEnd = Math.min(page * filters.pageSize, total)
 
   return (
     <>
@@ -614,27 +615,27 @@ function SubmissionsTable({
         </div>
       </div>
     </>
-  );
+  )
 }
 
 function SubmissionDialog({
   submission,
   userId,
   onClose,
-  onDelete,
+  onDelete
 }: {
-  submission: Submission;
-  userId: string;
-  onClose: () => void;
-  onDelete: () => void;
+  submission: Submission
+  userId: string
+  onClose: () => void
+  onDelete: () => void
 }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+      if (e.key === "Escape") onClose()
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [onClose])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -682,71 +683,75 @@ function SubmissionDialog({
         </Suspense>
       </div>
     </div>
-  );
+  )
 }
 
 function RepliesPanel({
   submission,
   userId,
-  onDelete,
+  onDelete
 }: {
-  submission: Submission;
-  userId: string;
-  onDelete: () => void;
+  submission: Submission
+  userId: string
+  onDelete: () => void
 }) {
-  const queryClient = useQueryClient();
-  const { data: replies } = useSuspenseQuery(repliesQueryOptions(submission.id));
-  const [body, setBody] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const queryClient = useQueryClient()
+  const { data: replies } = useSuspenseQuery(repliesQueryOptions(submission.id))
+  const [body, setBody] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const addReply = useMutation({
     mutationFn: async (text: string) => {
       const { data, error: dbError } = await supabase
         .from("submission_replies")
-        .insert({ submission_id: submission.id, admin_user_id: userId, body: text })
+        .insert({
+          submission_id: submission.id,
+          admin_user_id: userId,
+          body: text
+        })
         .select()
-        .single();
-      if (dbError) throw dbError;
-      return data as Reply;
+        .single()
+      if (dbError) throw dbError
+      return data as Reply
     },
     onSuccess: (newReply) => {
       queryClient.setQueryData(
         repliesQueryOptions(submission.id).queryKey,
-        (prev: Reply[] | undefined) => [...(prev ?? []), newReply],
-      );
-      setBody("");
-      textareaRef.current?.focus();
+        (prev: Reply[] | undefined) => [...(prev ?? []), newReply]
+      )
+      setBody("")
+      textareaRef.current?.focus()
     },
-    onError: (e) => setError(e instanceof Error ? e.message : "Save failed"),
-  });
+    onError: (e) => setError(e instanceof Error ? e.message : "Save failed")
+  })
 
   const deleteReply = useMutation({
     mutationFn: async (id: string) => {
-      const { error: dbError } = await supabase.from("submission_replies").delete().eq("id", id);
-      if (dbError) throw dbError;
-      return id;
+      const { error: dbError } = await supabase.from("submission_replies").delete().eq("id", id)
+      if (dbError) throw dbError
+      return id
     },
     onSuccess: (id) => {
       queryClient.setQueryData(
         repliesQueryOptions(submission.id).queryKey,
-        (prev: Reply[] | undefined) => (prev ?? []).filter((r) => r.id !== id),
-      );
+        (prev: Reply[] | undefined) => (prev ?? []).filter((r) => r.id !== id)
+      )
     },
-    onError: (e) => alert(e instanceof Error ? e.message : "Delete failed"),
-  });
+    onError: (e) => alert(e instanceof Error ? e.message : "Delete failed")
+  })
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const trimmed = body.trim();
-    if (trimmed.length < 1) return;
-    setError(null);
-    addReply.mutate(trimmed);
+    e.preventDefault()
+    const trimmed = body.trim()
+    if (trimmed.length < 1) return
+    setError(null)
+    addReply.mutate(trimmed)
   }
 
   function handleDeleteReply(id: string) {
-    if (!confirm("Delete this reply?")) return;
-    deleteReply.mutate(id);
+    if (!confirm("Delete this reply?")) return
+    deleteReply.mutate(id)
   }
 
   return (
@@ -824,5 +829,5 @@ function RepliesPanel({
         </div>
       </form>
     </>
-  );
+  )
 }

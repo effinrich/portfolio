@@ -1,18 +1,20 @@
 const items = [
-  "React 18+",
+  "React 19",
   "TypeScript",
+  "Radix UI",
+  "Accessibility",
+  "WCAG 2.1 AA",
   "Next.js",
   "TanStack Start",
   "React Native",
   "Expo",
-  "Storybook 8+",
+  "Storybook 10",
   "Chromatic",
+  "shadcn/ui",
   "Nx",
   "Turborepo",
   "Chakra UI",
-  "shadcn/ui",
   "Tamagui",
-  "Radix UI",
   "Figma MCP",
   "Claude Code",
   "Cursor",
@@ -21,11 +23,11 @@ const items = [
   "tRPC",
   "Playwright",
   "Vitest",
-  "Supabase",
-];
+  "Supabase"
+]
 
 export function Marquee() {
-  const row = [...items, ...items];
+  const row = [...items, ...items]
   return (
     <section className="border-y border-border bg-surface/40 py-5">
       <div className="ticker overflow-hidden">
@@ -39,5 +41,5 @@ export function Marquee() {
         </ul>
       </div>
     </section>
-  );
+  )
 }

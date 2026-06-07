@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Separator } from "@/components/ui/separator";
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { Separator } from "@/components/ui/separator"
 
 const meta: Meta<typeof Separator> = {
   title: "UI/Separator",
@@ -8,11 +8,11 @@ const meta: Meta<typeof Separator> = {
   args: { orientation: "horizontal", decorative: true },
   argTypes: {
     orientation: { control: "radio", options: ["horizontal", "vertical"] },
-    decorative: { control: "boolean" },
-  },
-};
-export default meta;
-type Story = StoryObj<typeof Separator>;
+    decorative: { control: "boolean" }
+  }
+}
+export default meta
+type Story = StoryObj<typeof Separator>
 
 export const Horizontal: Story = {
   render: (args) => (
@@ -21,8 +21,8 @@ export const Horizontal: Story = {
       <Separator {...args} />
       <div>Below</div>
     </div>
-  ),
-};
+  )
+}
 export const Vertical: Story = {
   args: { orientation: "vertical" },
   render: (args) => (
@@ -31,5 +31,5 @@ export const Vertical: Story = {
       <Separator {...args} />
       <span>Right</span>
     </div>
-  ),
-};
+  )
+}

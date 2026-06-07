@@ -1,32 +1,32 @@
-import { SectionHeading } from "./section-heading";
+import { SectionHeading } from "./section-heading"
 
 const roles = [
   {
     company: "ForgeKit",
-    role: "Founder & Principal Engineer",
-    period: "Jan 2026 — Present",
+    role: "Open-Source Author & Frontend Engineer",
+    period: "2024 — Present",
     location: "Remote",
     blurb:
-      "Published the first MCP servers purpose-built for Figma → React design system workflows. 5,703+ external npm installs and active production adoption.",
-    tags: ["MCP", "Nx", "Storybook", "Figma Code Connect"],
+      "Open-source CLI + MCP servers that sync Figma design tokens into Radix/shadcn, Tailwind, and Chakra codebases — design-to-code for design-system teams. forgekit-storybook-mcp passed 5,703+ npm downloads (MIT).",
+    tags: ["MCP", "Radix", "Storybook", "Figma Code Connect"]
   },
   {
-    company: "micro1",
+    company: "micro1 / Mercor",
     role: "Senior Frontend Engineer · AI Training & Evals",
-    period: "Nov 2025 — Jan 2026",
+    period: "Nov 2025 — Present",
     location: "Remote · Contract",
     blurb:
-      "Designed evaluation prompts and UI for AI coding agents. Advised eng teams on Claude Code & Cursor adoption in production.",
-    tags: ["TanStack Start", "Chakra UI", "Prompt Eng"],
+      "Author React/TypeScript evaluation tasks and developer UI for AI coding agents. Advise eng teams on Claude Code & Cursor adoption in production.",
+    tags: ["React 19", "TanStack Start", "Chakra UI", "Storybook"]
   },
   {
     company: "Redesign Health",
-    role: "Engineering Director (0→1)",
+    role: "Engineering Director · Staff FE & Tech Lead (0→1)",
     period: "Jul 2022 — May 2024",
     location: "Remote",
     blurb:
-      "Double-promoted to ED. Led 3 cross-functional teams (15+) launching multiple greenfield healthcare SaaS products. Built a 50+ component design system in Storybook + Chromatic that cut dev time 30% across a 10–15 dev org and unified Figma → React handoff.",
-    tags: ["0→1 SaaS", "Design System", "Storybook", "Chromatic", "Zustand"],
+      "Double-promoted to ED while staying hands-on. Led 3 cross-functional teams (15+) launching greenfield healthcare SaaS. Built a 50+ component, accessible design system in Storybook + Chromatic that cut dev time 30% across a 10–15 dev org and unified Figma → React handoff.",
+    tags: ["0→1 SaaS", "Design System", "Storybook", "Chromatic", "Zustand"]
   },
   {
     company: "Pineapple Corporation",
@@ -35,7 +35,7 @@ const roles = [
     location: "Remote · Contract",
     blurb:
       "Stood up an Nx monorepo hosting 8+ apps; cross-platform Expo/RN serving 100K+ users with 60+ Storybook-driven components shared across web and native.",
-    tags: ["Nx Monorepo", "Expo", "NativeBase", "Storybook"],
+    tags: ["Nx Monorepo", "Expo", "NativeBase", "Storybook"]
   },
   {
     company: "PHC Global",
@@ -44,7 +44,7 @@ const roles = [
     location: "Remote",
     blurb:
       "0→1 enterprise B2B fintech SaaS. Architected an Nx monorepo with 30+ shared libs, gRPC middleware, and a Chakra-based design system — cut infra cost 30% and shipped 8 weeks early.",
-    tags: ["Enterprise SaaS", "Nx Monorepo", "Chakra UI", "gRPC", "GCP"],
+    tags: ["Enterprise SaaS", "Nx Monorepo", "Chakra UI", "gRPC", "GCP"]
   },
   {
     company: "Freebird",
@@ -53,9 +53,9 @@ const roles = [
     location: "Santa Monica, CA",
     blurb:
       "Built one of the earliest production React design systems on Storybook (2016) — a 200-component library spanning B2B, B2C, and React Native. Pioneered Storybook + React + Figma as a shared source of truth for design, product, and engineering well before Code Connect existed.",
-    tags: ["Design System (2016)", "Storybook", "React Native", "Figma"],
-  },
-];
+    tags: ["Design System (2016)", "Storybook", "React Native", "Figma"]
+  }
+]
 
 export function Experience() {
   return (
@@ -64,7 +64,7 @@ export function Experience() {
         <SectionHeading
           eyebrow="Experience"
           title="Frontend, design systems, and AI-native tooling."
-          description="Each role traded velocity, scale, and depth in different combinations — from 0→1 design systems to shipping MCP servers used in production by external teams."
+          description="Each role traded velocity, scale, and depth in different combinations — from 0→1 design systems to shipping open-source MCP servers for design-system teams."
         />
 
         <ol className="relative space-y-4">
@@ -99,5 +99,5 @@ export function Experience() {
         </ol>
       </div>
     </section>
-  );
+  )
 }

@@ -9,9 +9,9 @@ export function Hero() {
             Remote
           </span>
           <span className="chip font-mono">React + TypeScript</span>
+          <span className="chip font-mono">Radix · Accessibility</span>
           <span className="chip font-mono">Storybook · Chromatic</span>
-          <span className="chip font-mono">Nx monorepos at scale</span>
-          <span className="chip font-mono">5,703+ npm installs</span>
+          <span className="chip font-mono">5,703+ npm downloads</span>
         </div>
 
         <h1 className="mt-6 text-balance text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
@@ -20,11 +20,11 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-          I&apos;m <span className="text-foreground font-medium">Rich Tillman</span> — Principal
-          Frontend Engineer. I architect{" "}
-          <span className="text-foreground font-medium">enterprise-scale</span> React platforms, Nx
-          monorepos, and 0→1 SaaS products — and the design systems (Storybook + React + Figma) that
-          keep design, product, and engineering shipping in lockstep.
+          I&apos;m <span className="text-foreground font-medium">Rich Tillman</span> — a{" "}
+          <span className="text-foreground font-medium">Senior/Staff Frontend Engineer</span>. I
+          build accessible, production React interfaces on Radix and headless UI — and the design
+          systems (Storybook + React + Figma) that keep design, product, and engineering shipping in
+          lockstep.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -68,10 +68,10 @@ export function Hero() {
         {/* Quick stats */}
         <dl className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4">
           {[
-            ["5,703+", "npm installs · ForgeKit MCP"],
+            ["5,703+", "npm downloads · ForgeKit MCP"],
             ["200+", "component design system"],
             ["500K+", "users on shipped RN apps"],
-            ["$400K/mo", "revenue uplift · NARS AR"],
+            ["$400K/mo", "revenue uplift · NARS AR"]
           ].map(([k, v]) => (
             <div key={k} className="bg-background p-5">
               <dt className="font-mono text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
@@ -83,5 +83,5 @@ export function Hero() {
         </dl>
       </div>
     </section>
-  );
+  )
 }

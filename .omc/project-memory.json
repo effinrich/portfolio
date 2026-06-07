@@ -1,0 +1,154 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1780793341152,
+  "projectRoot": "/Users/richtillman/Documents/GitHub/portfolio",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": ["package.json"]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": ["tsconfig.json"]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "19.2.0",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.0",
+        "category": "frontend"
+      },
+      {
+        "name": "vite",
+        "version": "7.3.1",
+        "category": "build"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "bun build",
+    "testCommand": null,
+    "lintCommand": "bun lint",
+    "devCommand": "bun dev",
+    "scripts": {
+      "dev": "vite dev",
+      "build": "vite build",
+      "build:dev": "vite build --mode development",
+      "preview": "vite preview",
+      "lint": "oxlint",
+      "lint:fix": "oxlint --fix",
+      "format": "oxfmt .",
+      "format:check": "oxfmt --check .",
+      "typecheck": "tsc --noEmit",
+      "bundle": "tsdown",
+      "prepare": "lefthook install",
+      "storybook": "storybook dev -p 6006",
+      "build-storybook": "storybook build"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": ["src"],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "ContextPool": {
+      "path": "ContextPool",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1780793341001,
+      "keyFiles": []
+    },
+    "resume": {
+      "path": "resume",
+      "purpose": null,
+      "fileCount": 17,
+      "lastAccessed": 1780793341014,
+      "keyFiles": [
+        "CLAUDE.md",
+        "FACTS.md",
+        "Flick-Interview-Prep.md",
+        "README.md",
+        "RichTillman_CoverLetter_PrizePicks.docx"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 5,
+      "lastAccessed": 1780793341124,
+      "keyFiles": ["routeTree.gen.ts", "router.tsx", "server.ts", "start.ts", "styles.css"]
+    },
+    "supabase": {
+      "path": "supabase",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1780793341127,
+      "keyFiles": ["config.toml"]
+    },
+    "src/assets": {
+      "path": "src/assets",
+      "purpose": "Static assets",
+      "fileCount": 4,
+      "lastAccessed": 1780793341138,
+      "keyFiles": ["project-figma-mcp.jpg", "project-forgekit-cli.jpg", "project-storybook-mcp.jpg"]
+    },
+    "src/components": {
+      "path": "src/components",
+      "purpose": "UI components",
+      "fileCount": 1,
+      "lastAccessed": 1780793341139,
+      "keyFiles": []
+    },
+    "src/lib": {
+      "path": "src/lib",
+      "purpose": "Library code",
+      "fileCount": 3,
+      "lastAccessed": 1780793341140,
+      "keyFiles": ["error-capture.ts", "error-page.ts", "utils.ts"]
+    },
+    "src/routes": {
+      "path": "src/routes",
+      "purpose": "Route handlers",
+      "fileCount": 4,
+      "lastAccessed": 1780793341141,
+      "keyFiles": ["__root.tsx", "admin.tsx", "index.tsx"]
+    },
+    "supabase/migrations": {
+      "path": "supabase/migrations",
+      "purpose": "Database migrations",
+      "fileCount": 5,
+      "lastAccessed": 1780793341142,
+      "keyFiles": [
+        "20260508072852_52c16a28-918c-4432-b9f7-bf22dd075022.sql",
+        "20260508073005_fd85c6ed-5de4-4f1a-b1f0-1aa03b4becc1.sql",
+        "20260508073023_72736879-5844-4c2b-86b6-7766bea58be8.sql"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

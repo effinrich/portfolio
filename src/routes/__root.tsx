@@ -1,15 +1,15 @@
-import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
   Outlet,
   Link,
   createRootRouteWithContext,
   useRouter,
   HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
+  Scripts
+} from "@tanstack/react-router"
 
-import appCss from "../styles.css?url";
+import appCss from "../styles.css?url"
 
 function NotFoundComponent() {
   return (
@@ -30,15 +30,15 @@ function NotFoundComponent() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-    console.error(error);
-  }, [error]);
+    console.error(error)
+  }, [error])
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -52,8 +52,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
-              router.invalidate();
-              reset();
+              router.invalidate()
+              reset()
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
@@ -68,7 +68,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
@@ -80,14 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills.",
+          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills."
       },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Rich Tillman | Portfolio" },
       {
         property: "og:description",
         content:
-          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills.",
+          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills."
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -96,31 +96,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "twitter:description",
         content:
-          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills.",
+          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills."
       },
       {
         property: "og:image",
         content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png",
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png"
       },
       {
         name: "twitter:image",
         content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png",
-      },
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png"
+      }
     ],
     links: [
       {
         rel: "stylesheet",
-        href: appCss,
-      },
-    ],
+        href: appCss
+      }
+    ]
   }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
-  errorComponent: ErrorComponent,
-});
+  errorComponent: ErrorComponent
+})
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
@@ -133,15 +133,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient } = Route.useRouteContext()
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
     </QueryClientProvider>
-  );
+  )
 }
