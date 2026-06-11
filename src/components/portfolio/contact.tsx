@@ -2,22 +2,14 @@ import { SectionHeading } from "./section-heading"
 import { ContactForm } from "./contact-form"
 
 const links = [
-  {
-    label: "Email",
-    value: "richtillman@pm.me",
-    href: "mailto:richtillman@pm.me"
-  },
+  { label: "Email", value: "richtillman@pm.me", href: "mailto:richtillman@pm.me" },
   { label: "Phone", value: "843-834-0041", href: "tel:+18438340041" },
-  {
-    label: "LinkedIn",
-    value: "in/effinrich",
-    href: "https://linkedin.com/in/effinrich"
-  },
+  { label: "LinkedIn", value: "in/effinrich", href: "https://linkedin.com/in/effinrich" },
   { label: "npm", value: "~effinrich", href: "https://npmjs.com/~effinrich" },
   { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" }
 ]
 
-export function Contact() {
+export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error" | "invalid" }) {
   return (
     <section id="contact" className="relative py-24 md:py-32">
       <div className="container-x">
@@ -35,7 +27,7 @@ export function Contact() {
             <div>
               <SectionHeading
                 eyebrow="Let's build"
-                title="Open to senior frontend roles in design systems, accessibility, and developer tooling."
+                title="Open to Staff and Principal roles in AI developer tooling, design systems, or platform frontend."
                 description="Fully remote. Happiest where engineering excellence and design rigor meet — and where the team treats AI tooling as leverage, not a gimmick."
               />
               <a
@@ -64,7 +56,7 @@ export function Contact() {
               </ul>
             </div>
 
-            <ContactForm />
+            <ContactForm initialStatus={submissionStatus} />
           </div>
         </div>
 

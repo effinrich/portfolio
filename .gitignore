@@ -16,6 +16,9 @@ dist-ssr
 .nitro
 *.local
 
+# Storybook build output (produced by `bun run build-storybook`)
+storybook-static/
+
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
 
@@ -37,4 +40,4 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 .env
-resume
+.omc

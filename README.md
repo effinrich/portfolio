@@ -10,7 +10,7 @@ Personal portfolio site. Public portfolio at `/`, authenticated admin inbox at `
 - **Styling:** Tailwind v4
 - **Data:** Supabase (Postgres, RLS, Realtime)
 - **Runtime:** Cloudflare Workers via Wrangler
-- **Tooling:** Bun, oxlint, oxfmt, lefthook, Storybook 10+
+- **Tooling:** Bun, oxlint, oxfmt, lefthook, Storybook 10+, Chromatic
 - **Language:** TypeScript (strict)
 
 ## Architecture
@@ -48,14 +48,28 @@ VITE_SUPABASE_PROJECT_ID
 
 ## Scripts
 
-| Script              | Purpose                                      |
-| ------------------- | -------------------------------------------- |
-| `bun run dev`       | Local dev server                             |
-| `bun run build`     | Production build (Cloudflare Workers target) |
-| `bun run lint`      | oxlint                                       |
-| `bun run format`    | oxfmt                                        |
-| `bun run storybook` | Storybook 8 component sandbox                |
-| `bun run typecheck` | `tsc --noEmit`                               |
+| Script                    | Purpose                                      |
+| ------------------------- | -------------------------------------------- |
+| `bun run dev`             | Local dev server                             |
+| `bun run build`           | Production build (Cloudflare Workers target) |
+| `bun run lint`            | oxlint                                       |
+| `bun run format`          | oxfmt                                        |
+| `bun run typecheck`       | `tsc --noEmit`                               |
+| `bun run storybook`       | Storybook 10 component sandbox               |
+| `bun run build-storybook` | Static Storybook build                       |
+| `bun run chromatic`       | Publish + visual-regression run on Chromatic |
+
+## Storybook & visual QA
+
+The full component sandbox — Tailwind tokens, shadcn primitives, and the portfolio's own design components — runs in Storybook 10 with the a11y, docs, and themes addons.
+
+> **Live sandbox →** [Storybook on Chromatic](https://6a06fa237708f9da65107759-puycxjsmyy.chromatic.com/)
+>
+> Always-on, deploy-previewed, and the same build the visual-regression suite snapshots against.
+
+Every pull request runs [`.github/workflows/chromatic.yml`](.github/workflows/chromatic.yml), which publishes the Storybook build to Chromatic and diffs it against the `main` baseline. `fetch-depth: 0` is required so TurboSnap can narrow the snapshot set to only the stories affected by the diff — full rebuilds are reserved for changes under `src/**`, `.storybook/**`, `chromatic.config.json`, or the lockfile.
+
+Run it locally against your branch with `bun run chromatic` (requires `CHROMATIC_PROJECT_TOKEN`).
 
 ## Deployment
 
