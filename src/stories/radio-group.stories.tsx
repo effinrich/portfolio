@@ -36,7 +36,7 @@ export const SelectInteraction: Story = {
   render: Default.render,
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByLabelText("Compact"))
+    await userEvent.click(canvas.getByLabelText("compact"))
     await expect(args.onValueChange).toHaveBeenCalledWith("compact")
   }
 }
