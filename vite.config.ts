@@ -7,14 +7,10 @@ import tailwindcss from "@tailwindcss/vite"
 import { cloudflare } from "@cloudflare/vite-plugin"
 
 const config = defineConfig({
-  tanstackStart: {
-    server: { entry: "server" }
-  },
-  resolve: { tsconfigPaths: true },
   plugins: [
     cloudflare({ viteEnvironment: { name: "ssr" } }),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({ server: { entry: "server" } }),
     viteReact()
   ]
 })

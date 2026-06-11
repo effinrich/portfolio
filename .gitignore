@@ -41,3 +41,5 @@ tsconfig.tsbuildinfo
 *.sw?
 .env
 .omc
+resume
+.omc/project-memory.json
