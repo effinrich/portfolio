@@ -18,22 +18,17 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      {
-        title: "Rich Tillman — Senior Frontend Engineer · Design Systems & Accessibility"
-      },
+      { title: "Rich Tillman — Principal Frontend Engineer & Design Systems Architect" },
       {
         name: "description",
         content:
-          "Rich Tillman is a Senior/Staff Frontend Engineer building accessible React interfaces on Radix, design systems, and design-to-code tooling. Creator of ForgeKit."
+          "Rich Tillman is a Principal Frontend Engineer building React design systems, MCP-driven developer tooling, and AI-native workflows. Creator of ForgeKit."
       },
-      {
-        property: "og:title",
-        content: "Rich Tillman — Senior Frontend Engineer"
-      },
+      { property: "og:title", content: "Rich Tillman — Principal Frontend Engineer" },
       {
         property: "og:description",
         content:
-          "Accessible React interfaces on Radix, design systems, and design-to-code tooling. Creator of ForgeKit MCP servers (5,703+ npm downloads)."
+          "Shipping React UI platforms, design systems, and AI developer tooling. Creator of ForgeKit MCP servers (5,703+ installs)."
       }
     ]
   })

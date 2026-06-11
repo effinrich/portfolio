@@ -17,11 +17,7 @@ const links = [
   { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" }
 ]
 
-export function Contact({
-  submissionStatus,
-}: {
-  submissionStatus?: "ok" | "error" | "invalid"
-}) {
+export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error" | "invalid" }) {
   return (
     <section id="contact" className="relative py-24 md:py-32">
       <div className="container-x">
@@ -39,12 +35,12 @@ export function Contact({
             <div>
               <SectionHeading
                 eyebrow="Let's build"
-                title="Open to senior frontend roles in design systems, accessibility, and developer tooling."
+                title="Open to Staff and Principal roles in AI developer tooling, design systems, or platform frontend."
                 description="Fully remote. Happiest where engineering excellence and design rigor meet — and where the team treats AI tooling as leverage, not a gimmick."
               />
               <a
                 href="mailto:richtillman@pm.me"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--glow-primary)] transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-(--glow-primary)sition-transform hover:-translate-y-0.5"
               >
                 Start a conversation →
               </a>

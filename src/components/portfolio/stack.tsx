@@ -23,7 +23,7 @@ const groups = [
   },
   {
     label: "Testing & a11y",
-    items: ["Vitest", "Jest", "Playwright", "RTL", "ARIA patterns", "Storybook a11y", "WCAG 2.1 AA"]
+    items: ["Vitest", "Jest", "Playwright", "RTL", "Storybook a11y", "WCAG 2.1 AA"]
   }
 ]
 

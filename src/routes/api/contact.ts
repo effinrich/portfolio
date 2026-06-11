@@ -6,14 +6,14 @@ const schema = z.object({
   name: z.string().trim().min(1).max(100),
   email: z.string().trim().email().max(255),
   message: z.string().trim().min(10).max(1000),
-  website: z.string().optional(), // honeypot
+  website: z.string().optional() // honeypot
 })
 
 function redirectTo(url: string, status: "ok" | "error" | "invalid") {
   const origin = new URL(url).origin
   return new Response(null, {
     status: 303,
-    headers: { Location: `${origin}/?contact=${status}#contact` },
+    headers: { Location: `${origin}/?contact=${status}#contact` }
   })
 }
 
@@ -40,10 +40,10 @@ export const Route = createFileRoute("/api/contact")({
         const { error } = await supabaseAdmin.from("contact_submissions").insert({
           name: parsed.data.name,
           email: parsed.data.email,
-          message: parsed.data.message,
+          message: parsed.data.message
         })
         return redirectTo(request.url, error ? "error" : "ok")
-      },
-    },
-  },
+      }
+    }
+  }
 })

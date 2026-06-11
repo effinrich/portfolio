@@ -8,7 +8,7 @@ const links = [
 ]
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false)
+  const [, setScrolled] = useState(false)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
