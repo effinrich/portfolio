@@ -28,6 +28,7 @@ tsconfig.tsbuildinfo
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
+.wrangler/
 
 # Editor directories and files
 .vscode/*
@@ -40,3 +41,10 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 .env
+resume
+.qodo
+.omc
+.omc/*
+wrangler.jsonc
+.claude
+.claude/*
