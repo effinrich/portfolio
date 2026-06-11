@@ -11,12 +11,22 @@ jobs:
     if: |
       (github.event.comment.body == '/oc' ||
       startsWith(github.event.comment.body, '/oc ') ||
+      startsWith(github.event.comment.body, format('/oc{0}', fromJSON('"\n"'))) ||
       contains(github.event.comment.body, ' /oc ') ||
+      contains(github.event.comment.body, format(' /oc{0}', fromJSON('"\n"'))) ||
+      contains(github.event.comment.body, format('{0}/oc{1}', fromJSON('"\n"'), fromJSON('"\n"'))) ||
+      contains(github.event.comment.body, format('{0}/oc ', fromJSON('"\n"'))) ||
       endsWith(github.event.comment.body, ' /oc') ||
+      endsWith(github.event.comment.body, format('{0}/oc', fromJSON('"\n"'))) ||
       github.event.comment.body == '/opencode' ||
       startsWith(github.event.comment.body, '/opencode ') ||
+      startsWith(github.event.comment.body, format('/opencode{0}', fromJSON('"\n"'))) ||
       contains(github.event.comment.body, ' /opencode ') ||
-      endsWith(github.event.comment.body, ' /opencode')) &&
+      contains(github.event.comment.body, format(' /opencode{0}', fromJSON('"\n"'))) ||
+      contains(github.event.comment.body, format('{0}/opencode{1}', fromJSON('"\n"'), fromJSON('"\n"'))) ||
+      contains(github.event.comment.body, format('{0}/opencode ', fromJSON('"\n"'))) ||
+      endsWith(github.event.comment.body, ' /opencode') ||
+      endsWith(github.event.comment.body, format('{0}/opencode', fromJSON('"\n"'))) &&
       (github.event.comment.author_association == 'OWNER' ||
       github.event.comment.author_association == 'MEMBER' ||
       github.event.comment.author_association == 'COLLABORATOR')
