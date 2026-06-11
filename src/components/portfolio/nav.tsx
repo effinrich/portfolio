@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react"
-
 const links = [
   { href: "#work", label: "Work" },
   { href: "#projects", label: "Projects" },
@@ -8,14 +6,6 @@ const links = [
 ]
 
 export function Nav() {
-  const [, setScrolled] = useState(false)
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/70 backdrop-blur-xl">
       <nav className="container-x flex h-16 items-center justify-between">

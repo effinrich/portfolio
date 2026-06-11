@@ -1,7 +1,7 @@
 # Flick — CEO Interview Prep
 
 **Interview:** Sunday with Ray Wang, CEO/co-founder of Flick (flick.art)
-**Stage:** Just-funded Seed ($6M, announced May 14, 2026 — _yesterday_)
+**Stage:** Just-funded Seed ($6M, announced May 14, 2026)
 **Source:** Ray tapped you directly. This is inbound, not a cold application.
 **Likely format:** 30–60 min, conversational, single-panel. At seed, CEO interviews are about chemistry, motivation, ambiguity tolerance, and whether the CEO wants you next to them for five years. Less a tech screen than a "do we click" call.
 

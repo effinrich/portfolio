@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { expect, fn, userEvent, within } from "storybook/test"
+import { PointerEventsCheckLevel } from "@testing-library/user-event"
 import { Button } from "@/components/ui/button"
 import { Mail } from "lucide-react"
 
@@ -62,7 +63,7 @@ export const DisabledDoesNotFire: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement)
     const button = canvas.getByRole("button")
-    await userEvent.click(button)
+    await userEvent.click(button, { pointerEventsCheck: PointerEventsCheckLevel.Never })
     await expect(args.onClick).not.toHaveBeenCalled()
   }
 }
