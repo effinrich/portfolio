@@ -43,4 +43,3 @@ tsconfig.tsbuildinfo
 .omc
 resume
 .omc/*
-.omc/.project-memory.json
