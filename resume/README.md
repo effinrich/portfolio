@@ -4,11 +4,9 @@ Versioned, code-built `.docx`. Edit content in `build-resume.mjs` (top of file i
 
 ## Build
 
-```bash
 cd resume
-npm install docx           # one-time, ~5 MB
-node build-resume.mjs
-```
+bun add docx           # one-time, ~5 MB
+bun run build-resume.mjs
 
 Output: `RichTillman_Resume.docx` in this folder.
 
