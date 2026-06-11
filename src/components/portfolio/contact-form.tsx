@@ -1,130 +1,101 @@
-import { useRef, useState } from "react"
-import { z } from "zod"
-import { supabase } from "@/integrations/supabase/client"
+import { useRef, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { FormSuccessCard } from "@/components/forms/form-success";
+import { SubmitButton } from "@/components/forms/submit-button";
+import { contactSchema, contactDefaults, MESSAGE_MAX_LENGTH } from "./contact-schema";
 
-const schema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "Name is required")
-    .max(100, "Name must be less than 100 characters"),
-  email: z
-    .string()
-    .trim()
-    .email("Enter a valid email")
-    .max(255, "Email must be less than 255 characters"),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Message must be at least 10 characters")
-    .max(1000, "Message must be less than 1000 characters"),
-})
-
-type Errors = Partial<Record<"name" | "email" | "message", string>>
+type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
 // Bots typically submit forms in well under a second.
-const MIN_SUBMIT_MS = 1500
+const MIN_SUBMIT_MS = 1500;
 
 export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" | "invalid" }) {
-  const [values, setValues] = useState({ name: "", email: "", message: "" })
-  const [website, setWebsite] = useState("") // honeypot — must stay empty
-  const [errors, setErrors] = useState<Errors>({})
+  const [values, setValues] = useState(contactDefaults);
+  const [website, setWebsite] = useState(""); // honeypot — must stay empty
+  const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success">(
     initialStatus === "ok" ? "success" : "idle",
-  )
+  );
   const [formError, setFormError] = useState<string | null>(
     initialStatus === "error"
       ? "Something went wrong sending your message. Please try again."
       : initialStatus === "invalid"
         ? "Please check your entries and try again."
         : null,
-  )
-  const mountedAt = useRef<number>(Date.now())
+  );
+  const mountedAt = useRef<number>(Date.now());
 
   function update<K extends keyof typeof values>(key: K, value: string) {
-    setValues((v) => ({ ...v, [key]: value }))
-    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }))
+    setValues((v) => ({ ...v, [key]: value }));
+    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setFormError(null)
+    e.preventDefault();
+    setFormError(null);
 
     // Spam check 1: honeypot field. Real users can't see it; bots fill every input.
     if (website.trim() !== "") {
       // Pretend success so bots don't retry, but don't actually do anything.
-      setStatus("success")
-      return
+      setStatus("success");
+      return;
     }
 
     // Spam check 2: minimum time-to-submit.
     if (Date.now() - mountedAt.current < MIN_SUBMIT_MS) {
-      setFormError("Submission looked automated. Please try again in a moment.")
-      return
+      setFormError("Submission looked automated. Please try again in a moment.");
+      return;
     }
 
-    const result = schema.safeParse(values)
+    const result = contactSchema.safeParse(values);
     if (!result.success) {
-      const next: Errors = {}
+      const next: Errors = {};
       for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof Errors
-        if (!next[key]) next[key] = issue.message
+        const key = issue.path[0] as keyof Errors;
+        if (!next[key]) next[key] = issue.message;
       }
-      setErrors(next)
-      const firstKey = (["name", "email", "message"] as const).find((k) => next[k])
-      if (firstKey) document.getElementById(`cf-${firstKey}`)?.focus()
-      return
+      setErrors(next);
+      const firstKey = (["name", "email", "message"] as const).find((k) => next[k]);
+      if (firstKey) document.getElementById(`cf-${firstKey}`)?.focus();
+      return;
     }
-    setStatus("submitting")
+    setStatus("submitting");
     const { error } = await supabase.from("contact_submissions").insert({
       name: result.data.name,
       email: result.data.email,
       message: result.data.message,
-    })
+    });
     if (error) {
-      setFormError("Something went wrong sending your message. Please try again.")
-      setStatus("idle")
-      return
+      setFormError("Something went wrong sending your message. Please try again.");
+      setStatus("idle");
+      return;
     }
-    setStatus("success")
+    setStatus("success");
   }
 
   if (status === "success") {
     return (
-      <output
-        aria-live="polite"
-        className="flex h-full flex-col items-start justify-center gap-4 rounded-xl border border-border bg-background p-6"
-      >
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-primary">
-          ✓
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">Message sent</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {values.name
-              ? `Thanks, ${values.name.split(" ")[0]}. I'll get back to you at ${values.email} shortly.`
-              : "Thanks for reaching out — I'll get back to you shortly."}
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            setValues({ name: "", email: "", message: "" })
-            setWebsite("")
-            setFormError(null)
-            mountedAt.current = Date.now()
-            setStatus("idle")
-          }}
-          className="text-sm font-medium text-primary hover:underline"
-        >
-          Send another message
-        </button>
-      </output>
-    )
+      <FormSuccessCard
+        title="Message sent"
+        description={
+          values.name
+            ? `Thanks, ${values.name.split(" ")[0]}. I'll get back to you at ${values.email} shortly.`
+            : "Thanks for reaching out — I'll get back to you shortly."
+        }
+        actionLabel="Send another message"
+        onAction={() => {
+          setValues(contactDefaults);
+          setWebsite("");
+          setFormError(null);
+          mountedAt.current = Date.now();
+          setStatus("idle");
+        }}
+      />
+    );
   }
 
   const inputBase =
-    "w-full rounded-lg border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors"
+    "w-full rounded-lg border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors";
 
   return (
     <form
@@ -222,7 +193,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
           aria-describedby={errors.message ? "cf-message-err" : "cf-message-hint"}
           className={`${inputBase} resize-y ${errors.message ? "border-destructive" : "border-border"}`}
           placeholder="Tell me about the role, team, or problem you're working on…"
-          maxLength={1000}
+          maxLength={MESSAGE_MAX_LENGTH}
         />
         {errors.message ? (
           <p id="cf-message-err" className="text-xs text-destructive">
@@ -230,7 +201,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
           </p>
         ) : (
           <p id="cf-message-hint" className="text-xs text-muted-foreground">
-            {values.message.length}/1000
+            {values.message.length}/{MESSAGE_MAX_LENGTH}
           </p>
         )}
       </div>
@@ -241,20 +212,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-(--glow-primary) transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
-      >
-        {status === "submitting" ? (
-          <>
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
-            Sending…
-          </>
-        ) : (
-          <>Send message →</>
-        )}
-      </button>
+      <SubmitButton pending={status === "submitting"}>Send message →</SubmitButton>
     </form>
-  )
+  );
 }
