@@ -3,18 +3,19 @@ import { SectionHeading } from "./section-heading"
 const groups = [
   {
     label: "Frontend",
-    items: [
-      "React 18+",
-      "TypeScript (strict)",
-      "Next.js",
-      "TanStack Start",
-      "React Native",
-      "Expo",
-    ],
+    items: ["React 19", "TypeScript (strict)", "Next.js", "TanStack Start", "React Native", "Expo"],
   },
   {
     label: "Design Systems",
-    items: ["Storybook 8+", "Chromatic", "Chakra UI", "shadcn/ui", "Tamagui", "Ark UI", "Radix UI"],
+    items: [
+      "Storybook 10+",
+      "Chromatic",
+      "Chakra UI",
+      "shadcn/ui",
+      "Tamagui",
+      "Ark UI",
+      "Radix UI",
+    ],
   },
   {
     label: "AI & MCP",

@@ -1,11 +1,11 @@
 const items = [
-  "React 18+",
+  "React 19",
   "TypeScript",
   "Next.js",
   "TanStack Start",
   "React Native",
   "Expo",
-  "Storybook 8+",
+  "Storybook 10+",
   "Chromatic",
   "Nx",
   "Turborepo",
