@@ -2,9 +2,17 @@ import { SectionHeading } from "./section-heading"
 import { ContactForm } from "./contact-form"
 
 const links = [
-  { label: "Email", value: "richtillman@pm.me", href: "mailto:richtillman@pm.me" },
+  {
+    label: "Email",
+    value: "richtillman@pm.me",
+    href: "mailto:richtillman@pm.me"
+  },
   { label: "Phone", value: "843-834-0041", href: "tel:+18438340041" },
-  { label: "LinkedIn", value: "in/effinrich", href: "https://linkedin.com/in/effinrich" },
+  {
+    label: "LinkedIn",
+    value: "in/effinrich",
+    href: "https://linkedin.com/in/effinrich"
+  },
   { label: "npm", value: "~effinrich", href: "https://npmjs.com/~effinrich" },
   { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" }
 ]
@@ -32,7 +40,7 @@ export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error
               />
               <a
                 href="mailto:richtillman@pm.me"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--glow-primary)] transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-(--glow-primary)sition-transform hover:-translate-y-0.5"
               >
                 Start a conversation →
               </a>
