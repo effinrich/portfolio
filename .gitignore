@@ -24,7 +24,6 @@ tsconfig.tsbuildinfo
 
 # Cursor IDE hook state (per-machine)
 .cursor/hooks/state/
-.omc/
 
 # Wrangler / Cloudflare
 .wrangler/
@@ -41,4 +40,6 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 .env
+.omc
 resume
+.omc/*
