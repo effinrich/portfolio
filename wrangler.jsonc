@@ -1,7 +1,20 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
-  "compatibility_date": "2025-09-24",
-  "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
+  "compatibility_date": "2026-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Workers Logs — makes runtime errors visible in the Cloudflare dashboard
+  "observability": {
+    "enabled": true,
+  },
+
+  // Public config only. Secrets belong in .dev.vars (local) or
+  // `wrangler secret put` / dashboard Secrets (prod) — never here.
+  "vars": {
+    "VITE_SUPABASE_PROJECT_ID": "gcpldojnytxtxufpuunb",
+    "VITE_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_sORMNNz4QWLo-jh3-c_dfw_PU0w3Eac",
+    "VITE_SUPABASE_URL": "https://gcpldojnytxtxufpuunb.supabase.co",
+  },
 }

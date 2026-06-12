@@ -40,3 +40,6 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 .env
+resume
+.kombai
+.omc
