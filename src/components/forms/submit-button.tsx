@@ -1,11 +1,11 @@
-import { Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react"
 
-import { Button, type ButtonProps } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button, type ButtonProps } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 interface SubmitButtonProps extends ButtonProps {
-  pending?: boolean;
-  pendingLabel?: string;
+  pending?: boolean
+  pendingLabel?: string
 }
 
 /**
@@ -39,5 +39,5 @@ export function SubmitButton({
         children
       )}
     </Button>
-  );
+  )
 }

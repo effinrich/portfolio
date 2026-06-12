@@ -1,76 +1,76 @@
-import { useRef, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { FormSuccessCard } from "@/components/forms/form-success";
-import { SubmitButton } from "@/components/forms/submit-button";
-import { contactSchema, contactDefaults, MESSAGE_MAX_LENGTH } from "./contact-schema";
+import { useRef, useState } from "react"
+import { supabase } from "@/integrations/supabase/client"
+import { FormSuccessCard } from "@/components/forms/form-success"
+import { SubmitButton } from "@/components/forms/submit-button"
+import { contactSchema, contactDefaults, MESSAGE_MAX_LENGTH } from "./contact-schema"
 
-type Errors = Partial<Record<"name" | "email" | "message", string>>;
+type Errors = Partial<Record<"name" | "email" | "message", string>>
 
 // Bots typically submit forms in well under a second.
-const MIN_SUBMIT_MS = 1500;
+const MIN_SUBMIT_MS = 1500
 
 export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" | "invalid" }) {
-  const [values, setValues] = useState(contactDefaults);
-  const [website, setWebsite] = useState(""); // honeypot — must stay empty
-  const [errors, setErrors] = useState<Errors>({});
+  const [values, setValues] = useState(contactDefaults)
+  const [website, setWebsite] = useState("") // honeypot — must stay empty
+  const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<"idle" | "submitting" | "success">(
     initialStatus === "ok" ? "success" : "idle",
-  );
+  )
   const [formError, setFormError] = useState<string | null>(
     initialStatus === "error"
       ? "Something went wrong sending your message. Please try again."
       : initialStatus === "invalid"
         ? "Please check your entries and try again."
         : null,
-  );
-  const mountedAt = useRef<number>(Date.now());
+  )
+  const mountedAt = useRef<number>(Date.now())
 
   function update<K extends keyof typeof values>(key: K, value: string) {
-    setValues((v) => ({ ...v, [key]: value }));
-    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
+    setValues((v) => ({ ...v, [key]: value }))
+    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }))
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setFormError(null);
+    e.preventDefault()
+    setFormError(null)
 
     // Spam check 1: honeypot field. Real users can't see it; bots fill every input.
     if (website.trim() !== "") {
       // Pretend success so bots don't retry, but don't actually do anything.
-      setStatus("success");
-      return;
+      setStatus("success")
+      return
     }
 
     // Spam check 2: minimum time-to-submit.
     if (Date.now() - mountedAt.current < MIN_SUBMIT_MS) {
-      setFormError("Submission looked automated. Please try again in a moment.");
-      return;
+      setFormError("Submission looked automated. Please try again in a moment.")
+      return
     }
 
-    const result = contactSchema.safeParse(values);
+    const result = contactSchema.safeParse(values)
     if (!result.success) {
-      const next: Errors = {};
+      const next: Errors = {}
       for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof Errors;
-        if (!next[key]) next[key] = issue.message;
+        const key = issue.path[0] as keyof Errors
+        if (!next[key]) next[key] = issue.message
       }
-      setErrors(next);
-      const firstKey = (["name", "email", "message"] as const).find((k) => next[k]);
-      if (firstKey) document.getElementById(`cf-${firstKey}`)?.focus();
-      return;
+      setErrors(next)
+      const firstKey = (["name", "email", "message"] as const).find((k) => next[k])
+      if (firstKey) document.getElementById(`cf-${firstKey}`)?.focus()
+      return
     }
-    setStatus("submitting");
+    setStatus("submitting")
     const { error } = await supabase.from("contact_submissions").insert({
       name: result.data.name,
       email: result.data.email,
       message: result.data.message,
-    });
+    })
     if (error) {
-      setFormError("Something went wrong sending your message. Please try again.");
-      setStatus("idle");
-      return;
+      setFormError("Something went wrong sending your message. Please try again.")
+      setStatus("idle")
+      return
     }
-    setStatus("success");
+    setStatus("success")
   }
 
   if (status === "success") {
@@ -84,18 +84,18 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
         }
         actionLabel="Send another message"
         onAction={() => {
-          setValues(contactDefaults);
-          setWebsite("");
-          setFormError(null);
-          mountedAt.current = Date.now();
-          setStatus("idle");
+          setValues(contactDefaults)
+          setWebsite("")
+          setFormError(null)
+          mountedAt.current = Date.now()
+          setStatus("idle")
         }}
       />
-    );
+    )
   }
 
   const inputBase =
-    "w-full rounded-lg border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors";
+    "w-full rounded-lg border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors"
 
   return (
     <form
@@ -214,5 +214,5 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
 
       <SubmitButton pending={status === "submitting"}>Send message →</SubmitButton>
     </form>
-  );
+  )
 }

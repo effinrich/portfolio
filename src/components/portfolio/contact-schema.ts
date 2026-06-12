@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { z } from "zod"
 
 /** Shared length cap for the message field, reused by the live character counter. */
-export const MESSAGE_MAX_LENGTH = 1000;
+export const MESSAGE_MAX_LENGTH = 1000
 
 export const contactSchema = z.object({
   name: z
@@ -19,12 +19,12 @@ export const contactSchema = z.object({
     .trim()
     .min(10, "Message must be at least 10 characters")
     .max(MESSAGE_MAX_LENGTH, `Message must be less than ${MESSAGE_MAX_LENGTH} characters`),
-});
+})
 
-export type ContactValues = z.infer<typeof contactSchema>;
+export type ContactValues = z.infer<typeof contactSchema>
 
 export const contactDefaults: ContactValues = {
   name: "",
   email: "",
   message: "",
-};
+}

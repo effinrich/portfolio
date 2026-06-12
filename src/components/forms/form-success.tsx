@@ -1,13 +1,13 @@
-import type * as React from "react";
-import { Check } from "lucide-react";
+import type * as React from "react"
+import { Check } from "lucide-react"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 
 interface FormSuccessCardProps {
-  title: string;
-  description: React.ReactNode;
-  actionLabel?: string;
-  onAction?: () => void;
+  title: string
+  description: React.ReactNode
+  actionLabel?: string
+  onAction?: () => void
 }
 
 /**
@@ -43,5 +43,5 @@ export function FormSuccessCard({
         </Button>
       ) : null}
     </output>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { SectionHeading } from "./section-heading";
-import { ContactForm } from "./contact-form";
+import { SectionHeading } from "./section-heading"
+import { ContactForm } from "./contact-form"
 
 const links = [
   {
@@ -15,7 +15,7 @@ const links = [
   },
   { label: "npm", value: "~effinrich", href: "https://npmjs.com/~effinrich" },
   { label: "Web", value: "forgekit.cloud", href: "https://forgekit.cloud" },
-];
+]
 
 export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error" | "invalid" }) {
   return (
@@ -74,5 +74,5 @@ export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error
         </footer>
       </div>
     </section>
-  );
+  )
 }
