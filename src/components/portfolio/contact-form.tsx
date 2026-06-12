@@ -1,24 +1,8 @@
 import { useRef, useState } from "react"
-import { z } from "zod"
 import { supabase } from "@/integrations/supabase/client"
-
-const schema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "Name is required")
-    .max(100, "Name must be less than 100 characters"),
-  email: z
-    .string()
-    .trim()
-    .email("Enter a valid email")
-    .max(255, "Email must be less than 255 characters"),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Message must be at least 10 characters")
-    .max(1000, "Message must be less than 1000 characters"),
-})
+import { FormSuccessCard } from "@/components/forms/form-success"
+import { SubmitButton } from "@/components/forms/submit-button"
+import { contactSchema, contactDefaults, MESSAGE_MAX_LENGTH } from "./contact-schema"
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>
 
@@ -26,7 +10,7 @@ type Errors = Partial<Record<"name" | "email" | "message", string>>
 const MIN_SUBMIT_MS = 1500
 
 export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" | "invalid" }) {
-  const [values, setValues] = useState({ name: "", email: "", message: "" })
+  const [values, setValues] = useState(contactDefaults)
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<"idle" | "submitting" | "success">(
@@ -63,7 +47,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
       return
     }
 
-    const result = schema.safeParse(values)
+    const result = contactSchema.safeParse(values)
     if (!result.success) {
       const next: Errors = {}
       for (const issue of result.error.issues) {
@@ -91,35 +75,22 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
 
   if (status === "success") {
     return (
-      <output
-        aria-live="polite"
-        className="flex h-full flex-col items-start justify-center gap-4 rounded-xl border border-border bg-background p-6"
-      >
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-primary">
-          ✓
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">Message sent</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {values.name
-              ? `Thanks, ${values.name.split(" ")[0]}. I'll get back to you at ${values.email} shortly.`
-              : "Thanks for reaching out — I'll get back to you shortly."}
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            setValues({ name: "", email: "", message: "" })
-            setWebsite("")
-            setFormError(null)
-            mountedAt.current = Date.now()
-            setStatus("idle")
-          }}
-          className="text-sm font-medium text-primary hover:underline"
-        >
-          Send another message
-        </button>
-      </output>
+      <FormSuccessCard
+        title="Message sent"
+        description={
+          values.name
+            ? `Thanks, ${values.name.split(" ")[0]}. I'll get back to you at ${values.email} shortly.`
+            : "Thanks for reaching out — I'll get back to you shortly."
+        }
+        actionLabel="Send another message"
+        onAction={() => {
+          setValues(contactDefaults)
+          setWebsite("")
+          setFormError(null)
+          mountedAt.current = Date.now()
+          setStatus("idle")
+        }}
+      />
     )
   }
 
@@ -222,7 +193,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
           aria-describedby={errors.message ? "cf-message-err" : "cf-message-hint"}
           className={`${inputBase} resize-y ${errors.message ? "border-destructive" : "border-border"}`}
           placeholder="Tell me about the role, team, or problem you're working on…"
-          maxLength={1000}
+          maxLength={MESSAGE_MAX_LENGTH}
         />
         {errors.message ? (
           <p id="cf-message-err" className="text-xs text-destructive">
@@ -230,7 +201,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
           </p>
         ) : (
           <p id="cf-message-hint" className="text-xs text-muted-foreground">
-            {values.message.length}/1000
+            {values.message.length}/{MESSAGE_MAX_LENGTH}
           </p>
         )}
       </div>
@@ -241,20 +212,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-(--glow-primary) transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
-      >
-        {status === "submitting" ? (
-          <>
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
-            Sending…
-          </>
-        ) : (
-          <>Send message →</>
-        )}
-      </button>
+      <SubmitButton pending={status === "submitting"}>Send message →</SubmitButton>
     </form>
   )
 }

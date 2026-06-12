@@ -43,6 +43,7 @@ tsconfig.tsbuildinfo
 .env
 resume
 .qodo
+.kombai
 .omc
 .omc/*
 .claude
