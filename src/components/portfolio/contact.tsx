@@ -40,7 +40,7 @@ export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error
               />
               <a
                 href="mailto:richtillman@pm.me"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-(--glow-primary) transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--glow-primary)] transition-transform hover:-translate-y-0.5"
               >
                 Start a conversation →
               </a>
