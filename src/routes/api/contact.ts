@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { z } from "zod"
-import { supabaseAdmin } from "@/integrations/supabase/client.server"
+import { supabase } from "@/integrations/supabase/client"
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/api/contact")({
           return redirectTo(request.url, "ok")
         }
 
-        const { error } = await supabaseAdmin.from("contact_submissions").insert({
+        const { error } = await supabase.from("contact_submissions").insert({
           name: parsed.data.name,
           email: parsed.data.email,
           message: parsed.data.message,
