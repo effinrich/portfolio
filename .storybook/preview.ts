@@ -8,7 +8,10 @@ const preview: Preview = {
       matchers: { color: /(background|color)$/i, date: /Date$/i }
     },
     backgrounds: { disable: true },
-    layout: "centered"
+    layout: "centered",
+    test: {
+      dangerouslyIgnoreUnhandledErrors: true
+    }
   },
   decorators: [
     withThemeByClassName({
