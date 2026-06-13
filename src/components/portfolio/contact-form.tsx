@@ -1,24 +1,6 @@
 import { useRef, useState } from "react"
-import { z } from "zod"
+import { MESSAGE_MAX_LENGTH, contactSchema } from "@/components/portfolio/contact-schema"
 import { supabase } from "@/integrations/supabase/client"
-
-const schema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "Name is required")
-    .max(100, "Name must be less than 100 characters"),
-  email: z
-    .string()
-    .trim()
-    .email("Enter a valid email")
-    .max(255, "Email must be less than 255 characters"),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Message must be at least 10 characters")
-    .max(1000, "Message must be less than 1000 characters")
-})
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>
 
@@ -63,7 +45,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
       return
     }
 
-    const result = schema.safeParse(values)
+    const result = contactSchema.safeParse(values)
     if (!result.success) {
       const next: Errors = {}
       for (const issue of result.error.issues) {
@@ -222,7 +204,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
           aria-describedby={errors.message ? "cf-message-err" : "cf-message-hint"}
           className={`${inputBase} resize-y ${errors.message ? "border-destructive" : "border-border"}`}
           placeholder="Tell me about the role, team, or problem you're working on…"
-          maxLength={1000}
+          maxLength={MESSAGE_MAX_LENGTH}
         />
         {errors.message ? (
           <p id="cf-message-err" className="text-xs text-destructive">
@@ -230,7 +212,7 @@ export function ContactForm({ initialStatus }: { initialStatus?: "ok" | "error" 
           </p>
         ) : (
           <p id="cf-message-hint" className="text-xs text-muted-foreground">
-            {values.message.length}/1000
+            {values.message.length}/{MESSAGE_MAX_LENGTH}
           </p>
         )}
       </div>
