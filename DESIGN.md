@@ -10,13 +10,14 @@ A reference for the visual system as it exists in the codebase. Sourced from `sr
 - **Theme**: dark-only. `html { color-scheme: dark }` in the base layer; the app never toggles a `.dark` class. The `@custom-variant dark (&:is(.dark *))` exists for future light-mode opt-in but is unused today.
 - **Type**: Inter (sans), JetBrains Mono (mono). Body opts into `font-feature-settings: "ss01", "cv11"`.
 - **Where to edit**:
-  | Concern | Location |
-  | --- | --- |
-  | Color / radius / font tokens | `src/styles.css` (`:root` + `@theme inline`) |
-  | Reusable utility classes | `src/styles.css` (`@layer components`) |
-  | shadcn primitives | `src/components/ui/**` — lint-ignored, no app logic |
-  | App sections | `src/components/portfolio/**` |
-  | Storybook stories | `src/stories/**` (config in `.storybook/`) |
+
+  | Concern                      | Location                                            |
+  | ---------------------------- | --------------------------------------------------- |
+  | Color / radius / font tokens | `src/styles.css` (`:root` + `@theme inline`)        |
+  | Reusable utility classes     | `src/styles.css` (`@layer components`)              |
+  | shadcn primitives            | `src/components/ui/**` — lint-ignored, no app logic |
+  | App sections                 | `src/components/portfolio/**`                       |
+  | Storybook stories            | `src/stories/**` (config in `.storybook/`)          |
 
 ## 2. Design tokens
 

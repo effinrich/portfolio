@@ -35,7 +35,7 @@ jobs:
         with:
           # [Optional; only required when used with Stark Projects]
           # The token used by the action to send an audit report back to Stark.
-          token: ${{ secrets.STARK_TOKEN }}
+          token: ${{ secrets.STARK_TOKEN || '' }}
 
           # [Optional] Shell commands for setting up the container.
           # You can use this to install tools, export variables, etc.
