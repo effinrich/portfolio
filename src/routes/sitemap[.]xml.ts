@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-
 const BASE_URL = import.meta.env.VITE_SITE_URL ?? "https://richtillman.lovable.app"
 
 interface SitemapEntry {
