@@ -35,6 +35,15 @@ pre-commit:
         - "*.md"
       stage_fixed: true
 
+    # Whole-project typecheck. tsc has no staged-file mode, so it runs on every
+    # commit that touches TS — catches type errors before they land, not at push.
+    # The glob gates the job so non-TS commits skip it.
+    - name: typecheck
+      run: bunx tsc --noEmit
+      glob:
+        - "*.ts"
+        - "*.tsx"
+
 pre-push:
   jobs:
     - name: typecheck

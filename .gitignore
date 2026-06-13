@@ -41,6 +41,10 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 .env
+
+# Supabase data exports — may contain real submission PII, never commit
+supabase/exports/
+
 resume
 .qodo
 .kombai
