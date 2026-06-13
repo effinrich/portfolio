@@ -13,8 +13,8 @@
 //
 // Run:
 //   cd resume
-//   npm install docx
-//   node build-resume.mjs
+//   bun add docx
+//   bun run build-resume.mjs
 //
 // Output: ./RichTillman_Resume.docx (same folder)
 //

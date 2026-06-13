@@ -1,13 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { z } from "zod"
+import { contactSchema } from "@/components/portfolio/contact-schema"
 import { supabaseAdmin } from "@/integrations/supabase/client.server"
-
-const schema = z.object({
-  name: z.string().trim().min(1).max(100),
-  email: z.string().trim().email().max(255),
-  message: z.string().trim().min(10).max(1000),
-  website: z.string().optional() // honeypot
-})
 
 function redirectTo(url: string, status: "ok" | "error" | "invalid") {
   const origin = new URL(url).origin
@@ -29,11 +22,11 @@ export const Route = createFileRoute("/api/contact")({
         }
 
         const raw = Object.fromEntries(form) as Record<string, string>
-        const parsed = schema.safeParse(raw)
+        const parsed = contactSchema.safeParse(raw)
         if (!parsed.success) return redirectTo(request.url, "invalid")
 
         // Honeypot — silently treat as success so bots don't retry.
-        if ((parsed.data.website ?? "").trim() !== "") {
+        if ((raw.website ?? "").trim() !== "") {
           return redirectTo(request.url, "ok")
         }
 
