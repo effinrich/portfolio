@@ -1,6 +1,8 @@
+import { PageSection } from "./page-section"
+
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
+    <PageSection id="top" className="overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
       <div className="absolute inset-0 grid-bg pointer-events-none" aria-hidden />
       <div className="container-x relative">
         <div className="flex flex-wrap items-center gap-2 text-xs">
@@ -82,6 +84,6 @@ export function Hero() {
           ))}
         </dl>
       </div>
-    </section>
+    </PageSection>
   )
 }

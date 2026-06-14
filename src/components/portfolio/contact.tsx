@@ -1,3 +1,4 @@
+import { PageSection } from "./page-section"
 import { SectionHeading } from "./section-heading"
 import { ContactForm } from "./contact-form"
 
@@ -19,7 +20,7 @@ const links = [
 
 export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error" | "invalid" }) {
   return (
-    <section id="contact" className="relative py-24 md:py-32">
+    <PageSection id="contact">
       <div className="container-x">
         <div className="card-elevated relative overflow-hidden p-8 md:p-14">
           <div
@@ -73,6 +74,6 @@ export function Contact({ submissionStatus }: { submissionStatus?: "ok" | "error
           <div className="font-mono">Built with TanStack Start · Tailwind · ☕</div>
         </footer>
       </div>
-    </section>
+    </PageSection>
   )
 }

@@ -1,3 +1,4 @@
+import { PageSection } from "./page-section"
 import { SectionHeading } from "./section-heading"
 
 const roles = [
@@ -59,7 +60,7 @@ const roles = [
 
 export function Experience() {
   return (
-    <section id="work" className="relative py-24 md:py-32">
+    <PageSection id="work">
       <div className="container-x">
         <SectionHeading
           eyebrow="Experience"
@@ -98,6 +99,6 @@ export function Experience() {
           ))}
         </ol>
       </div>
-    </section>
+    </PageSection>
   )
 }

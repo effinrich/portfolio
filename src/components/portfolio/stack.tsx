@@ -1,3 +1,4 @@
+import { PageSection } from "./page-section"
 import { SectionHeading } from "./section-heading"
 
 const groups = [
@@ -43,7 +44,7 @@ const groups = [
 
 export function Stack() {
   return (
-    <section id="stack" className="relative py-24 md:py-32">
+    <PageSection id="stack">
       <div className="container-x">
         <SectionHeading
           eyebrow="Stack"
@@ -69,6 +70,6 @@ export function Stack() {
           ))}
         </div>
       </div>
-    </section>
+    </PageSection>
   )
 }

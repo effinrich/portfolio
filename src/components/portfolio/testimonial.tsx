@@ -1,10 +1,8 @@
+import { PageSection } from "./page-section"
+
 export function Testimonial() {
   return (
-    <section
-      id="testimonial"
-      aria-labelledby="testimonial-quote"
-      className="relative py-16 md:py-24"
-    >
+    <PageSection id="testimonial" aria-labelledby="testimonial-quote" className="py-16 md:py-24">
       <div className="container-x">
         <figure className="card-elevated relative mx-auto max-w-3xl overflow-hidden p-8 md:p-12">
           <div
@@ -42,6 +40,6 @@ export function Testimonial() {
           </figcaption>
         </figure>
       </div>
-    </section>
+    </PageSection>
   )
 }

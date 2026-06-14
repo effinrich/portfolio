@@ -1,3 +1,4 @@
+import { PageSection } from "./page-section"
 import { SectionHeading } from "./section-heading"
 import figmaMcpImg from "@/assets/project-figma-mcp.jpg"
 import storybookMcpImg from "@/assets/project-storybook-mcp.jpg"
@@ -121,7 +122,7 @@ function ProjectMedia({
 
 export function Projects() {
   return (
-    <section id="projects" className="relative py-24 md:py-32">
+    <PageSection id="projects">
       <div className="container-x">
         <SectionHeading
           eyebrow="Selected Projects"
@@ -171,6 +172,6 @@ export function Projects() {
           ))}
         </div>
       </div>
-    </section>
+    </PageSection>
   )
 }
