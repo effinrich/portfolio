@@ -51,3 +51,4 @@ supabase/exports/
 .omc/*
 .claude
 .claude/*
+.defract-worktrees

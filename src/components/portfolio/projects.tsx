@@ -124,6 +124,7 @@ export function Projects() {
     <section id="projects" className="relative py-24 md:py-32">
       <div className="container-x">
         <SectionHeading
+          index="02"
           eyebrow="Selected Projects"
           title="Tools I've shipped that other developers actually install."
           description="Open source MCP servers, CLIs, and product work — built around the workflows I want for myself."

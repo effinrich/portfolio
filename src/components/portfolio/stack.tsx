@@ -46,6 +46,7 @@ export function Stack() {
     <section id="stack" className="relative py-24 md:py-32">
       <div className="container-x">
         <SectionHeading
+          index="03"
           eyebrow="Stack"
           title="Tools I reach for to ship production frontend at scale."
         />

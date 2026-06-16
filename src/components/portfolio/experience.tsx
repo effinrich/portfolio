@@ -62,6 +62,7 @@ export function Experience() {
     <section id="work" className="relative py-24 md:py-32">
       <div className="container-x">
         <SectionHeading
+          index="01"
           eyebrow="Experience"
           title="Frontend, design systems, and AI-native tooling."
           description="Each role traded velocity, scale, and depth in different combinations — from 0→1 design systems to shipping MCP servers used in production by external teams."

@@ -1,3 +1,5 @@
+import { ThemeToggle } from "./theme-toggle"
+
 const links = [
   { href: "#work", label: "Work" },
   { href: "#projects", label: "Projects" },
@@ -9,36 +11,41 @@ export function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/70 backdrop-blur-xl">
       <nav className="container-x flex h-16 items-center justify-between">
-        <a href="#top" className="group flex items-center gap-2.5">
-          <span className="relative grid h-8 w-8 place-items-center rounded-md border border-border bg-surface font-mono text-sm font-bold text-primary">
-            R
-            <span className="absolute -inset-px rounded-md ring-1 ring-primary/30 opacity-0 transition-opacity group-hover:opacity-100" />
-          </span>
-          <span className="text-sm font-semibold tracking-tight">Rich Tillman</span>
-          <span className="hidden text-xs text-muted-foreground sm:inline">
-            / Principal Frontend Engineer
-          </span>
-        </a>
+        <div className="flex items-center gap-6">
+          <a href="#top" className="group flex items-center gap-2.5">
+            <span className="relative grid h-8 w-8 place-items-center rounded-md border border-border bg-surface font-mono text-sm font-bold text-primary">
+              R
+              <span className="absolute -inset-px rounded-md ring-1 ring-primary/30 opacity-0 transition-opacity group-hover:opacity-100" />
+            </span>
+            <span className="text-sm font-semibold tracking-tight">Rich Tillman</span>
+            <span className="hidden text-xs text-muted-foreground sm:inline">
+              / Principal Frontend Engineer
+            </span>
+          </a>
 
-        <ul className="hidden items-center gap-1 md:flex">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                className="rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+          <ul className="hidden items-center gap-1 md:flex">
+            {links.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  className="rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <a
-          href="mailto:richtillman@pm.me"
-          className="hidden md:inline-flex items-center gap-2 rounded-md border border-primary/40 bg-primary/10 px-3.5 py-1.5 text-sm font-medium text-primary transition-all hover:bg-primary/20 hover:shadow-[0_0_24px_-4px_oklch(0.86_0.17_95/0.5)]"
-        >
-          <span className="pill-dot" /> Available
-        </a>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <a
+            href="mailto:richtillman@pm.me"
+            className="hidden md:inline-flex items-center gap-2 rounded-md border border-primary/40 bg-primary/10 px-3.5 py-1.5 text-sm font-medium text-primary transition-all hover:bg-primary/20 hover:shadow-glow"
+          >
+            <span className="pill-dot" /> Available
+          </a>
+        </div>
       </nav>
     </header>
   )
