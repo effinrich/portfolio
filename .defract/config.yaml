@@ -1,12 +1,12 @@
 defract:
-  version: '1.0'
+  version: "1.0"
   theme: dark
   repo:
     name: portfolio
     languages:
-    - typescript
+      - typescript
     frameworks:
-    - react
+      - react
     test_runner: vitest
     run_command: npm run dev
     ci_cd: github-actions
@@ -19,8 +19,8 @@ defract:
     offline_override: true
     completion_mode: merge
     worktree_assets:
-    - .dev.vars
-    - .env.local
+      - .dev.vars
+      - .env.local
   agents: null
   concurrency: null
   context_monitor:
