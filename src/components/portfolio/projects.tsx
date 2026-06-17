@@ -59,7 +59,7 @@ const projects: Project[] = [
     tag: "React Native · Expo",
     desc: "Offline-first, ADHD-friendly home management app. Resilient data layer (Zustand + TanStack Query), Supabase, and full Figma Code Connect mappings.",
     metric: "TestFlight beta",
-    href: "#",
+    href: "https://tidyapp.me",
     cta: "Case study soon",
     accent: "accent",
     image: tidyAppImg,
