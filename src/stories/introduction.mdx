@@ -1,0 +1,97 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Design System/Introduction" />
+
+<div style={{ maxWidth: 760 }}>
+
+# Portfolio Design System
+
+The visual system behind the portfolio — a **dark-only**, token-driven UI kit built on
+[shadcn/ui](https://ui.shadcn.com) (New York style) + Radix primitives, styled with Tailwind v4.
+Every story on this site renders the real component from `src/components/ui/**`.
+
+<div style={{ display: "flex", gap: 12, flexWrap: "wrap", margin: "20px 0" }}>
+  <span
+    style={{
+      padding: "4px 12px",
+      borderRadius: 999,
+      background: "var(--primary)",
+      color: "var(--primary-foreground)",
+      fontSize: 13,
+      fontWeight: 600,
+    }}
+  >
+    Gold accent
+  </span>
+  <span
+    style={{
+      padding: "4px 12px",
+      borderRadius: 999,
+      background: "var(--accent)",
+      color: "var(--accent-foreground)",
+      fontSize: 13,
+      fontWeight: 600,
+    }}
+  >
+    Cyan accent
+  </span>
+  <span
+    style={{
+      padding: "4px 12px",
+      borderRadius: 999,
+      border: "1px solid var(--border)",
+      color: "var(--foreground)",
+      fontSize: 13,
+    }}
+  >
+    Dark-only
+  </span>
+  <span
+    style={{
+      padding: "4px 12px",
+      borderRadius: 999,
+      border: "1px solid var(--border)",
+      color: "var(--foreground)",
+      fontSize: 13,
+    }}
+  >
+    Tailwind v4 · oklch tokens
+  </span>
+</div>
+
+## How this site is organized
+
+- **Foundations** — the raw material: [Colors](?path=/docs/design-system-foundations-colors--docs),
+  [Typography](?path=/docs/design-system-foundations-typography--docs), and
+  [Tokens & Effects](?path=/docs/design-system-foundations-tokens--docs). All values are oklch and
+  declared once in `src/styles.css`.
+- **UI** — every primitive (Button, Card, Dialog, …) with an interactive **Docs** page and live
+  **Controls**. These are the same stories the design-sync pipeline ships to claude.ai/design.
+
+## Principles
+
+1. **Tokens are the source of truth.** Components never use raw colors — only semantic Tailwind
+   utilities backed by `--color-*`. Edit a token in `src/styles.css`, every component follows.
+2. **Dark-only.** `html { color-scheme: dark }`; the app never toggles a `.dark` class. The dark
+   look comes from `:root`, not a theme class.
+3. **Primitives stay thin.** `src/components/ui/**` is the shadcn surface (lint-ignored, no app
+   logic). Composition happens in feature folders.
+
+## Using a component
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export function Example() {
+  return (
+    <Button variant="default" size="lg">
+      Get in touch
+    </Button>
+  )
+}
+```
+
+Open any component in the sidebar, flip variants in **Controls**, and copy the generated code from
+the **Docs** tab.
+
+</div>
