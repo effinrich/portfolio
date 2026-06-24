@@ -4,9 +4,7 @@
   "shape": "storybook",
   "storybookStatic": ".design-sync/sb-reference",
   "storybookConfigDir": ".storybook",
-  "buildCmd": "bun run bundle && cp dist/index.d.mts dist/index.d.ts",
-  "extraEntries": [
-    "/Users/richtillman/Documents/GitHub/portfolio/.claude/worktrees/affectionate-beaver-488c9d/.design-sync/ds-preview-surface.tsx"
-  ],
+  "buildCmd": "bun run bundle && node -e \"require('fs').copyFileSync('dist/index.d.mts','dist/index.d.ts')\"",
+  "extraEntries": ["./.design-sync/ds-preview-surface.tsx"],
   "provider": { "component": "DesignSurface" }
 }
