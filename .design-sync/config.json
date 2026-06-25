@@ -1,12 +1,11 @@
 {
+  "projectId": "d07f3750-7d7b-482b-ac33-739d649f5725",
   "pkg": "portfolio",
   "globalName": "PortfolioDS",
   "shape": "storybook",
   "storybookStatic": ".design-sync/sb-reference",
   "storybookConfigDir": ".storybook",
   "buildCmd": "bun run bundle && cp dist/index.d.mts dist/index.d.ts",
-  "extraEntries": [
-    "/Users/richtillman/Documents/GitHub/portfolio/.claude/worktrees/affectionate-beaver-488c9d/.design-sync/ds-preview-surface.tsx"
-  ],
+  "extraEntries": ["./.design-sync/ds-preview-surface.tsx"],
   "provider": { "component": "DesignSurface" }
 }
