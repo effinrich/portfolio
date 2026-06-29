@@ -8,7 +8,7 @@ other client lacks).
 ## Steps
 
 ```bash
-cd /Users/richtillman/Documents/GitHub/portfolio
+cd <repo-root> # or: cd "$(git rev-parse --show-toplevel)"
 claude
 ```
 
@@ -45,7 +45,7 @@ Storybook reference, author the conventions header from `DESIGN.md`, and upload 
 - `[GRID_OVERFLOW]` Accordion/Alert/Tabs → `cfg.overrides.<Name>.cardMode: "column"`.
 - `[RENDER_THIN]` HoverCard/RadioGroup/Toggle/Tooltip → owned preview or `cardMode: "single"`.
 - Converter run gotchas (if invoking scripts by hand): `--node-modules` = the MAIN checkout's
-  `node_modules` (worktree's is sparse), `--entry dist/index.mjs`.
+  `<repo-root>/node_modules` (worktree's is sparse), `--entry dist/index.mjs`.
 
 ## Separate, already shipped
 

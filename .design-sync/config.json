@@ -5,7 +5,7 @@
   "shape": "storybook",
   "storybookStatic": ".design-sync/sb-reference",
   "storybookConfigDir": ".storybook",
-  "buildCmd": "bun run bundle && cp dist/index.d.mts dist/index.d.ts",
+  "buildCmd": "bun run bundle && bun -e 'import { copyFileSync, existsSync } from \"node:fs\"; if (existsSync(\"dist/index.d.mts\")) copyFileSync(\"dist/index.d.mts\", \"dist/index.d.ts\")'",
   "extraEntries": ["./.design-sync/ds-preview-surface.tsx"],
   "provider": { "component": "DesignSurface" }
 }

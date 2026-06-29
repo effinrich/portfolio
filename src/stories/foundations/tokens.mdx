@@ -13,10 +13,10 @@ Base `--radius: 0.625rem`. Tailwind utilities derive from it:
 export const Radii = () => (
   <div style={{ display: "flex", gap: 20, flexWrap: "wrap", margin: "16px 0" }}>
     {[
-      ["rounded-sm", "calc(--radius - 4px)", "var(--radius-sm)"],
-      ["rounded-md", "calc(--radius - 2px)", "var(--radius-md)"],
+      ["rounded-sm", "calc(var(--radius) - 4px)", "var(--radius-sm)"],
+      ["rounded-md", "calc(var(--radius) - 2px)", "var(--radius-md)"],
       ["rounded-lg", "var(--radius)", "var(--radius-lg)"],
-      ["rounded-xl", "calc(--radius + 4px)", "var(--radius-xl)"],
+      ["rounded-xl", "calc(var(--radius) + 4px)", "var(--radius-xl)"],
     ].map(([cls, val, v]) => (
       <div key={cls} style={{ textAlign: "center" }}>
         <div

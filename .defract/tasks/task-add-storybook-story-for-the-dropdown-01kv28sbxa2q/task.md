@@ -28,10 +28,6 @@ Original paste from the builder:
 
 # Add Storybook story for the dropdown-menu component
 
-# Add Storybook story for the dropdown-menu component
-
-# Add Storybook story for the dropdown-menu component
-
 ## What We're Building
 
 Adding a Storybook story for the dropdown-menu component to provide visual regression testing coverage. This closes a documented gap in the design system and gives Chromatic a baseline to detect regressions as the component evolves.
@@ -108,8 +104,8 @@ dropdown-menu is a shadcn/ui primitive wrapping Radix UI's dropdown-menu. Curren
 - [ ] play function uses Storybook test utilities (userEvent, within, expect, screen, waitFor)
 - [ ] All 14 dropdown-menu exports are used or directly tested across story variants
 - [ ] Story follows naming convention from existing stories (button.stories.tsx, select.stories.tsx) for consistency
-- [ ] No TypeScript errors in story file (verified via npm run typecheck)
-- [ ] Storybook builds and renders story without console errors (verified via npm run storybook)
+- [ ] No TypeScript errors in story file (verified via bun run typecheck)
+- [ ] Storybook builds and renders story without console errors (verified via bun run storybook)
 
 ## Implementation Phases
 
@@ -128,8 +124,8 @@ dropdown-menu is a shadcn/ui primitive wrapping Radix UI's dropdown-menu. Curren
 - [ ] Meta configuration includes title "UI/DropdownMenu", component DropdownMenu, tags: ["autodocs"]
 - [ ] All 7 variants render without console errors in Storybook
 - [ ] Keyboard interaction tests in play function pass (Arrow Up/Down opens menu, Enter selects item, Escape closes menu)
-- [ ] npm run typecheck passes with no errors
-- [ ] npm run storybook launches and renders story without errors
+- [ ] bun run typecheck passes with no errors
+- [ ] bun run storybook launches and renders story without errors
 - [ ] Chromatic visual regression baseline is captured on PR (visual regression CI)
 
 **Estimated effort:** Small

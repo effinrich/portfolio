@@ -6,7 +6,7 @@ Storybook-shape sync of the portfolio's shadcn/ui primitives to claude.ai/design
 
 - **No library bundle existed.** Portfolio is a Vite/Cloudflare _app_, `tsdown.config.ts` had `entry: []`. Added `src/index.ts` barrel re-exporting every `src/components/ui/*` + `cn`, pointed tsdown at it (`entry: ["src/index.ts"]`, react/react-dom external). Bundle → `dist/index.mjs` (~116 KB). globalName `PortfolioDS`.
 - **DTS extension.** tsdown emits `dist/index.d.mts`; the converter's dts scan globs `**/*.d.ts` and reads `pkg.types`. Added `"types": "./dist/index.d.ts"` to package.json and `buildCmd` copies `index.d.mts → index.d.ts`. Without this: 0 components discovered (`[TITLE_UNMAPPED]` on all 24).
-- **node_modules lives in the MAIN checkout, not the worktree.** Run the converter with `--node-modules /Users/richtillman/Documents/GitHub/portfolio/node_modules` (worktree's own `node_modules` is sparse — no react). `--entry dist/index.mjs` (own-source repo, no `node_modules/portfolio`).
+- **node_modules lives in the MAIN checkout, not the worktree.** Run the converter with `--node-modules <repo-root>/node_modules` (worktree's own `node_modules` is sparse — no react). `--entry dist/index.mjs` (own-source repo, no `node_modules/portfolio`).
 
 ## [GENERAL] Dark-only DS needs a dark preview surface
 
