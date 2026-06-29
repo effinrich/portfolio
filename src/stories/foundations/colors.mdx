@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Design System/Foundations/Colors" />
+
+export const Swatch = ({ token, value, role }) => (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 16,
+      padding: "10px 0",
+      borderBottom: "1px solid var(--border)",
+    }}
+  >
+    <div
+      style={{
+        width: 56,
+        height: 40,
+        borderRadius: 8,
+        background: `var(${token})`,
+        border: "1px solid var(--border)",
+        flexShrink: 0,
+      }}
+    />
+    <div style={{ minWidth: 0 }}>
+      <code style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--foreground)" }}>
+        {token}
+      </code>
+      <div
+        style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted-foreground)" }}
+      >
+        {value}
+      </div>
+    </div>
+    <div
+      style={{
+        marginLeft: "auto",
+        fontSize: 13,
+        color: "var(--muted-foreground)",
+        textAlign: "right",
+      }}
+    >
+      {role}
+    </div>
+  </div>
+)
+
+<div style={{ maxWidth: 760 }}>
+
+# Colors
+
+All color values are **oklch**, declared in `:root` and exposed to Tailwind via `@theme inline` as
+`--color-*` — so `bg-background`, `text-muted-foreground`, `border-border` resolve automatically.
+**Never write raw colors** (`text-white`, hex, rgb) in components.
+
+## Surfaces & text
+
+<Swatch token="--background" value="oklch(0.16 0.01 260)" role="Page — near-black, cool indigo" />
+<Swatch token="--foreground" value="oklch(0.97 0.005 260)" role="Body text — off-white" />
+<Swatch token="--surface" value="oklch(0.2 0.012 260)" role="Cards, nav chip" />
+<Swatch token="--surface-2" value="oklch(0.235 0.014 260)" role="Hover / elevated" />
+<Swatch token="--card" value="oklch(0.2 0.012 260)" role="Card background" />
+<Swatch token="--popover" value="oklch(0.2 0.012 260)" role="Popover background" />
+<Swatch token="--muted" value="oklch(0.24 0.012 260)" role="Muted surface" />
+<Swatch token="--muted-foreground" value="oklch(0.7 0.02 260)" role="Muted text" />
+
+## Accents
+
+<Swatch token="--primary" value="oklch(0.86 0.17 95)" role="Warm gold — brand accent" />
+<Swatch token="--primary-foreground" value="oklch(0.18 0.02 260)" role="Text on gold" />
+<Swatch token="--accent" value="oklch(0.78 0.16 200)" role="Cyan — secondary accent" />
+<Swatch token="--accent-foreground" value="oklch(0.18 0.02 260)" role="Text on cyan" />
+<Swatch token="--secondary" value="oklch(0.27 0.015 260)" role="Secondary surface" />
+<Swatch token="--destructive" value="oklch(0.65 0.22 27)" role="Error / destructive" />
+
+## Lines & focus
+
+<Swatch token="--border" value="oklch(0.3 0.015 260 / 60%)" role="Translucent border" />
+<Swatch token="--input" value="oklch(0.3 0.015 260)" role="Input border" />
+<Swatch token="--ring" value="oklch(0.86 0.17 95)" role="Focus ring (matches primary)" />
+
+</div>

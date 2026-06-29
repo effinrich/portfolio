@@ -1,0 +1,107 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Design System/Foundations/Tokens" />
+
+<div style={{ maxWidth: 760 }}>
+
+# Tokens & Effects
+
+## Radius
+
+Base `--radius: 0.625rem`. Tailwind utilities derive from it:
+
+export const Radii = () => (
+  <div style={{ display: "flex", gap: 20, flexWrap: "wrap", margin: "16px 0" }}>
+    {[
+      ["rounded-sm", "calc(var(--radius) - 4px)", "var(--radius-sm)"],
+      ["rounded-md", "calc(var(--radius) - 2px)", "var(--radius-md)"],
+      ["rounded-lg", "var(--radius)", "var(--radius-lg)"],
+      ["rounded-xl", "calc(var(--radius) + 4px)", "var(--radius-xl)"],
+    ].map(([cls, val, v]) => (
+      <div key={cls} style={{ textAlign: "center" }}>
+        <div
+          style={{
+            width: 72,
+            height: 72,
+            background: "var(--surface)",
+            border: "1px solid var(--border)",
+            borderRadius: v,
+          }}
+        />
+        <code
+          style={{
+            display: "block",
+            fontFamily: "var(--font-mono)",
+            fontSize: 12,
+            color: "var(--foreground)",
+            marginTop: 8,
+          }}
+        >
+          {cls}
+        </code>
+        <span
+          style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted-foreground)" }}
+        >
+          {val}
+        </span>
+      </div>
+    ))}
+  </div>
+)
+
+<Radii />
+
+## Effects
+
+| Token            | Purpose                                                            |
+| ---------------- | ------------------------------------------------------------------ |
+| `--glow-primary` | `0 0 60px -10px oklch(0.86 0.17 95 / 35%)` — gold halo for CTAs    |
+| `--glow-accent`  | `0 0 60px -10px oklch(0.78 0.16 200 / 35%)` — cyan halo            |
+| `--shadow-soft`  | Inset top highlight + large drop shadow — used by `.card-elevated` |
+| `--grid-color`   | `oklch(1 0 0 / 4%)` — used by `.grid-bg`                           |
+
+<div style={{ display: "flex", gap: 20, margin: "16px 0" }}>
+  <div
+    style={{
+      width: 120,
+      height: 64,
+      borderRadius: 12,
+      background: "var(--primary)",
+      boxShadow: "0 0 60px -10px oklch(0.86 0.17 95 / 55%)",
+    }}
+  />
+  <div
+    style={{
+      width: 120,
+      height: 64,
+      borderRadius: 12,
+      background: "var(--accent)",
+      boxShadow: "0 0 60px -10px oklch(0.78 0.16 200 / 55%)",
+    }}
+  />
+</div>
+
+## Component utility classes
+
+Defined in `@layer components` (`src/styles.css`) — reach for these before re-deriving a recipe inline.
+
+| Class             | What it does                                                        |
+| ----------------- | ------------------------------------------------------------------- |
+| `.container-x`    | `mx-auto w-full max-w-6xl px-6 md:px-10` page gutter                |
+| `.grid-bg`        | Faint dotted grid masked to a radial vignette (Hero backdrop)       |
+| `.chip`           | Small rounded pill, translucent border + bg, mono-ish meta          |
+| `.pill-dot`       | 6px gold dot with matching glow ("Available" indicator)             |
+| `.card-elevated`  | Surface→bg gradient, hairline border, `--shadow-soft`, `rounded-xl` |
+| `.link-underline` | Animated bottom border that grows on hover (220ms)                  |
+| `.text-gradient`  | Foreground → gold → cyan text gradient (clipped)                    |
+| `.ticker`         | Edge-fade mask for marquee strips                                   |
+
+## Animations
+
+| Name             | Duration / easing                                                |
+| ---------------- | ---------------------------------------------------------------- |
+| `marquee`        | 40s linear infinite — `0 → -50%`                                 |
+| `float-glow`     | 6s ease-in-out infinite — opacity + 6px lift                     |
+| `tw-animate-css` | `animate-in/out`, `fade-*`, `slide-*` presets (imported package) |
+
+</div>
