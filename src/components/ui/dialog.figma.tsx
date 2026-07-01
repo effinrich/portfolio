@@ -3,6 +3,7 @@
 import figma from "@figma/code-connect"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
