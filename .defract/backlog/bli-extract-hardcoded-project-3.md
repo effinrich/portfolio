@@ -11,6 +11,7 @@ labels:
 groomingStatus: completed
 createdAt: 2026-06-14T05:07:15Z
 groomedAt: 2026-07-01T03:00:33Z
+promotedTaskId: task-extract-project-card-data-into-typed-01kwdw0hb5c0
 events:
   - type: grooming_started
     timestamp: 2026-07-01T03:00:00Z

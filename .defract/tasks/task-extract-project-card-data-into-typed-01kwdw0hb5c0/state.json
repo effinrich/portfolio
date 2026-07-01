@@ -1,0 +1,90 @@
+{
+  "id": "task-extract-project-card-data-into-typed-01kwdw0hb5c0",
+  "status": "active",
+  "stage": "scope",
+  "phase": 0,
+  "totalPhases": 1,
+  "createdAt": "2026-07-01T03:36:54Z",
+  "updatedAt": "2026-07-01T03:37:44Z",
+  "events": [
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "branch": "feature/task-extract-project-card-data-into-typed-01kwdw0hb5c0",
+      "path": "/Users/richtillman/Documents/GitHub/portfolio/.defract-worktrees/task-extract-project-card-data-into-typed-01kwdw0hb5c0",
+      "timestamp": "2026-07-01T03:36:54Z",
+      "type": "worktree_created"
+    },
+    {
+      "mode": "start",
+      "session_id": "01kwdw0jkzcpqcywa3ef206smp",
+      "stage": "scope",
+      "timestamp": "2026-07-01T03:36:54Z",
+      "type": "stage_agent_started"
+    },
+    {
+      "note": "Pushing Intent Check for project card data extraction refactor",
+      "phase": 0,
+      "stage": "scope",
+      "timestamp": "2026-07-01T03:37:30Z",
+      "type": "work_resumed"
+    },
+    {
+      "change_summary": "Intent Check: extract project card data into typed constants file",
+      "revision": 1,
+      "timestamp": "2026-07-01T03:37:33Z",
+      "type": "scope_update"
+    },
+    {
+      "stage": "scope",
+      "summary": "Intent check pushed — moving project data into typed constants file for cleaner data/presentation separation",
+      "timestamp": "2026-07-01T03:37:33Z",
+      "type": "stage_work_complete",
+      "worktree_head": "9990e5982468e82a1cf373e5107b9f3f1849eec5",
+      "worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "reason": "already_up_to_date",
+      "timestamp": "2026-07-01T03:37:43Z",
+      "type": "worktree_sync_skipped"
+    },
+    {
+      "mode": "approve_initial",
+      "session_id": "01kwdw22gja9rema9a2znf8nz5",
+      "stage": "scope",
+      "timestamp": "2026-07-01T03:37:43Z",
+      "type": "stage_agent_started"
+    },
+    {
+      "exit_code": 143,
+      "session_id": "01kwdw0jkzcpqcywa3ef206smp",
+      "timed_out": false,
+      "timestamp": "2026-07-01T03:37:44Z",
+      "type": "agent_exited"
+    }
+  ],
+  "stages": {
+    "review": {
+      "status": "not_started"
+    },
+    "release": {
+      "status": "not_started"
+    },
+    "scope": {
+      "status": "in_progress",
+      "startedAt": "2026-07-01T03:37:43Z"
+    },
+    "architecture": {
+      "status": "not_started"
+    },
+    "implementation": {
+      "status": "not_started"
+    },
+    "design": {
+      "status": "not_started"
+    }
+  },
+  "worktreePath": "/Users/richtillman/Documents/GitHub/portfolio/.defract-worktrees/task-extract-project-card-data-into-typed-01kwdw0hb5c0",
+  "worktreeBaseBranch": "claude/optimistic-meitner-uztpah",
+  "worktreeLastSyncedAt": "2026-07-01T03:37:43Z"
+}

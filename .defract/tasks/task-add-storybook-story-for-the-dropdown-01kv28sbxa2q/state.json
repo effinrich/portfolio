@@ -1,11 +1,11 @@
 {
   "id": "task-add-storybook-story-for-the-dropdown-01kv28sbxa2q",
   "status": "active",
-  "stage": "implementation",
+  "stage": "review",
   "phase": 1,
   "totalPhases": 1,
   "createdAt": "2026-06-14T05:13:34Z",
-  "updatedAt": "2026-07-01T03:25:20Z",
+  "updatedAt": "2026-07-01T03:36:39Z",
   "events": [
     {
       "base_branch": "main",
@@ -419,6 +419,237 @@
       "type": "stage_work_complete",
       "worktree_head": "c8ded70878e7d3c5c47764d6b3b4459c589cddab",
       "worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "merged_commits": 8,
+      "timestamp": "2026-07-01T03:33:18Z",
+      "type": "worktree_synced"
+    },
+    {
+      "actor": null,
+      "stage": "implementation",
+      "timestamp": "2026-07-01T03:33:16Z",
+      "type": "stage_approved"
+    },
+    {
+      "current_worktree_head": "b8c1a8a0ab4ad8abd25b8b010416174c5f90e46a",
+      "current_worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stage": "implementation",
+      "stale_worktree_head": "c8ded70878e7d3c5c47764d6b3b4459c589cddab",
+      "stale_worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timestamp": "2026-07-01T03:33:18Z",
+      "type": "worktree_drift_detected",
+      "what_changed": "HEAD"
+    },
+    {
+      "action": "sweep",
+      "rationale": "Routine sync drift: HEAD fast-forwarded (stale HEAD is a strict ancestor of current) with a byte-identical dirty-status digest; swept forward automatically without waking an agent.",
+      "resolved_by": "auto",
+      "stage": "implementation",
+      "timestamp": "2026-07-01T03:33:18Z",
+      "type": "worktree_drift_resolved"
+    },
+    {
+      "from": "implementation",
+      "timestamp": "2026-07-01T03:33:18Z",
+      "to": "review",
+      "type": "stage_advanced"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "reason": "already_up_to_date",
+      "timestamp": "2026-07-01T03:33:18Z",
+      "type": "worktree_sync_skipped"
+    },
+    {
+      "mode": "start",
+      "model": "sonnet",
+      "session_id": "01kwdvt2myah9h5cr47b28wvqw",
+      "stage": "review",
+      "timestamp": "2026-07-01T03:33:21Z",
+      "type": "stage_agent_started"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "stop",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:35:46Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "auto",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:35:48Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "auto",
+        "scope": "auto"
+      },
+      "timestamp": "2026-07-01T03:35:52Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "details": "bun run typecheck (0 errors), bun run lint (0 warnings, 0 errors), bun run build-storybook (completed successfully)",
+      "failed": 0,
+      "passed": 3,
+      "phase": 1,
+      "skipped": 0,
+      "timestamp": "2026-07-01T03:35:58Z",
+      "type": "test_results"
+    },
+    {
+      "policies": {
+        "implementation": "stop",
+        "release": "stop",
+        "review": "stop",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:35:59Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "stop",
+        "release": "stop",
+        "review": "stop",
+        "scope": "auto"
+      },
+      "timestamp": "2026-07-01T03:36:01Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "stop",
+        "scope": "auto"
+      },
+      "timestamp": "2026-07-01T03:36:02Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "auto",
+        "scope": "auto"
+      },
+      "timestamp": "2026-07-01T03:36:03Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "auto",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:04Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "stop",
+        "release": "stop",
+        "review": "stop",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:16Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "stop",
+        "release": "stop",
+        "review": "stop",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:20Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "auto",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:21Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "stop",
+        "release": "stop",
+        "review": "stop",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:23Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "auto",
+        "release": "stop",
+        "review": "auto",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:24Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "stop",
+        "release": "stop",
+        "review": "stop",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:25Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "policies": {
+        "implementation": "stop",
+        "release": "stop",
+        "review": "stop",
+        "scope": "stop"
+      },
+      "timestamp": "2026-07-01T03:36:27Z",
+      "type": "gate_policies_updated"
+    },
+    {
+      "change_summary": "APPROVE: All three blocking issues from revision 1 are resolved: story is committed to the feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, and the play function dispatches ArrowDown and Escape keyboard events. The recommended Radix nesting fix was also applied. All 14 acceptance criteria pass.",
+      "revision": 2,
+      "stage": "review",
+      "timestamp": "2026-07-01T03:36:27Z",
+      "type": "stage_content_updated"
+    },
+    {
+      "alternatives_considered": [],
+      "decision": "Review verdict: APPROVE",
+      "rationale": "14/14 acceptance criteria passed, 3/3 automated checks passed. All blocking issues from revision 1 resolved: story on feature branch, Disabled story tests disabled items via defaultOpen, play function dispatches ArrowDown and Escape. Recommended Radix nesting fix also applied.",
+      "timestamp": "2026-07-01T03:36:33Z",
+      "type": "decision"
+    },
+    {
+      "stage": "review",
+      "summary": "APPROVE — 14/14 AC pass, 3/3 checks pass. All revision 1 blockers resolved.",
+      "timestamp": "2026-07-01T03:36:39Z",
+      "type": "stage_work_complete",
+      "worktree_head": "b8c1a8a0ab4ad8abd25b8b010416174c5f90e46a",
+      "worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
   "needsArchitecture": false,
@@ -431,39 +662,40 @@
     "rationale": "Story creation is straightforward, follows established Storybook patterns from existing stories (button, select, dialog). Single file with 7 variants, no new UI exposed to users, no architectural decisions. Skip architecture and design stages — story structure and component patterns already defined by project conventions."
   },
   "stageApprovals": {
+    "implementation": "2026-07-01T03:33:16Z",
     "scope": "2026-06-14T05:59:12Z"
   },
   "stageContent": {
-    "review": "## Verdict\n\n**Verdict:** REQUEST CHANGES\n**Files reviewed:** 2 files changed across 1 phases\n\nStory file exists only as an untracked file in the main repo — the feature branch has no story. Disabled story tests a disabled trigger not disabled items, and play function never dispatches Arrow key or Escape events.\n\n### Automated Checks\n\n| Check | Result | Details |\n|-------|--------|---------|\n| Type check | PASS | bun run typecheck — 0 errors |\n| Lint | PASS | bun run lint — 0 warnings, 0 errors |\n\n### Acceptance Criteria (11/14 passed)\n\n- [ ] AC-1: File src/stories/dropdown-menu.stories.tsx exists with valid TypeScript syntax and no linting errors — FAIL: File is untracked in main repo only. git diff main..HEAD in feature worktree shows only .defract changes — no story file on the branch.\n- [x] AC-2: Meta exports with title UI/DropdownMenu, component DropdownMenu, tags autodocs — PASS: dropdown-menu.stories.tsx:23-30 — title UI/DropdownMenu, component DropdownMenu, tags autodocs all present.\n- [x] AC-3: Default story renders without errors and displays a basic dropdown menu with 3+ menu items — PASS: dropdown-menu.stories.tsx:38-51 — Default story renders Profile, Settings, Help (3 items).\n- [x] AC-4: Checkbox variant shows CheckboxItem with checked state, unchecked state, and Check icon indicator — PASS: dropdown-menu.stories.tsx:66-74 — checked=true on Dark Mode and Animations, checked=false on Notifications. Check icon via ItemIndicator in dropdown-menu.tsx:108-110.\n- [x] AC-5: RadioGroup variant shows 3+ RadioItem options with mutual exclusivity — PASS: dropdown-menu.stories.tsx:94-98 — RadioGroup value=light with Light, Dark, Auto (3 RadioItems).\n- [ ] AC-6: Disabled variant renders DropdownMenuItem with data-disabled styling and opacity applied — FAIL: dropdown-menu.stories.tsx:109-123 — story disables DropdownMenuTrigger and Button; no DropdownMenuItem has disabled prop; data-[disabled]:opacity-50 (dropdown-menu.tsx:85) never triggered.\n- [x] AC-7: Separator and Shortcut variant renders DropdownMenuSeparator and DropdownMenuShortcut with correct spacing — PASS: dropdown-menu.stories.tsx:138-155 — DropdownMenuSeparator at lines 138,152,155; DropdownMenuShortcut at 141,144,149.\n- [x] AC-8: Submenu variant renders nested menu structure with ChevronRight indicator — PASS: dropdown-menu.stories.tsx:179-188 — Sub > SubTrigger > Portal > SubContent > Items. ChevronRight built into SubTrigger at dropdown-menu.tsx:37.\n- [ ] AC-9: At least one story includes play function testing keyboard navigation (Arrow keys, Enter, Escape) — FAIL: dropdown-menu.stories.tsx:226-265 — play function clicks trigger and dispatches Enter but no ArrowDown, ArrowUp, or Escape keyboard events appear anywhere.\n- [x] AC-10: play function uses Storybook test utilities (userEvent, within, expect, screen, waitFor) — PASS: dropdown-menu.stories.tsx:2,227-264 — all five utilities imported from storybook/test and used.\n- [x] AC-11: All 14 dropdown-menu exports are used or directly tested across story variants — PASS: All 15 exports imported at lines 4-20 and used across stories.\n- [x] AC-12: Story follows naming convention from existing stories — PASS: Filename dropdown-menu.stories.tsx is kebab-case matching button.stories.tsx, select.stories.tsx.\n- [x] AC-13: No TypeScript errors in story file — PASS: bun run typecheck returned exit 0 with 0 errors.\n- [x] AC-14: Storybook builds and renders story without console errors — PASS: Implementation agent reported build-storybook exit 0; typecheck and lint pass independently.\n\n### Code Quality (Refactor Review)\n\n#### Incorrect Radix nesting\n\n- **WARNING:** `src/stories/dropdown-menu.stories.tsx:178` — DropdownMenuSub wrapped in extra DropdownMenu inside DropdownMenuContent at lines 178 and 190. Nested Radix Roots break context propagation. Suggested fix: Remove the DropdownMenu wrapper at lines 178 and 190 so DropdownMenuSub is a direct child of DropdownMenuGroup\n- **WARNING:** `src/stories/dropdown-menu.stories.tsx:349` — Same extra DropdownMenu wrapper around DropdownMenuSub in AllExportsComprehensive at line 349. Suggested fix: Remove the DropdownMenu wrapper at line 349\n\n#### Incomplete interaction test\n\n- **WARNING:** `src/stories/dropdown-menu.stories.tsx:239` — Comment claims Arrow Down navigation testing but no keyboard event dispatched — only DOM presence assertions. Suggested fix: Add userEvent.keyboard ArrowDown after menu opens and assert focus moves; add Escape and assert menu closes\n\n#### Disabled state coverage\n\n- **WARNING:** `src/stories/dropdown-menu.stories.tsx:109` — Disabled story prevents menu from opening via disabled trigger; DropdownMenuItem disabled prop and data-disabled styles never exercised. Suggested fix: Use DropdownMenu defaultOpen and set disabled on DropdownMenuItems to capture actual disabled-item visual state\n\n### Security Assessment (Security Review)\n\nNo security issues found in changed files.\n\n### Decisions Made During Implementation\n\n- Single implementation phase — story creation self-contained, no architectural decisions required.\n- All 15 dropdown-menu exports covered across variants for comprehensive Chromatic baseline.\n- Keyboard interaction play function intended to cover Arrow Up/Down, Enter, Escape — only Enter implemented.\n\n## Headline Findings\n\n- **critical** — Story file was written to the main repo as an untracked file — feature branch has no story, PR ships nothing, Chromatic gets no baseline.\n- **critical** — Disabled story shows a disabled trigger preventing menu opening, not disabled DropdownMenuItems — data-disabled opacity styles are never captured by Chromatic.\n- **critical** — KeyboardInteraction play function never dispatches Arrow key or Escape events — accessibility regression coverage is absent despite comments claiming otherwise.\n- **recommended** — Submenu and AllExportsComprehensive stories wrap DropdownMenuSub inside an extra DropdownMenu (nested Radix Root) which breaks context propagation.\n\n## Required Changes\n\n**Blocking**\n\n- Copy src/stories/dropdown-menu.stories.tsx into the feature branch worktree at .defract-worktrees/task-add-storybook-story-for-the-dropdown-01kv28sbxa2q/src/stories/ and commit it.\n- Replace Disabled story in src/stories/dropdown-menu.stories.tsx lines 109-123 to use DropdownMenu defaultOpen and DropdownMenuItem with disabled prop so data-disabled opacity is visible.\n- Add userEvent.keyboard ArrowDown and Escape dispatches to KeyboardInteraction play function in src/stories/dropdown-menu.stories.tsx around line 239.\n\n**Recommended**\n\n- Remove extra DropdownMenu wrappers around DropdownMenuSub at src/stories/dropdown-menu.stories.tsx lines 178, 190, and 349.\n\n"
+    "review": "## Verdict\n\n**Verdict:** APPROVE\n**Files reviewed:** 2 files changed across 1 phases\n\nAll three blocking issues from revision 1 are resolved: story is committed to the feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, and the play function dispatches ArrowDown and Escape keyboard events. The recommended Radix nesting fix was also applied. All 14 acceptance criteria pass.\n\n### Automated Checks\n\n| Check | Result | Details |\n|-------|--------|---------|\n| Type check | PASS | bun run typecheck — 0 errors |\n| Lint | PASS | bun run lint — 0 warnings, 0 errors |\n| Storybook build | PASS | bun run build-storybook — completed successfully |\n\n### Acceptance Criteria (14/14 passed)\n\n- [x] AC-1: File src/stories/dropdown-menu.stories.tsx exists with valid TypeScript syntax and no linting errors — PASS: File present in git diff vs base branch. bun run typecheck exit 0, bun run lint 0 errors.\n- [x] AC-2: Meta exports with title \"UI/DropdownMenu\", component DropdownMenu, tags: [\"autodocs\"] — PASS: dropdown-menu.stories.tsx:23-30 — title UI/DropdownMenu, component DropdownMenu, tags autodocs all present.\n- [x] AC-3: Default story renders without errors and displays a basic dropdown menu with 3+ menu items — PASS: dropdown-menu.stories.tsx:38-51 — Default story renders Profile, Settings, Help (3 DropdownMenuItems).\n- [x] AC-4: Checkbox variant shows CheckboxItem with checked state, unchecked state, and Check icon indicator — PASS: dropdown-menu.stories.tsx:66-68 — checked=true on Dark Mode and Animations, checked=false on Notifications. Check icon rendered via ItemIndicator in dropdown-menu.tsx:108-110.\n- [x] AC-5: RadioGroup variant shows 3+ RadioItem options with mutual exclusivity (only one checked at time) — PASS: dropdown-menu.stories.tsx:88-93 — DropdownMenuRadioGroup value=light with Light, Dark, Auto (3 RadioItems).\n- [x] AC-6: Disabled variant renders DropdownMenuItem with data-disabled styling and opacity applied — PASS: dropdown-menu.stories.tsx:103-116 — DropdownMenu defaultOpen=true; DropdownMenuItem disabled at lines 111-112; data-[disabled]:opacity-50 triggered via dropdown-menu.tsx:85.\n- [x] AC-7: Separator and Shortcut variant renders DropdownMenuSeparator and DropdownMenuShortcut with correct spacing — PASS: dropdown-menu.stories.tsx:122-155 — DropdownMenuSeparator at lines 131,145,148; DropdownMenuShortcut at lines 134,138,142.\n- [x] AC-8: Submenu variant renders nested menu structure (Sub > SubTrigger > SubContent > items) with ChevronRight indicator — PASS: dropdown-menu.stories.tsx:161-194 — Sub > SubTrigger > Portal > SubContent > Items. ChevronRight rendered by component at dropdown-menu.tsx:37.\n- [x] AC-9: At least one story includes play function testing keyboard navigation (Arrow keys, Enter, Escape) — PASS: dropdown-menu.stories.tsx:246 — userEvent.keyboard('{ArrowDown}'); line 253 — userEvent.keyboard('{ArrowDown}'); line 259 — userEvent.keyboard('{Escape}').\n- [x] AC-10: play function uses Storybook test utilities (userEvent, within, expect, screen, waitFor) — PASS: dropdown-menu.stories.tsx:2 — all 5 utilities imported from storybook/test and used in KeyboardInteraction play function.\n- [x] AC-11: All 14 dropdown-menu exports are used or directly tested across story variants — PASS: dropdown-menu.stories.tsx:4-20 — all 15 exports (14 + DropdownMenuRadioGroup) imported and used across 8 story variants.\n- [x] AC-12: Story follows naming convention from existing stories (button.stories.tsx, select.stories.tsx) for consistency — PASS: Filename dropdown-menu.stories.tsx is kebab-case matching button.stories.tsx, select.stories.tsx.\n- [x] AC-13: No TypeScript errors in story file (verified via bun run typecheck) — PASS: bun run typecheck exit 0 with 0 errors.\n- [x] AC-14: Storybook builds and renders story without console errors (verified via bun run storybook) — PASS: bun run build-storybook — Storybook build completed successfully, output to storybook-static/.\n\n### Code Quality (Refactor Review)\n\nNo code quality issues found in changed files.\n\n### Security Assessment (Security Review)\n\nNo security issues found in changed files.\n\n### Decisions Made During Implementation\n\n- All three blocking issues from revision 1 resolved: story committed to feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, play function dispatches ArrowDown and Escape.\n- Recommended Radix nesting fix applied: extra DropdownMenu wrapper removed from Submenu and AllExportsComprehensive stories.\n- 8 story variants covering all 15 dropdown-menu exports — exceeds 14-export requirement.\n\n## Required Changes\n\nNone.\n"
   },
   "stages": {
-    "release": {
-      "status": "not_started"
-    },
-    "architecture": {
-      "status": "skipped"
-    },
-    "review": {
-      "status": "awaiting_approval",
-      "startedAt": "2026-06-14T06:04:43Z"
-    },
-    "implementation": {
-      "status": "awaiting_approval",
-      "approvedAt": "2026-06-14T06:04:42Z",
-      "startedAt": "2026-06-14T06:13:46Z"
-    },
-    "design": {
-      "status": "skipped"
-    },
     "scope": {
       "status": "approved",
       "approvedAt": "2026-06-14T05:59:12Z",
       "startedAt": "2026-06-14T05:51:41Z"
+    },
+    "release": {
+      "status": "not_started"
+    },
+    "review": {
+      "status": "awaiting_approval",
+      "startedAt": "2026-07-01T03:33:21Z"
+    },
+    "architecture": {
+      "status": "skipped"
+    },
+    "implementation": {
+      "status": "approved",
+      "approvedAt": "2026-07-01T03:33:16Z",
+      "startedAt": "2026-06-14T06:13:46Z"
+    },
+    "design": {
+      "status": "skipped"
     }
   },
   "worktreePath": "/Users/richtillman/Documents/GitHub/portfolio/.defract-worktrees/task-add-storybook-story-for-the-dropdown-01kv28sbxa2q",
   "worktreeBaseBranch": "claude/optimistic-meitner-uztpah",
-  "worktreeLastSyncedAt": "2026-06-14T06:13:46Z",
+  "worktreeLastSyncedAt": "2026-07-01T03:33:18Z",
   "loopBackHistory": [
     {
       "fromStage": "review",
@@ -478,8 +710,8 @@
     }
   ],
   "reviewPayload": {
-    "verdict": "request_changes",
-    "summary": "Story file exists only as an untracked file in the main repo — the feature branch has no story. Disabled story tests a disabled trigger not disabled items, and play function never dispatches Arrow key or Escape events.",
+    "verdict": "approve",
+    "summary": "All three blocking issues from revision 1 are resolved: story is committed to the feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, and the play function dispatches ArrowDown and Escape keyboard events. The recommended Radix nesting fix was also applied. All 14 acceptance criteria pass.",
     "filesReviewedCount": 2,
     "phasesReviewedCount": 1,
     "automatedChecks": [
@@ -492,18 +724,23 @@
         "name": "Lint",
         "result": "pass",
         "detail": "bun run lint — 0 warnings, 0 errors"
+      },
+      {
+        "name": "Storybook build",
+        "result": "pass",
+        "detail": "bun run build-storybook — completed successfully"
       }
     ],
     "acceptanceCriteria": [
       {
         "acId": "AC-1",
         "text": "File src/stories/dropdown-menu.stories.tsx exists with valid TypeScript syntax and no linting errors",
-        "status": "fail",
-        "evidence": "File is untracked in main repo only. git diff main..HEAD in feature worktree shows only .defract changes — no story file on the branch."
+        "status": "pass",
+        "evidence": "File present in git diff vs base branch. bun run typecheck exit 0, bun run lint 0 errors."
       },
       {
         "acId": "AC-2",
-        "text": "Meta exports with title UI/DropdownMenu, component DropdownMenu, tags autodocs",
+        "text": "Meta exports with title \"UI/DropdownMenu\", component DropdownMenu, tags: [\"autodocs\"]",
         "status": "pass",
         "evidence": "dropdown-menu.stories.tsx:23-30 — title UI/DropdownMenu, component DropdownMenu, tags autodocs all present."
       },
@@ -511,151 +748,96 @@
         "acId": "AC-3",
         "text": "Default story renders without errors and displays a basic dropdown menu with 3+ menu items",
         "status": "pass",
-        "evidence": "dropdown-menu.stories.tsx:38-51 — Default story renders Profile, Settings, Help (3 items)."
+        "evidence": "dropdown-menu.stories.tsx:38-51 — Default story renders Profile, Settings, Help (3 DropdownMenuItems)."
       },
       {
         "acId": "AC-4",
         "text": "Checkbox variant shows CheckboxItem with checked state, unchecked state, and Check icon indicator",
         "status": "pass",
-        "evidence": "dropdown-menu.stories.tsx:66-74 — checked=true on Dark Mode and Animations, checked=false on Notifications. Check icon via ItemIndicator in dropdown-menu.tsx:108-110."
+        "evidence": "dropdown-menu.stories.tsx:66-68 — checked=true on Dark Mode and Animations, checked=false on Notifications. Check icon rendered via ItemIndicator in dropdown-menu.tsx:108-110."
       },
       {
         "acId": "AC-5",
-        "text": "RadioGroup variant shows 3+ RadioItem options with mutual exclusivity",
+        "text": "RadioGroup variant shows 3+ RadioItem options with mutual exclusivity (only one checked at time)",
         "status": "pass",
-        "evidence": "dropdown-menu.stories.tsx:94-98 — RadioGroup value=light with Light, Dark, Auto (3 RadioItems)."
+        "evidence": "dropdown-menu.stories.tsx:88-93 — DropdownMenuRadioGroup value=light with Light, Dark, Auto (3 RadioItems)."
       },
       {
         "acId": "AC-6",
         "text": "Disabled variant renders DropdownMenuItem with data-disabled styling and opacity applied",
-        "status": "fail",
-        "evidence": "dropdown-menu.stories.tsx:109-123 — story disables DropdownMenuTrigger and Button; no DropdownMenuItem has disabled prop; data-[disabled]:opacity-50 (dropdown-menu.tsx:85) never triggered."
+        "status": "pass",
+        "evidence": "dropdown-menu.stories.tsx:103-116 — DropdownMenu defaultOpen=true; DropdownMenuItem disabled at lines 111-112; data-[disabled]:opacity-50 triggered via dropdown-menu.tsx:85."
       },
       {
         "acId": "AC-7",
         "text": "Separator and Shortcut variant renders DropdownMenuSeparator and DropdownMenuShortcut with correct spacing",
         "status": "pass",
-        "evidence": "dropdown-menu.stories.tsx:138-155 — DropdownMenuSeparator at lines 138,152,155; DropdownMenuShortcut at 141,144,149."
+        "evidence": "dropdown-menu.stories.tsx:122-155 — DropdownMenuSeparator at lines 131,145,148; DropdownMenuShortcut at lines 134,138,142."
       },
       {
         "acId": "AC-8",
-        "text": "Submenu variant renders nested menu structure with ChevronRight indicator",
+        "text": "Submenu variant renders nested menu structure (Sub > SubTrigger > SubContent > items) with ChevronRight indicator",
         "status": "pass",
-        "evidence": "dropdown-menu.stories.tsx:179-188 — Sub > SubTrigger > Portal > SubContent > Items. ChevronRight built into SubTrigger at dropdown-menu.tsx:37."
+        "evidence": "dropdown-menu.stories.tsx:161-194 — Sub > SubTrigger > Portal > SubContent > Items. ChevronRight rendered by component at dropdown-menu.tsx:37."
       },
       {
         "acId": "AC-9",
         "text": "At least one story includes play function testing keyboard navigation (Arrow keys, Enter, Escape)",
-        "status": "fail",
-        "evidence": "dropdown-menu.stories.tsx:226-265 — play function clicks trigger and dispatches Enter but no ArrowDown, ArrowUp, or Escape keyboard events appear anywhere."
+        "status": "pass",
+        "evidence": "dropdown-menu.stories.tsx:246 — userEvent.keyboard('{ArrowDown}'); line 253 — userEvent.keyboard('{ArrowDown}'); line 259 — userEvent.keyboard('{Escape}')."
       },
       {
         "acId": "AC-10",
         "text": "play function uses Storybook test utilities (userEvent, within, expect, screen, waitFor)",
         "status": "pass",
-        "evidence": "dropdown-menu.stories.tsx:2,227-264 — all five utilities imported from storybook/test and used."
+        "evidence": "dropdown-menu.stories.tsx:2 — all 5 utilities imported from storybook/test and used in KeyboardInteraction play function."
       },
       {
         "acId": "AC-11",
         "text": "All 14 dropdown-menu exports are used or directly tested across story variants",
         "status": "pass",
-        "evidence": "All 15 exports imported at lines 4-20 and used across stories."
+        "evidence": "dropdown-menu.stories.tsx:4-20 — all 15 exports (14 + DropdownMenuRadioGroup) imported and used across 8 story variants."
       },
       {
         "acId": "AC-12",
-        "text": "Story follows naming convention from existing stories",
+        "text": "Story follows naming convention from existing stories (button.stories.tsx, select.stories.tsx) for consistency",
         "status": "pass",
         "evidence": "Filename dropdown-menu.stories.tsx is kebab-case matching button.stories.tsx, select.stories.tsx."
       },
       {
         "acId": "AC-13",
-        "text": "No TypeScript errors in story file",
+        "text": "No TypeScript errors in story file (verified via bun run typecheck)",
         "status": "pass",
-        "evidence": "bun run typecheck returned exit 0 with 0 errors."
+        "evidence": "bun run typecheck exit 0 with 0 errors."
       },
       {
         "acId": "AC-14",
-        "text": "Storybook builds and renders story without console errors",
+        "text": "Storybook builds and renders story without console errors (verified via bun run storybook)",
         "status": "pass",
-        "evidence": "Implementation agent reported build-storybook exit 0; typecheck and lint pass independently."
+        "evidence": "bun run build-storybook — Storybook build completed successfully, output to storybook-static/."
       }
     ],
-    "headlineFindings": [
-      {
-        "severity": "critical",
-        "impact": "Story file was written to the main repo as an untracked file — feature branch has no story, PR ships nothing, Chromatic gets no baseline."
-      },
-      {
-        "severity": "critical",
-        "impact": "Disabled story shows a disabled trigger preventing menu opening, not disabled DropdownMenuItems — data-disabled opacity styles are never captured by Chromatic."
-      },
-      {
-        "severity": "critical",
-        "impact": "KeyboardInteraction play function never dispatches Arrow key or Escape events — accessibility regression coverage is absent despite comments claiming otherwise."
-      },
-      {
-        "severity": "recommended",
-        "impact": "Submenu and AllExportsComprehensive stories wrap DropdownMenuSub inside an extra DropdownMenu (nested Radix Root) which breaks context propagation."
-      }
-    ],
-    "requiredChanges": [
-      {
-        "text": "Copy src/stories/dropdown-menu.stories.tsx into the feature branch worktree at .defract-worktrees/task-add-storybook-story-for-the-dropdown-01kv28sbxa2q/src/stories/ and commit it.",
-        "severityGroup": "blocking"
-      },
-      {
-        "text": "Replace Disabled story in src/stories/dropdown-menu.stories.tsx lines 109-123 to use DropdownMenu defaultOpen and DropdownMenuItem with disabled prop so data-disabled opacity is visible.",
-        "severityGroup": "blocking"
-      },
-      {
-        "text": "Add userEvent.keyboard ArrowDown and Escape dispatches to KeyboardInteraction play function in src/stories/dropdown-menu.stories.tsx around line 239.",
-        "severityGroup": "blocking"
-      },
-      {
-        "text": "Remove extra DropdownMenu wrappers around DropdownMenuSub at src/stories/dropdown-menu.stories.tsx lines 178, 190, and 349.",
-        "severityGroup": "recommended"
-      }
-    ],
-    "codeQualityFindings": [
-      {
-        "category": "Incorrect Radix nesting",
-        "severity": "warning",
-        "file": "src/stories/dropdown-menu.stories.tsx",
-        "line": 178,
-        "description": "DropdownMenuSub wrapped in extra DropdownMenu inside DropdownMenuContent at lines 178 and 190. Nested Radix Roots break context propagation.",
-        "fixOrRemediation": "Remove the DropdownMenu wrapper at lines 178 and 190 so DropdownMenuSub is a direct child of DropdownMenuGroup."
-      },
-      {
-        "category": "Incorrect Radix nesting",
-        "severity": "warning",
-        "file": "src/stories/dropdown-menu.stories.tsx",
-        "line": 349,
-        "description": "Same extra DropdownMenu wrapper around DropdownMenuSub in AllExportsComprehensive at line 349.",
-        "fixOrRemediation": "Remove the DropdownMenu wrapper at line 349."
-      },
-      {
-        "category": "Incomplete interaction test",
-        "severity": "warning",
-        "file": "src/stories/dropdown-menu.stories.tsx",
-        "line": 239,
-        "description": "Comment claims Arrow Down navigation testing but no keyboard event dispatched — only DOM presence assertions.",
-        "fixOrRemediation": "Add userEvent.keyboard ArrowDown after menu opens and assert focus moves; add Escape and assert menu closes."
-      },
-      {
-        "category": "Disabled state coverage",
-        "severity": "warning",
-        "file": "src/stories/dropdown-menu.stories.tsx",
-        "line": 109,
-        "description": "Disabled story prevents menu from opening via disabled trigger; DropdownMenuItem disabled prop and data-disabled styles never exercised.",
-        "fixOrRemediation": "Use DropdownMenu defaultOpen and set disabled on DropdownMenuItems to capture actual disabled-item visual state."
-      }
-    ],
+    "headlineFindings": [],
+    "requiredChanges": [],
+    "codeQualityFindings": [],
     "securityFindings": [],
     "decisions": [
-      "Single implementation phase — story creation self-contained, no architectural decisions required.",
-      "All 15 dropdown-menu exports covered across variants for comprehensive Chromatic baseline.",
-      "Keyboard interaction play function intended to cover Arrow Up/Down, Enter, Escape — only Enter implemented."
+      "All three blocking issues from revision 1 resolved: story committed to feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, play function dispatches ArrowDown and Escape.",
+      "Recommended Radix nesting fix applied: extra DropdownMenu wrapper removed from Submenu and AllExportsComprehensive stories.",
+      "8 story variants covering all 15 dropdown-menu exports — exceeds 14-export requirement."
     ],
-    "revision": 1
+    "revision": 2,
+    "changeAnnotations": [
+      {
+        "file": "src/stories/dropdown-menu.stories.tsx",
+        "note": "Adds Storybook story for the dropdown-menu component with 8 variants (Default, Checkbox, RadioGroup, Disabled, SeparatorAndShortcut, Submenu, KeyboardInteraction, AllExportsComprehensive) covering all 15 exports and establishing a Chromatic visual regression baseline."
+      }
+    ]
+  },
+  "gatePolicies": {
+    "review": "stop",
+    "scope": "stop",
+    "release": "stop",
+    "implementation": "stop"
   }
 }
