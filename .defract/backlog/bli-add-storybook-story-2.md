@@ -11,6 +11,7 @@ labels:
 groomingStatus: completed
 createdAt: 2026-06-14T05:07:15Z
 groomedAt: 2026-07-01T03:00:30Z
+promotedTaskId: task-add-sonner-toast-story-01kwdt6k55j8
 events:
   - type: grooming_started
     timestamp: 2026-07-01T02:59:42Z

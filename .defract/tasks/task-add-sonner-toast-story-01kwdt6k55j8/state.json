@@ -1,0 +1,107 @@
+{
+  "id": "task-add-sonner-toast-story-01kwdt6k55j8",
+  "status": "active",
+  "stage": "scope",
+  "phase": 0,
+  "totalPhases": 1,
+  "createdAt": "2026-07-01T03:05:14Z",
+  "updatedAt": "2026-07-01T03:06:18Z",
+  "events": [
+    {
+      "models": {
+        "architecture": "sonnet",
+        "design": "sonnet",
+        "implementation": "sonnet",
+        "release": "haiku",
+        "review": "sonnet",
+        "scope_full": "sonnet",
+        "scope_initial": "haiku"
+      },
+      "timestamp": "2026-07-01T03:05:14Z",
+      "type": "stage_models_updated"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "branch": "feature/task-add-sonner-toast-story-01kwdt6k55j8",
+      "path": "/Users/richtillman/Documents/GitHub/portfolio/.defract-worktrees/task-add-sonner-toast-story-01kwdt6k55j8",
+      "timestamp": "2026-07-01T03:05:16Z",
+      "type": "worktree_created"
+    },
+    {
+      "mode": "start",
+      "model": "haiku",
+      "session_id": "01kwdt6qqnag8xe3kb424292kn",
+      "stage": "scope",
+      "timestamp": "2026-07-01T03:05:19Z",
+      "type": "stage_agent_started"
+    },
+    {
+      "change_summary": "Intent check — Sonner story scope boundaries",
+      "revision": 1,
+      "timestamp": "2026-07-01T03:05:56Z",
+      "type": "scope_update"
+    },
+    {
+      "stage": "scope",
+      "summary": "Intent check: Sonner story scope — success/error toast variants, visual regression, no route integration",
+      "timestamp": "2026-07-01T03:05:59Z",
+      "type": "stage_work_complete",
+      "worktree_head": "5a5250023bd0bed0a232903651547d0f80ec71e4",
+      "worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "reason": "already_up_to_date",
+      "timestamp": "2026-07-01T03:06:06Z",
+      "type": "worktree_sync_skipped"
+    },
+    {
+      "exit_code": 1,
+      "session_id": "01kwdt6qqnag8xe3kb424292kn",
+      "timed_out": false,
+      "timestamp": "2026-07-01T03:06:07Z",
+      "type": "agent_exited"
+    },
+    {
+      "mode": "approve_initial",
+      "model": "sonnet",
+      "session_id": "01kwdt8h9cmfwkrhsdk4sp4skr",
+      "stage": "scope",
+      "timestamp": "2026-07-01T03:06:18Z",
+      "type": "stage_agent_started"
+    }
+  ],
+  "stages": {
+    "review": {
+      "status": "not_started"
+    },
+    "implementation": {
+      "status": "not_started"
+    },
+    "release": {
+      "status": "not_started"
+    },
+    "scope": {
+      "status": "in_progress",
+      "startedAt": "2026-07-01T03:06:18Z"
+    },
+    "design": {
+      "status": "not_started"
+    },
+    "architecture": {
+      "status": "not_started"
+    }
+  },
+  "worktreePath": "/Users/richtillman/Documents/GitHub/portfolio/.defract-worktrees/task-add-sonner-toast-story-01kwdt6k55j8",
+  "worktreeBaseBranch": "claude/optimistic-meitner-uztpah",
+  "worktreeLastSyncedAt": "2026-07-01T03:06:06Z",
+  "stageModels": {
+    "review": "sonnet",
+    "scope_full": "sonnet",
+    "implementation": "sonnet",
+    "release": "haiku",
+    "architecture": "sonnet",
+    "scope_initial": "haiku",
+    "design": "sonnet"
+  }
+}
