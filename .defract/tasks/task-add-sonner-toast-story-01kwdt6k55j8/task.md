@@ -173,3 +173,29 @@ No security issues found in changed files.
 ## Required Changes
 
 None.
+
+## Release
+
+## Release Notes
+
+### What was built
+- Storybook story documenting Sonner toast notifications with success and error variants
+- Live interactive examples with play functions for both toast states
+- Visual regression coverage added via Chromatic snapshots
+- UI/Sonner entry in Storybook sidebar with autodocs support
+
+### Key decisions
+- Toaster mounted inside each story's render function rather than globally — avoids unnecessary Toaster instances across all stories
+- screen (not within(canvasElement)) used for DOM assertions — Sonner renders toasts into document.body portal outside Storybook canvas
+- duration=Infinity on Toaster — prevents auto-dismiss during Chromatic snapshots
+
+### Changes by phase
+- **Phase 1: Add Sonner story file** — Created src/stories/sonner.stories.tsx with Success (green, "Message sent") and Error (red, "Submission failed") variants. Each story mounts Toaster and includes play functions that click trigger buttons and assert toast visibility via screen queries.
+
+## Verification
+
+- Production build: PASS (`bun run build` exits 0)
+- Code pushed: feature/task-add-sonner-toast-story-01kwdt6k55j8 → origin
+- Review approved: APPROVE (all 5 acceptance criteria pass)
+- Typecheck: exit 0, no TypeScript errors
+- Lint: 0 warnings, 0 errors across 58 files

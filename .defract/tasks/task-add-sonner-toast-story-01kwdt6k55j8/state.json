@@ -1,11 +1,11 @@
 {
   "id": "task-add-sonner-toast-story-01kwdt6k55j8",
-  "status": "active",
+  "status": "completed",
   "stage": "release",
   "phase": 1,
   "totalPhases": 1,
   "createdAt": "2026-07-01T03:05:14Z",
-  "updatedAt": "2026-07-01T03:13:40Z",
+  "updatedAt": "2026-07-01T03:18:22Z",
   "events": [
     {
       "models": {
@@ -78,7 +78,12 @@
     },
     {
       "rationale": "One new story file, no UI changes to the app itself — skip design. Well-contained single file touching no subsystem boundaries — skip architecture.",
-      "stages": ["scope", "implementation", "review", "release"],
+      "stages": [
+        "scope",
+        "implementation",
+        "review",
+        "release"
+      ],
       "template": "refactor",
       "tier": "trivial",
       "timestamp": "2026-07-01T03:08:37Z",
@@ -221,7 +226,9 @@
       "type": "stage_content_updated"
     },
     {
-      "artifacts_created": ["src/stories/sonner.stories.tsx"],
+      "artifacts_created": [
+        "src/stories/sonner.stories.tsx"
+      ],
       "phase": 0,
       "summary": "Created src/stories/sonner.stories.tsx with Success and Error variants. Each mounts Toaster with duration=Infinity and uses screen for portal assertions. Typecheck and lint both clean.",
       "timestamp": "2026-07-01T03:11:31Z",
@@ -399,6 +406,57 @@
       "timestamp": "2026-07-01T03:13:40Z",
       "to": "release",
       "type": "stage_handoff"
+    },
+    {
+      "note": "Release stage — build passed, code pushed, recording release",
+      "phase": 1,
+      "stage": "release",
+      "timestamp": "2026-07-01T03:17:21Z",
+      "type": "work_resumed"
+    },
+    {
+      "change_summary": "Release validated — build passes, code pushed",
+      "revision": 2,
+      "stage": "release",
+      "timestamp": "2026-07-01T03:17:26Z",
+      "type": "stage_content_updated"
+    },
+    {
+      "alternatives_considered": [],
+      "decision": "Release complete — task done",
+      "rationale": "Production build passes, review approved on 2026-07-01, code committed and pushed",
+      "timestamp": "2026-07-01T03:17:27Z",
+      "type": "decision"
+    },
+    {
+      "stage": "release",
+      "summary": "Release complete — production build passes, review approved, code pushed to feature/task-add-sonner-toast-story-01kwdt6k55j8",
+      "timestamp": "2026-07-01T03:17:34Z",
+      "type": "stage_work_complete",
+      "worktree_head": "29ad2c69e7ca7c22170f02d9d7c522e9f2ff6d74",
+      "worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "files_changed": 1,
+      "lines_added": 60,
+      "lines_removed": 0,
+      "timestamp": "2026-07-01T03:18:16Z",
+      "type": "worktree_merged"
+    },
+    {
+      "timestamp": "2026-07-01T03:18:17Z",
+      "type": "worktree_removed"
+    },
+    {
+      "branch": "feature/task-add-sonner-toast-story-01kwdt6k55j8",
+      "timestamp": "2026-07-01T03:18:22Z",
+      "type": "remote_branch_deleted"
+    },
+    {
+      "actor": null,
+      "timestamp": "2026-07-01T03:18:22Z",
+      "type": "task_completed"
     }
   ],
   "needsArchitecture": false,
@@ -406,18 +464,25 @@
   "workflow": {
     "tier": "trivial",
     "template": "refactor",
-    "stages": ["scope", "implementation", "review", "release"],
+    "stages": [
+      "scope",
+      "implementation",
+      "review",
+      "release"
+    ],
     "classifiedBy": "scope-agent",
     "rationale": "One new story file, no UI changes to the app itself — skip design. Well-contained single file touching no subsystem boundaries — skip architecture."
   },
   "stageApprovals": {
-    "review": "2026-07-01T03:13:38Z",
     "implementation": "2026-07-01T03:12:04Z",
-    "scope": "2026-07-01T03:09:15Z"
+    "scope": "2026-07-01T03:09:15Z",
+    "review": "2026-07-01T03:13:38Z"
   },
+  "completedAt": "2026-07-01T03:18:22Z",
   "stageContent": {
-    "review": "## Verdict\n\n**Verdict:** APPROVE\n**Files reviewed:** 1 files changed across 1 phases\n\nAll 5 acceptance criteria pass. Typecheck and lint clean. Story structure matches existing dialog.stories.tsx conventions. Toaster mounted per-story with duration=Infinity, screen used for portal assertions — both scope decisions correctly applied.\n\n### Automated Checks\n\n| Check | Result | Details |\n|-------|--------|---------|\n| Type check | PASS | tsc --noEmit: 0 errors |\n| Lint | PASS | oxlint: 0 warnings, 0 errors across 58 files |\n\n### Acceptance Criteria (5/5 passed)\n\n- [x] AC-1: `src/stories/sonner.stories.tsx` exists, is kebab-case named, and imports from `@/components/ui/sonner` and `sonner` — PASS: File at src/stories/sonner.stories.tsx (kebab-case). Line 3: import { toast } from \"sonner\". Line 4: import { Toaster } from \"@/components/ui/sonner\".\n- [x] AC-2: Story appears in Storybook sidebar at `UI/Sonner` with autodocs tab populated — PASS: sonner.stories.tsx:8 — title: \"UI/Sonner\". sonner.stories.tsx:10 — tags: [\"autodocs\"]. Both required for sidebar entry and autodocs tab.\n- [x] AC-3: `Success` play function clicks the trigger button and asserts the success toast message is visible in the DOM via `screen` — PASS: sonner.stories.tsx:32-36 — play uses within(canvasElement) to click button, then screen.getByText(\"Message sent\") with waitFor for DOM assertion.\n- [x] AC-4: `Error` play function clicks the trigger button and asserts the error toast message is visible in the DOM via `screen` — PASS: sonner.stories.tsx:55-59 — same pattern; asserts screen.getByText(\"Submission failed\") via waitFor.\n- [x] AC-5: `bun run storybook` starts without TypeScript errors; `bun run typecheck` exits 0 — PASS: bun run typecheck: exit 0, no output. bun run lint: 0 warnings, 0 errors. No Storybook-specific type errors present.\n\n### Code Quality (Refactor Review)\n\nNo code quality issues found in changed files.\n\n### Security Assessment (Security Review)\n\nNo security issues found in changed files.\n\n### Decisions Made During Implementation\n\n- Toaster mounted inside each story's render function rather than a global decorator — matches per-story pattern used for Tooltip's TooltipProvider, avoids polluting all stories\n- screen (not within(canvasElement)) used for toast DOM assertions — Sonner renders toasts into document.body portal outside Storybook canvas element\n- duration=Infinity on Toaster — prevents auto-dismiss during Chromatic snapshots\n\n## Required Changes\n\nNone.\n",
-    "implementation": "## Phase 1: Add Sonner story file\n\nCreated `src/stories/sonner.stories.tsx` with two story variants:\n\n- **Success** — renders `<Toaster duration={Infinity} />` + trigger button; play function clicks button and asserts \"Message sent\" toast appears via `screen`\n- **Error** — same pattern; play function asserts \"Submission failed\" toast appears via `screen`\n\nBoth stories use `parameters: { layout: \"padded\" }`. Portal assertion uses `screen` (not `within(canvasElement)`) per scope decision.\n\n**Files changed:**\n- `src/stories/sonner.stories.tsx` (new)\n\n**Verification:**\n- `bun run typecheck` — 0 errors\n- `bun run lint` — 0 warnings, 0 errors\n"
+    "implementation": "## Phase 1: Add Sonner story file\n\nCreated `src/stories/sonner.stories.tsx` with two story variants:\n\n- **Success** — renders `<Toaster duration={Infinity} />` + trigger button; play function clicks button and asserts \"Message sent\" toast appears via `screen`\n- **Error** — same pattern; play function asserts \"Submission failed\" toast appears via `screen`\n\nBoth stories use `parameters: { layout: \"padded\" }`. Portal assertion uses `screen` (not `within(canvasElement)`) per scope decision.\n\n**Files changed:**\n- `src/stories/sonner.stories.tsx` (new)\n\n**Verification:**\n- `bun run typecheck` — 0 errors\n- `bun run lint` — 0 warnings, 0 errors\n",
+    "release": "## Release Notes\n\n### What was built\n- Storybook story documenting Sonner toast notifications with success and error variants\n- Live interactive examples with play functions for both toast states\n- Visual regression coverage added via Chromatic snapshots\n- UI/Sonner entry in Storybook sidebar with autodocs support\n\n### Key decisions\n- Toaster mounted inside each story's render function rather than globally — avoids unnecessary Toaster instances across all stories\n- screen (not within(canvasElement)) used for DOM assertions — Sonner renders toasts into document.body portal outside Storybook canvas\n- duration=Infinity on Toaster — prevents auto-dismiss during Chromatic snapshots\n\n### Changes by phase\n- **Phase 1: Add Sonner story file** — Created src/stories/sonner.stories.tsx with Success (green, \"Message sent\") and Error (red, \"Submission failed\") variants. Each story mounts Toaster and includes play functions that click trigger buttons and assert toast visibility via screen queries.\n\n## Verification\n\n- Production build: PASS (`bun run build` exits 0)\n- Code pushed: feature/task-add-sonner-toast-story-01kwdt6k55j8 → origin\n- Review approved: APPROVE (all 5 acceptance criteria pass)\n- Typecheck: exit 0, no TypeScript errors\n- Lint: 0 warnings, 0 errors across 58 files",
+    "review": "## Verdict\n\n**Verdict:** APPROVE\n**Files reviewed:** 1 files changed across 1 phases\n\nAll 5 acceptance criteria pass. Typecheck and lint clean. Story structure matches existing dialog.stories.tsx conventions. Toaster mounted per-story with duration=Infinity, screen used for portal assertions — both scope decisions correctly applied.\n\n### Automated Checks\n\n| Check | Result | Details |\n|-------|--------|---------|\n| Type check | PASS | tsc --noEmit: 0 errors |\n| Lint | PASS | oxlint: 0 warnings, 0 errors across 58 files |\n\n### Acceptance Criteria (5/5 passed)\n\n- [x] AC-1: `src/stories/sonner.stories.tsx` exists, is kebab-case named, and imports from `@/components/ui/sonner` and `sonner` — PASS: File at src/stories/sonner.stories.tsx (kebab-case). Line 3: import { toast } from \"sonner\". Line 4: import { Toaster } from \"@/components/ui/sonner\".\n- [x] AC-2: Story appears in Storybook sidebar at `UI/Sonner` with autodocs tab populated — PASS: sonner.stories.tsx:8 — title: \"UI/Sonner\". sonner.stories.tsx:10 — tags: [\"autodocs\"]. Both required for sidebar entry and autodocs tab.\n- [x] AC-3: `Success` play function clicks the trigger button and asserts the success toast message is visible in the DOM via `screen` — PASS: sonner.stories.tsx:32-36 — play uses within(canvasElement) to click button, then screen.getByText(\"Message sent\") with waitFor for DOM assertion.\n- [x] AC-4: `Error` play function clicks the trigger button and asserts the error toast message is visible in the DOM via `screen` — PASS: sonner.stories.tsx:55-59 — same pattern; asserts screen.getByText(\"Submission failed\") via waitFor.\n- [x] AC-5: `bun run storybook` starts without TypeScript errors; `bun run typecheck` exits 0 — PASS: bun run typecheck: exit 0, no output. bun run lint: 0 warnings, 0 errors. No Storybook-specific type errors present.\n\n### Code Quality (Refactor Review)\n\nNo code quality issues found in changed files.\n\n### Security Assessment (Security Review)\n\nNo security issues found in changed files.\n\n### Decisions Made During Implementation\n\n- Toaster mounted inside each story's render function rather than a global decorator — matches per-story pattern used for Tooltip's TooltipProvider, avoids polluting all stories\n- screen (not within(canvasElement)) used for toast DOM assertions — Sonner renders toasts into document.body portal outside Storybook canvas element\n- duration=Infinity on Toaster — prevents auto-dismiss during Chromatic snapshots\n\n## Required Changes\n\nNone.\n"
   },
   "stages": {
     "implementation": {
@@ -425,29 +490,27 @@
       "approvedAt": "2026-07-01T03:12:04Z",
       "startedAt": "2026-07-01T03:09:17Z"
     },
-    "design": {
-      "status": "skipped"
-    },
-    "architecture": {
-      "status": "skipped"
-    },
-    "release": {
-      "status": "in_progress",
-      "startedAt": "2026-07-01T03:13:40Z"
-    },
     "review": {
       "status": "approved",
       "approvedAt": "2026-07-01T03:13:38Z",
       "startedAt": "2026-07-01T03:12:05Z"
     },
+    "design": {
+      "status": "skipped"
+    },
+    "release": {
+      "status": "awaiting_approval",
+      "startedAt": "2026-07-01T03:13:40Z"
+    },
     "scope": {
       "status": "approved",
       "approvedAt": "2026-07-01T03:09:15Z",
       "startedAt": "2026-07-01T03:06:18Z"
+    },
+    "architecture": {
+      "status": "skipped"
     }
   },
-  "worktreePath": "/Users/richtillman/Documents/GitHub/portfolio/.defract-worktrees/task-add-sonner-toast-story-01kwdt6k55j8",
-  "worktreeBaseBranch": "claude/optimistic-meitner-uztpah",
   "worktreeLastSyncedAt": "2026-07-01T03:13:38Z",
   "reviewPayload": {
     "verdict": "approve",
@@ -516,12 +579,12 @@
     ]
   },
   "stageModels": {
-    "review": "sonnet",
-    "implementation": "sonnet",
-    "scope_initial": "haiku",
-    "design": "sonnet",
     "scope_full": "sonnet",
+    "design": "sonnet",
+    "release": "haiku",
     "architecture": "sonnet",
-    "release": "haiku"
+    "scope_initial": "haiku",
+    "implementation": "sonnet",
+    "review": "sonnet"
   }
 }
