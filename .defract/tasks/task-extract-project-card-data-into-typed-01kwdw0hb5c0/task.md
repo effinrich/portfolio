@@ -3,7 +3,7 @@ defract:
   id: task-extract-project-card-data-into-typed-01kwdw0hb5c0
   type: improvement
   status: active
-  stage: review
+  stage: release
   phase: 0
   total_phases: 1
   priority: normal
@@ -173,3 +173,37 @@ No security issues found in changed files.
 ## Required Changes
 
 None.
+
+## Release
+
+## Release Notes
+
+### What was built
+- Extracted `Project` type definition and `projects` data array from inline component code into a new `src/constants/projects.ts` file
+- Moved all four project image imports (`figmaMcpImg`, `storybookMcpImg`, `forgekitCliImg`, `tidyAppImg`) into the constants file alongside the data they reference
+- Updated `src/components/portfolio/projects.tsx` to import from `@/constants/projects`, removing ~82 lines of inline definitions
+- Component reduced from 177 to 95 lines — now a pure presentation layer with no embedded content
+
+### Key decisions
+- Store project data in `src/constants/projects.ts` with image imports colocated — keeps data and type definition together, avoids splitting related concerns across files
+- Component imports only `projects` array (not `Project` type) from constants — TypeScript infers the element type from the typed array, so the explicit import is not required for type safety
+
+### Changes by phase
+- **Phase 1: Extract project data into typed constants** — Created `src/constants/projects.ts` with exported `Project` type and `projects: Project[]` array. Moved all 4 image imports into constants file. Updated component to import from constants. All automated checks pass: TypeScript strict mode, oxlint (0 errors, 59 files), oxfmt (124 files), production build.
+
+## Verification
+
+### Production Build
+PASS — Vite client + SSR build exits 0. All 4 project images bundled as assets (forgekit-cli, tidy-app, storybook-mcp, figma-mcp).
+
+### Review Reference
+Approved by reviewer on 2026-07-01 — 5/5 acceptance criteria passed, all automated checks passed (TypeScript, lint, format).
+
+### Release Checklist
+- [x] Approved review exists
+- [x] Production build passes
+- [x] Code committed and pushed
+- [x] Release notes prepared
+- [x] Stage content updated
+- [x] Completion event logged
+
