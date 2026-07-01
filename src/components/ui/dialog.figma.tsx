@@ -27,7 +27,9 @@ figma.connect(Dialog, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline">Cancel</Button>
+          <DialogClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DialogClose>
           <Button variant="destructive">Delete</Button>
         </DialogFooter>
       </DialogContent>
