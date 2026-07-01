@@ -7,5 +7,5 @@ figma.connect(Textarea, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?nod
   props: {
     placeholder: figma.string("Placeholder"),
   },
-  example: ({ placeholder }) => <Textarea placeholder={placeholder} />,
+  example: ({ placeholder }) => <Textarea placeholder={placeholder} aria-label={placeholder || "Text area input"} />,
 })

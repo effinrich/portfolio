@@ -8,7 +8,7 @@ figma.connect(HoverCard, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?no
     <HoverCard>
       <HoverCardTrigger>@effinrich</HoverCardTrigger>
       <HoverCardContent>
-        Designer &amp; engineer building delightful product experiences.
+        Designer & engineer building delightful product experiences.
       </HoverCardContent>
     </HoverCard>
   ),

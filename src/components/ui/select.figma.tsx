@@ -12,7 +12,7 @@ import {
 figma.connect(Select, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-id=74-5", {
   example: () => (
     <Select defaultValue="apple">
-      <SelectTrigger className="w-[260px]">
+      <SelectTrigger className="w-[260px]" aria-label="Select a fruit">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>

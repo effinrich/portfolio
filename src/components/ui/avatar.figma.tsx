@@ -9,7 +9,7 @@ figma.connect(Avatar, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-
   },
   example: ({ initials }) => (
     <Avatar>
-      <AvatarImage src="/avatar.jpg" alt="" />
+      <AvatarImage src="/avatar.jpg" alt={initials} />
       <AvatarFallback>{initials}</AvatarFallback>
     </Avatar>
   ),

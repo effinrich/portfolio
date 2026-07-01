@@ -7,5 +7,5 @@ figma.connect(Input, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-i
   props: {
     placeholder: figma.string("Placeholder"),
   },
-  example: ({ placeholder }) => <Input placeholder={placeholder} />,
+  example: ({ placeholder }) => <Input placeholder={placeholder} aria-label={placeholder || "Text input field"} />,
 })
