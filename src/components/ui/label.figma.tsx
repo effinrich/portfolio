@@ -7,5 +7,5 @@ figma.connect(Label, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-i
   props: {
     children: figma.string("Text"),
   },
-  example: ({ children }) => <Label htmlFor="input">{children}</Label>,
+  example: ({ children }) => <Label>{children}</Label>,
 })
