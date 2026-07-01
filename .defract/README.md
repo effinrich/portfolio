@@ -4,9 +4,16 @@ This project uses [defract](https://defract.dev) for structured AI-assisted deve
 
 ## Tasks
 
-| Task                                                | Stage | Status |
+<<<<<<< HEAD
+| Task | Stage | Status |
 | --------------------------------------------------- | ----- | ------ |
 | Add Storybook story for the dropdown-menu component | scope | active |
+=======
+| Task | Stage | Status |
+| --------------------------------------------------- | -------------- | ------ |
+| Add Storybook story for the dropdown-menu component | implementation | active |
+
+> > > > > > > 4b40f6c2e75a878a3ffb3df1410c63d48f779912
 
 ## Reading without defract
 
