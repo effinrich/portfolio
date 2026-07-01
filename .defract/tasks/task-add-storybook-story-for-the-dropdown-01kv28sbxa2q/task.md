@@ -3,7 +3,7 @@ defract:
   id: task-add-storybook-story-for-the-dropdown-01kv28sbxa2q
   type: task
   status: active
-  stage: review
+  stage: release
   phase: 0
   total_phases: 1
   priority: normal
@@ -229,3 +229,31 @@ No security issues found in changed files.
 ## Required Changes
 
 None.
+
+## Release
+
+## Release Notes
+
+### What was built
+- Created `src/stories/dropdown-menu.stories.tsx` with Meta configuration (title "UI/DropdownMenu", tags: ["autodocs"]) covering all 15 dropdown-menu exports
+- Added 8 story variants: Default, Checkbox, RadioGroup, Disabled (defaultOpen + disabled items), SeparatorAndShortcut, Submenu (with Portal), KeyboardInteraction, AllExportsComprehensive
+- Implemented play function with Arrow Down, Enter, and Escape keyboard event testing for accessibility validation
+- Removed nested DropdownMenu wrappers from Submenu and AllExportsComprehensive stories (Radix context fix)
+- Establishes Chromatic visual regression baseline for the dropdown-menu component
+
+### Key decisions
+- Single implementation phase: story creation is self-contained with no inter-variant dependencies
+- All 15 exports (14 + DropdownMenuRadioGroup) covered across variants — exceeds 14-export requirement
+- Keyboard interaction play function validates ArrowDown, Enter, and Escape events for accessibility
+- Disabled story uses `defaultOpen` with `disabled` DropdownMenuItems (not a disabled trigger) to properly exercise the disabled item styling
+
+### Changes by phase
+- **Phase 1: Create dropdown-menu story with full variant coverage** — Created `src/stories/dropdown-menu.stories.tsx` (single new file). Reviewer requested changes in revision 1 (story not committed to feature branch, Disabled story tested wrong element, play function missing Arrow/Escape events). All three issues resolved in revision 2 and approved.
+
+## Verification
+
+- Production build (bun run build-storybook): PASS — completed successfully, output to storybook-static/
+- Pre-push typecheck hook: PASS — 0 errors
+- Code committed to feature branch: c8ded70878e7d3c5c47764d6b3b4459c589cddab
+- Feature branch pushed: feature/task-add-storybook-story-for-the-dropdown-01kv28sbxa2q → origin (c8ded70..d0e1822)
+

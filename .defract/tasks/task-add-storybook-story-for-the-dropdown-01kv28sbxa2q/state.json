@@ -1,11 +1,11 @@
 {
   "id": "task-add-storybook-story-for-the-dropdown-01kv28sbxa2q",
-  "status": "active",
-  "stage": "review",
+  "status": "completed",
+  "stage": "release",
   "phase": 1,
   "totalPhases": 1,
   "createdAt": "2026-06-14T05:13:34Z",
-  "updatedAt": "2026-07-01T03:36:39Z",
+  "updatedAt": "2026-07-01T03:40:46Z",
   "events": [
     {
       "base_branch": "main",
@@ -62,7 +62,12 @@
     },
     {
       "rationale": "Story creation is straightforward, follows established Storybook patterns from existing stories (button, select, dialog). Single file with 7 variants, no new UI exposed to users, no architectural decisions. Skip architecture and design stages — story structure and component patterns already defined by project conventions.",
-      "stages": ["scope", "implementation", "review", "release"],
+      "stages": [
+        "scope",
+        "implementation",
+        "review",
+        "release"
+      ],
       "template": "ui-polish",
       "tier": "standard",
       "timestamp": "2026-06-14T05:56:29Z",
@@ -172,7 +177,9 @@
       "type": "test_results"
     },
     {
-      "artifacts_created": ["src/stories/dropdown-menu.stories.tsx"],
+      "artifacts_created": [
+        "src/stories/dropdown-menu.stories.tsx"
+      ],
       "phase": 0,
       "summary": "Created src/stories/dropdown-menu.stories.tsx with 8 story variants (Default, Checkbox, RadioGroup, Disabled, SeparatorAndShortcut, Submenu, KeyboardInteraction, AllExportsComprehensive) covering all 14 dropdown-menu exports. Keyboard interaction play function tests Arrow Up/Down, Enter, Escape navigation. All tests passing (typecheck, lint, storybook build).",
       "timestamp": "2026-06-14T06:02:27Z",
@@ -650,6 +657,113 @@
       "type": "stage_work_complete",
       "worktree_head": "b8c1a8a0ab4ad8abd25b8b010416174c5f90e46a",
       "worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "merged_commits": 1,
+      "timestamp": "2026-07-01T03:39:02Z",
+      "type": "worktree_synced"
+    },
+    {
+      "actor": null,
+      "stage": "review",
+      "timestamp": "2026-07-01T03:39:02Z",
+      "type": "stage_approved"
+    },
+    {
+      "current_worktree_head": "d0e1822c2d5a39d218df0f06e2e03c85d9545b9c",
+      "current_worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stage": "review",
+      "stale_worktree_head": "b8c1a8a0ab4ad8abd25b8b010416174c5f90e46a",
+      "stale_worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timestamp": "2026-07-01T03:39:02Z",
+      "type": "worktree_drift_detected",
+      "what_changed": "HEAD"
+    },
+    {
+      "action": "sweep",
+      "rationale": "Routine sync drift: HEAD fast-forwarded (stale HEAD is a strict ancestor of current) with a byte-identical dirty-status digest; swept forward automatically without waking an agent.",
+      "resolved_by": "auto",
+      "stage": "review",
+      "timestamp": "2026-07-01T03:39:02Z",
+      "type": "worktree_drift_resolved"
+    },
+    {
+      "from": "review",
+      "timestamp": "2026-07-01T03:39:02Z",
+      "to": "release",
+      "type": "stage_advanced"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "reason": "already_up_to_date",
+      "timestamp": "2026-07-01T03:39:02Z",
+      "type": "worktree_sync_skipped"
+    },
+    {
+      "mode": "start",
+      "model": "sonnet",
+      "session_id": "01kwdw4fyd2fqwetfaejvz3xbx",
+      "stage": "release",
+      "timestamp": "2026-07-01T03:39:02Z",
+      "type": "stage_agent_started"
+    },
+    {
+      "from": "review",
+      "timestamp": "2026-07-01T03:39:02Z",
+      "to": "release",
+      "type": "stage_handoff"
+    },
+    {
+      "note": "Running production build and pushing feature branch for release",
+      "phase": 1,
+      "stage": "release",
+      "timestamp": "2026-07-01T03:39:32Z",
+      "type": "work_resumed"
+    },
+    {
+      "change_summary": "Release validated — build passes, code pushed",
+      "revision": 1,
+      "stage": "release",
+      "timestamp": "2026-07-01T03:40:08Z",
+      "type": "stage_content_updated"
+    },
+    {
+      "alternatives_considered": [],
+      "decision": "Release complete — task done",
+      "rationale": "Production build passes, review approved on 2026-07-01T03:36:27Z, code committed and pushed to origin",
+      "timestamp": "2026-07-01T03:40:13Z",
+      "type": "decision"
+    },
+    {
+      "stage": "release",
+      "summary": "Build passes, feature branch pushed. Story adds 8 variants covering all 15 dropdown-menu exports with keyboard interaction tests. Review approved 14/14 AC on 2026-07-01.",
+      "timestamp": "2026-07-01T03:40:30Z",
+      "type": "stage_work_complete",
+      "worktree_head": "d0e1822c2d5a39d218df0f06e2e03c85d9545b9c",
+      "worktree_status_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "base_branch": "claude/optimistic-meitner-uztpah",
+      "files_changed": 1,
+      "lines_added": 365,
+      "lines_removed": 0,
+      "timestamp": "2026-07-01T03:40:45Z",
+      "type": "worktree_merged"
+    },
+    {
+      "timestamp": "2026-07-01T03:40:45Z",
+      "type": "worktree_removed"
+    },
+    {
+      "branch": "feature/task-add-storybook-story-for-the-dropdown-01kv28sbxa2q",
+      "timestamp": "2026-07-01T03:40:46Z",
+      "type": "remote_branch_deleted"
+    },
+    {
+      "actor": null,
+      "timestamp": "2026-07-01T03:40:46Z",
+      "type": "task_completed"
     }
   ],
   "needsArchitecture": false,
@@ -657,45 +771,53 @@
   "workflow": {
     "tier": "standard",
     "template": "ui-polish",
-    "stages": ["scope", "implementation", "review", "release"],
+    "stages": [
+      "scope",
+      "implementation",
+      "review",
+      "release"
+    ],
     "classifiedBy": "scope-agent",
     "rationale": "Story creation is straightforward, follows established Storybook patterns from existing stories (button, select, dialog). Single file with 7 variants, no new UI exposed to users, no architectural decisions. Skip architecture and design stages — story structure and component patterns already defined by project conventions."
   },
   "stageApprovals": {
-    "implementation": "2026-07-01T03:33:16Z",
-    "scope": "2026-06-14T05:59:12Z"
+    "review": "2026-07-01T03:39:02Z",
+    "scope": "2026-06-14T05:59:12Z",
+    "implementation": "2026-07-01T03:33:16Z"
   },
+  "completedAt": "2026-07-01T03:40:46Z",
   "stageContent": {
-    "review": "## Verdict\n\n**Verdict:** APPROVE\n**Files reviewed:** 2 files changed across 1 phases\n\nAll three blocking issues from revision 1 are resolved: story is committed to the feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, and the play function dispatches ArrowDown and Escape keyboard events. The recommended Radix nesting fix was also applied. All 14 acceptance criteria pass.\n\n### Automated Checks\n\n| Check | Result | Details |\n|-------|--------|---------|\n| Type check | PASS | bun run typecheck — 0 errors |\n| Lint | PASS | bun run lint — 0 warnings, 0 errors |\n| Storybook build | PASS | bun run build-storybook — completed successfully |\n\n### Acceptance Criteria (14/14 passed)\n\n- [x] AC-1: File src/stories/dropdown-menu.stories.tsx exists with valid TypeScript syntax and no linting errors — PASS: File present in git diff vs base branch. bun run typecheck exit 0, bun run lint 0 errors.\n- [x] AC-2: Meta exports with title \"UI/DropdownMenu\", component DropdownMenu, tags: [\"autodocs\"] — PASS: dropdown-menu.stories.tsx:23-30 — title UI/DropdownMenu, component DropdownMenu, tags autodocs all present.\n- [x] AC-3: Default story renders without errors and displays a basic dropdown menu with 3+ menu items — PASS: dropdown-menu.stories.tsx:38-51 — Default story renders Profile, Settings, Help (3 DropdownMenuItems).\n- [x] AC-4: Checkbox variant shows CheckboxItem with checked state, unchecked state, and Check icon indicator — PASS: dropdown-menu.stories.tsx:66-68 — checked=true on Dark Mode and Animations, checked=false on Notifications. Check icon rendered via ItemIndicator in dropdown-menu.tsx:108-110.\n- [x] AC-5: RadioGroup variant shows 3+ RadioItem options with mutual exclusivity (only one checked at time) — PASS: dropdown-menu.stories.tsx:88-93 — DropdownMenuRadioGroup value=light with Light, Dark, Auto (3 RadioItems).\n- [x] AC-6: Disabled variant renders DropdownMenuItem with data-disabled styling and opacity applied — PASS: dropdown-menu.stories.tsx:103-116 — DropdownMenu defaultOpen=true; DropdownMenuItem disabled at lines 111-112; data-[disabled]:opacity-50 triggered via dropdown-menu.tsx:85.\n- [x] AC-7: Separator and Shortcut variant renders DropdownMenuSeparator and DropdownMenuShortcut with correct spacing — PASS: dropdown-menu.stories.tsx:122-155 — DropdownMenuSeparator at lines 131,145,148; DropdownMenuShortcut at lines 134,138,142.\n- [x] AC-8: Submenu variant renders nested menu structure (Sub > SubTrigger > SubContent > items) with ChevronRight indicator — PASS: dropdown-menu.stories.tsx:161-194 — Sub > SubTrigger > Portal > SubContent > Items. ChevronRight rendered by component at dropdown-menu.tsx:37.\n- [x] AC-9: At least one story includes play function testing keyboard navigation (Arrow keys, Enter, Escape) — PASS: dropdown-menu.stories.tsx:246 — userEvent.keyboard('{ArrowDown}'); line 253 — userEvent.keyboard('{ArrowDown}'); line 259 — userEvent.keyboard('{Escape}').\n- [x] AC-10: play function uses Storybook test utilities (userEvent, within, expect, screen, waitFor) — PASS: dropdown-menu.stories.tsx:2 — all 5 utilities imported from storybook/test and used in KeyboardInteraction play function.\n- [x] AC-11: All 14 dropdown-menu exports are used or directly tested across story variants — PASS: dropdown-menu.stories.tsx:4-20 — all 15 exports (14 + DropdownMenuRadioGroup) imported and used across 8 story variants.\n- [x] AC-12: Story follows naming convention from existing stories (button.stories.tsx, select.stories.tsx) for consistency — PASS: Filename dropdown-menu.stories.tsx is kebab-case matching button.stories.tsx, select.stories.tsx.\n- [x] AC-13: No TypeScript errors in story file (verified via bun run typecheck) — PASS: bun run typecheck exit 0 with 0 errors.\n- [x] AC-14: Storybook builds and renders story without console errors (verified via bun run storybook) — PASS: bun run build-storybook — Storybook build completed successfully, output to storybook-static/.\n\n### Code Quality (Refactor Review)\n\nNo code quality issues found in changed files.\n\n### Security Assessment (Security Review)\n\nNo security issues found in changed files.\n\n### Decisions Made During Implementation\n\n- All three blocking issues from revision 1 resolved: story committed to feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, play function dispatches ArrowDown and Escape.\n- Recommended Radix nesting fix applied: extra DropdownMenu wrapper removed from Submenu and AllExportsComprehensive stories.\n- 8 story variants covering all 15 dropdown-menu exports — exceeds 14-export requirement.\n\n## Required Changes\n\nNone.\n"
+    "review": "## Verdict\n\n**Verdict:** APPROVE\n**Files reviewed:** 2 files changed across 1 phases\n\nAll three blocking issues from revision 1 are resolved: story is committed to the feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, and the play function dispatches ArrowDown and Escape keyboard events. The recommended Radix nesting fix was also applied. All 14 acceptance criteria pass.\n\n### Automated Checks\n\n| Check | Result | Details |\n|-------|--------|---------|\n| Type check | PASS | bun run typecheck — 0 errors |\n| Lint | PASS | bun run lint — 0 warnings, 0 errors |\n| Storybook build | PASS | bun run build-storybook — completed successfully |\n\n### Acceptance Criteria (14/14 passed)\n\n- [x] AC-1: File src/stories/dropdown-menu.stories.tsx exists with valid TypeScript syntax and no linting errors — PASS: File present in git diff vs base branch. bun run typecheck exit 0, bun run lint 0 errors.\n- [x] AC-2: Meta exports with title \"UI/DropdownMenu\", component DropdownMenu, tags: [\"autodocs\"] — PASS: dropdown-menu.stories.tsx:23-30 — title UI/DropdownMenu, component DropdownMenu, tags autodocs all present.\n- [x] AC-3: Default story renders without errors and displays a basic dropdown menu with 3+ menu items — PASS: dropdown-menu.stories.tsx:38-51 — Default story renders Profile, Settings, Help (3 DropdownMenuItems).\n- [x] AC-4: Checkbox variant shows CheckboxItem with checked state, unchecked state, and Check icon indicator — PASS: dropdown-menu.stories.tsx:66-68 — checked=true on Dark Mode and Animations, checked=false on Notifications. Check icon rendered via ItemIndicator in dropdown-menu.tsx:108-110.\n- [x] AC-5: RadioGroup variant shows 3+ RadioItem options with mutual exclusivity (only one checked at time) — PASS: dropdown-menu.stories.tsx:88-93 — DropdownMenuRadioGroup value=light with Light, Dark, Auto (3 RadioItems).\n- [x] AC-6: Disabled variant renders DropdownMenuItem with data-disabled styling and opacity applied — PASS: dropdown-menu.stories.tsx:103-116 — DropdownMenu defaultOpen=true; DropdownMenuItem disabled at lines 111-112; data-[disabled]:opacity-50 triggered via dropdown-menu.tsx:85.\n- [x] AC-7: Separator and Shortcut variant renders DropdownMenuSeparator and DropdownMenuShortcut with correct spacing — PASS: dropdown-menu.stories.tsx:122-155 — DropdownMenuSeparator at lines 131,145,148; DropdownMenuShortcut at lines 134,138,142.\n- [x] AC-8: Submenu variant renders nested menu structure (Sub > SubTrigger > SubContent > items) with ChevronRight indicator — PASS: dropdown-menu.stories.tsx:161-194 — Sub > SubTrigger > Portal > SubContent > Items. ChevronRight rendered by component at dropdown-menu.tsx:37.\n- [x] AC-9: At least one story includes play function testing keyboard navigation (Arrow keys, Enter, Escape) — PASS: dropdown-menu.stories.tsx:246 — userEvent.keyboard('{ArrowDown}'); line 253 — userEvent.keyboard('{ArrowDown}'); line 259 — userEvent.keyboard('{Escape}').\n- [x] AC-10: play function uses Storybook test utilities (userEvent, within, expect, screen, waitFor) — PASS: dropdown-menu.stories.tsx:2 — all 5 utilities imported from storybook/test and used in KeyboardInteraction play function.\n- [x] AC-11: All 14 dropdown-menu exports are used or directly tested across story variants — PASS: dropdown-menu.stories.tsx:4-20 — all 15 exports (14 + DropdownMenuRadioGroup) imported and used across 8 story variants.\n- [x] AC-12: Story follows naming convention from existing stories (button.stories.tsx, select.stories.tsx) for consistency — PASS: Filename dropdown-menu.stories.tsx is kebab-case matching button.stories.tsx, select.stories.tsx.\n- [x] AC-13: No TypeScript errors in story file (verified via bun run typecheck) — PASS: bun run typecheck exit 0 with 0 errors.\n- [x] AC-14: Storybook builds and renders story without console errors (verified via bun run storybook) — PASS: bun run build-storybook — Storybook build completed successfully, output to storybook-static/.\n\n### Code Quality (Refactor Review)\n\nNo code quality issues found in changed files.\n\n### Security Assessment (Security Review)\n\nNo security issues found in changed files.\n\n### Decisions Made During Implementation\n\n- All three blocking issues from revision 1 resolved: story committed to feature branch, Disabled story uses defaultOpen with disabled DropdownMenuItems, play function dispatches ArrowDown and Escape.\n- Recommended Radix nesting fix applied: extra DropdownMenu wrapper removed from Submenu and AllExportsComprehensive stories.\n- 8 story variants covering all 15 dropdown-menu exports — exceeds 14-export requirement.\n\n## Required Changes\n\nNone.\n",
+    "release": "## Release Notes\n\n### What was built\n- Created `src/stories/dropdown-menu.stories.tsx` with Meta configuration (title \"UI/DropdownMenu\", tags: [\"autodocs\"]) covering all 15 dropdown-menu exports\n- Added 8 story variants: Default, Checkbox, RadioGroup, Disabled (defaultOpen + disabled items), SeparatorAndShortcut, Submenu (with Portal), KeyboardInteraction, AllExportsComprehensive\n- Implemented play function with Arrow Down, Enter, and Escape keyboard event testing for accessibility validation\n- Removed nested DropdownMenu wrappers from Submenu and AllExportsComprehensive stories (Radix context fix)\n- Establishes Chromatic visual regression baseline for the dropdown-menu component\n\n### Key decisions\n- Single implementation phase: story creation is self-contained with no inter-variant dependencies\n- All 15 exports (14 + DropdownMenuRadioGroup) covered across variants — exceeds 14-export requirement\n- Keyboard interaction play function validates ArrowDown, Enter, and Escape events for accessibility\n- Disabled story uses `defaultOpen` with `disabled` DropdownMenuItems (not a disabled trigger) to properly exercise the disabled item styling\n\n### Changes by phase\n- **Phase 1: Create dropdown-menu story with full variant coverage** — Created `src/stories/dropdown-menu.stories.tsx` (single new file). Reviewer requested changes in revision 1 (story not committed to feature branch, Disabled story tested wrong element, play function missing Arrow/Escape events). All three issues resolved in revision 2 and approved.\n\n## Verification\n\n- Production build (bun run build-storybook): PASS — completed successfully, output to storybook-static/\n- Pre-push typecheck hook: PASS — 0 errors\n- Code committed to feature branch: c8ded70878e7d3c5c47764d6b3b4459c589cddab\n- Feature branch pushed: feature/task-add-storybook-story-for-the-dropdown-01kv28sbxa2q → origin (c8ded70..d0e1822)\n"
   },
   "stages": {
-    "scope": {
-      "status": "approved",
-      "approvedAt": "2026-06-14T05:59:12Z",
-      "startedAt": "2026-06-14T05:51:41Z"
-    },
-    "release": {
-      "status": "not_started"
-    },
-    "review": {
-      "status": "awaiting_approval",
-      "startedAt": "2026-07-01T03:33:21Z"
-    },
-    "architecture": {
-      "status": "skipped"
-    },
     "implementation": {
       "status": "approved",
       "approvedAt": "2026-07-01T03:33:16Z",
       "startedAt": "2026-06-14T06:13:46Z"
     },
+    "review": {
+      "status": "approved",
+      "approvedAt": "2026-07-01T03:39:02Z",
+      "startedAt": "2026-07-01T03:33:21Z"
+    },
     "design": {
       "status": "skipped"
+    },
+    "scope": {
+      "status": "approved",
+      "approvedAt": "2026-06-14T05:59:12Z",
+      "startedAt": "2026-06-14T05:51:41Z"
+    },
+    "architecture": {
+      "status": "skipped"
+    },
+    "release": {
+      "status": "awaiting_approval",
+      "startedAt": "2026-07-01T03:39:02Z"
     }
   },
-  "worktreePath": "/Users/richtillman/Documents/GitHub/portfolio/.defract-worktrees/task-add-storybook-story-for-the-dropdown-01kv28sbxa2q",
-  "worktreeBaseBranch": "claude/optimistic-meitner-uztpah",
-  "worktreeLastSyncedAt": "2026-07-01T03:33:18Z",
+  "worktreeLastSyncedAt": "2026-07-01T03:39:02Z",
   "loopBackHistory": [
     {
       "fromStage": "review",
@@ -835,9 +957,9 @@
     ]
   },
   "gatePolicies": {
-    "review": "stop",
-    "scope": "stop",
     "release": "stop",
-    "implementation": "stop"
+    "implementation": "stop",
+    "review": "stop",
+    "scope": "stop"
   }
 }
