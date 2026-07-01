@@ -14,7 +14,7 @@ figma.connect(Button, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-
       Ghost: "ghost",
       Link: "link",
     }),
-    size: figma.enum("Size", { sm: "sm", default: "default", lg: "lg" }),
+    size: figma.enum("Size", { sm: "sm", default: "default", lg: "lg", icon: "icon" }),
   },
   example: ({ children, variant, size }) => (
     <Button variant={variant} size={size}>
