@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
-"""Build an ATS-friendly DOCX + PDF resume for Rich Tillman from one content model."""
+"""Build an ATS-friendly DOCX + PDF resume for Rich Tillman from one content model.
 
-OUTDIR = "/tmp/claude-0/-home-user-portfolio/2e08ecae-85df-5b5c-88ec-2829bf2d731c/scratchpad"
+Output directory defaults to the script's own location (public/resume/); override
+with the RESUME_OUTDIR env var. The PDF font directory defaults to the Liberation
+fonts path on Debian/Ubuntu; override with RESUME_FONT_DIR. If the fonts are not
+found, the PDF falls back to the built-in Helvetica (Arial-metric) font.
+"""
+
+import os
+
+OUTDIR = os.environ.get("RESUME_OUTDIR", os.path.dirname(os.path.abspath(__file__)))
 BASENAME = "Rich-Tillman-Resume"
+# Arial is the metric match for Liberation Sans and is universally available in Word.
+DOCX_FONT = "Arial"
 
 NAME = "Rich Tillman"
 CONTACT = ("Elizabethton, TN  |  richtillman@pm.me  |  843-834-0041  |  "
@@ -96,14 +106,14 @@ def build_docx(path):
 
     doc = Document()
     normal = doc.styles["Normal"]
-    normal.font.name = "Calibri"
+    normal.font.name = DOCX_FONT
     normal.font.size = Pt(10.5)
     normal.paragraph_format.space_after = Pt(0)
     normal.paragraph_format.space_before = Pt(0)
     normal.paragraph_format.line_spacing = 1.08
     rpr = normal.element.get_or_add_rPr(); rfonts = rpr.get_or_add_rFonts()
     for a in ("w:ascii", "w:hAnsi", "w:cs"):
-        rfonts.set(qn(a), "Calibri")
+        rfonts.set(qn(a), DOCX_FONT)
     for s in doc.sections:
         s.top_margin = Inches(0.5); s.bottom_margin = Inches(0.5)
         s.left_margin = Inches(0.7); s.right_margin = Inches(0.7)
@@ -172,20 +182,26 @@ def build_pdf(path):
     from reportlab.lib.enums import TA_CENTER
     from reportlab.lib.styles import ParagraphStyle
     from reportlab.platypus import (BaseDocTemplate, PageTemplate, Frame, Paragraph,
-                                    Spacer, Table, TableStyle, ListFlowable, ListItem)
+                                    Spacer, HRFlowable, ListFlowable, ListItem)
     from reportlab.lib import colors
     from reportlab.pdfbase import pdfmetrics
-    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.pdfbase.ttfonts import TTFont, TTFError
     from xml.sax.saxutils import escape
 
-    # Register Liberation Sans (Arial-metric, ATS-preferred) for real Unicode glyph extraction
-    fdir = "/usr/share/fonts/truetype/liberation/"
-    pdfmetrics.registerFont(TTFont("ATSSans", fdir + "LiberationSans-Regular.ttf"))
-    pdfmetrics.registerFont(TTFont("ATSSans-Bold", fdir + "LiberationSans-Bold.ttf"))
-    pdfmetrics.registerFont(TTFont("ATSSans-Italic", fdir + "LiberationSans-Italic.ttf"))
-    pdfmetrics.registerFont(TTFont("ATSSans-BoldItalic", fdir + "LiberationSans-BoldItalic.ttf"))
-    pdfmetrics.registerFontFamily("ATSSans", normal="ATSSans", bold="ATSSans-Bold",
-                                  italic="ATSSans-Italic", boldItalic="ATSSans-BoldItalic")
+    # Prefer Liberation Sans (Arial-metric) for real Unicode glyph extraction; the font
+    # directory is configurable and falls back to built-in Helvetica (also Arial-metric)
+    # when the TTFs are unavailable (e.g. macOS/Windows or a minimal Linux image).
+    fdir = os.environ.get("RESUME_FONT_DIR", "/usr/share/fonts/truetype/liberation/")
+    faces = {"ATSSans": "LiberationSans-Regular.ttf", "ATSSans-Bold": "LiberationSans-Bold.ttf",
+             "ATSSans-Italic": "LiberationSans-Italic.ttf", "ATSSans-BoldItalic": "LiberationSans-BoldItalic.ttf"}
+    try:
+        for face, fn in faces.items():
+            pdfmetrics.registerFont(TTFont(face, os.path.join(fdir, fn)))
+        pdfmetrics.registerFontFamily("ATSSans", normal="ATSSans", bold="ATSSans-Bold",
+                                      italic="ATSSans-Italic", boldItalic="ATSSans-BoldItalic")
+        FONT, BOLD, ITAL = "ATSSans", "ATSSans-Bold", "ATSSans-Italic"
+    except (TTFError, IOError, OSError):
+        FONT, BOLD, ITAL = "Helvetica", "Helvetica-Bold", "Helvetica-Oblique"
 
     doc = BaseDocTemplate(path, pagesize=letter,
                           leftMargin=0.7 * inch, rightMargin=0.7 * inch,
@@ -195,41 +211,26 @@ def build_pdf(path):
     doc.addPageTemplates([PageTemplate(id="all", frames=[frame])])
     usable = doc.width
 
-    FONT = "ATSSans"; BOLD = "ATSSans-Bold"; ITAL = "ATSSans-Italic"
     name_st = ParagraphStyle("name", fontName=BOLD, fontSize=20, alignment=TA_CENTER, spaceAfter=2, leading=22)
     contact_st = ParagraphStyle("contact", fontName=FONT, fontSize=9, alignment=TA_CENTER, spaceAfter=6, leading=11)
     head_st = ParagraphStyle("head", fontName=BOLD, fontSize=11, spaceBefore=7, spaceAfter=2, leading=12)
     title_st = ParagraphStyle("title", fontName=BOLD, fontSize=10.5, spaceBefore=5, spaceAfter=0, leading=12)
+    meta_st = ParagraphStyle("meta", fontName=FONT, fontSize=9.5, leading=11, spaceAfter=2)
     body_st = ParagraphStyle("body", fontName=FONT, fontSize=10, leading=12, spaceAfter=1)
     bullet_st = ParagraphStyle("bul", fontName=FONT, fontSize=10, leading=12, spaceAfter=1.5)
 
     story = []
 
-    def rule():
-        t = Table([[""]], colWidths=[usable])
-        t.setStyle(TableStyle([("LINEBELOW", (0, 0), (-1, -1), 0.6, colors.black),
-                               ("TOPPADDING", (0, 0), (-1, -1), 0),
-                               ("BOTTOMPADDING", (0, 0), (-1, -1), 0)]))
-        return t
-
     def heading(text):
         story.append(Paragraph(text.upper(), head_st))
-        story.append(rule())
-        story.append(Spacer(1, 3))
+        story.append(HRFlowable(width="100%", thickness=0.6, color=colors.black,
+                                spaceBefore=1, spaceAfter=3, lineCap="square"))
 
     def title_company(title, company, dates):
+        # Single-line, natural reading order (no layout tables) — company italic, dates inline.
         story.append(Paragraph(escape(title), title_st))
-        row = Table([[Paragraph("<i>%s</i>" % escape(company),
-                                ParagraphStyle("c", fontName=ITAL, fontSize=9.5, leading=11)),
-                      Paragraph(escape(dates),
-                                ParagraphStyle("d", fontName=FONT, fontSize=9.5, leading=11, alignment=2))]],
-                    colWidths=[usable * 0.68, usable * 0.32])
-        row.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0),
-                                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-                                 ("TOPPADDING", (0, 0), (-1, -1), 0),
-                                 ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
-                                 ("VALIGN", (0, 0), (-1, -1), "TOP")]))
-        story.append(row)
+        story.append(Paragraph("<i>%s</i>&nbsp;&nbsp;—&nbsp;&nbsp;%s"
+                               % (escape(company), escape(dates)), meta_st))
 
     def bullets(items):
         li = []
@@ -259,7 +260,8 @@ def build_pdf(path):
 
 
 if __name__ == "__main__":
-    docx_path = "%s/%s.docx" % (OUTDIR, BASENAME)
-    pdf_path = "%s/%s.pdf" % (OUTDIR, BASENAME)
+    os.makedirs(OUTDIR, exist_ok=True)
+    docx_path = os.path.join(OUTDIR, BASENAME + ".docx")
+    pdf_path = os.path.join(OUTDIR, BASENAME + ".pdf")
     build_docx(docx_path); print("Saved", docx_path)
     build_pdf(pdf_path); print("Saved", pdf_path)
