@@ -4,11 +4,11 @@ Elizabethton, TN • richtillman@pm.me • 843-834-0041 • linkedin.com/in/effi
 
 ## Summary
 
-Senior AI Engineer (15 yrs) specializing in React/TypeScript design systems and Storybook-driven development. Founder of ForgeKit, an open-source Figma-to-React CLI + MCP suite (5,700+ npm installs). IC-to-Director experience across five 0-to-1 startups. Seeking Principal/Senior Frontend, Product Engineer, and design-systems/dev-tooling roles.
+Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design systems and Storybook-driven development. Founder of ForgeKit, an open-source Figma-to-React CLI + MCP suite (5,700+ npm installs). IC-to-Director experience across five 0-to-1 startups. Seeking Principal/Senior Frontend, Product Engineer, and design-systems/dev-tooling roles.
 
 ## Work Experience
 
-### Senior AI Engineer, AI Training & Evaluations
+### Senior Frontend Engineer, AI Training & Evaluations
 **Mercor / micro1 / Handshake AI** — November 2025 – June 2026
 
 - Designed programming prompts and evaluation rubrics scoring AI output on advanced frontend tasks—React architecture, TypeScript patterns, Storybook-driven development—with measurable model-quality gains traced to prompt design.
@@ -90,4 +90,4 @@ June 2024 – November 2025
 
 ## Skills
 
-React 19, TypeScript (strict), Next.js, React Native, Expo, TanStack Start, React Hooks, Concurrent Rendering, Component-Driven Architecture, Performance Optimization, HTML5, CSS3, Responsive Design, REST & GraphQL Integration, Storybook 10+, Chromatic, Chakra UI, shadcn/ui, Tamagui, Ark UI, Radix UI, Styled Components / CSS-in-JS, Model Context Protocol, Claude Code, Cursor, Lovable, Figma Code Connect, Figma MCP, Nx, Nx Agents, Turborepo, pnpm workspaces, Module Federation, GitHub Actions, EAS Build, TanStack Query, Zustand, Supabase, PostgreSQL, tRPC, gRPC, Redux Toolkit, Context API, Vitest, Jest, Playwright, React Testing Library, Storybook a11y, WCAG 2.1 AA, OpenAI, Agentic Systems, CLI
+React 19, TypeScript, Next.js, Node.js, React Native, Expo, TanStack Start, React Hooks, Performance Optimization, HTML5, CSS3, Responsive Design, REST & GraphQL Integration, Storybook, Chromatic, Chakra UI, shadcn/ui, Tamagui, Radix UI, Styled Components / CSS-in-JS, Model Context Protocol, Claude Code, Cursor, Lovable, Figma Code Connect, Figma MCP, Nx, Turborepo, Module Federation, GitHub Actions, TanStack Query, Zustand, Supabase, PostgreSQL, tRPC, Redux Toolkit, Vitest, Jest, Playwright, React Testing Library, a11y, WCAG 2.1 AA, OpenAI, Agentic Systems
