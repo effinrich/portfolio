@@ -10,7 +10,13 @@ figma.connect(Toggle, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-
     pressed: figma.enum("State", { On: true, Off: false }),
   },
   example: ({ variant, size, pressed }) => (
-    <Toggle variant={variant} size={size} defaultPressed={pressed} aria-label="Toggle bold">
+    <Toggle
+      variant={variant}
+      size={size}
+      pressed={pressed}
+      onPressedChange={() => {}}
+      aria-label="Toggle bold"
+    >
       B
     </Toggle>
   ),
