@@ -57,6 +57,8 @@ VITE_SUPABASE_PROJECT_ID
 | `bun run storybook`       | Storybook 10 component sandbox               |
 | `bun run build-storybook` | Static Storybook build                       |
 | `bun run chromatic`       | Publish + visual-regression run on Chromatic |
+| `bun run figma:check`     | Parse/validate Figma Code Connect mappings   |
+| `bun run figma:publish`   | Publish Code Connect to the Figma library    |
 
 ## Storybook & visual QA
 
@@ -70,12 +72,28 @@ Every pull request runs [`.github/workflows/chromatic.yml`](.github/workflows/ch
 
 Run it locally against your branch with `bun run chromatic` (requires `CHROMATIC_PROJECT_TOKEN`).
 
+## Design system
+
+A shadcn/ui (new-york) component set on Radix primitives, themed by a single dark token layer. **Code is the source of truth:**
+
+- **Tokens** — `src/styles.css` (`@theme` + `:root`): colors (oklch), radii, fonts, effects.
+- **Components** — `src/components/ui/*`, composed into portfolio sections in `src/components/portfolio/*`.
+
+A matching **Figma library** is _generated from_ that code — every variable, text/effect style, and component mirrors the repo, so designs map 1:1 onto shippable parts.
+
+> **Figma →** [Portfolio Design System](https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD)
+
+**Code Connect** links the two: each `src/components/ui/<name>.figma.tsx` binds a Figma component node to its code component with prop mappings, so Figma's Dev Mode surfaces the real import and API. Config lives in [`figma.config.json`](figma.config.json). Validate with `bun run figma:check`; `bun run figma:publish` pushes the mappings (needs `@figma/code-connect` installed, the library published to a team library, and a Figma plan that supports Code Connect).
+
+Sync is **one direction — code → Figma**. When tokens or components change, regenerate the Figma library rather than hand-editing Figma and syncing back.
+
 ## Deployment
 
 Cloudflare Workers via Wrangler. Secrets set with `wrangler secret put`. Auto-deploys from `main` via Cloudflare's GitHub integration.
 
 ## Links
 
+- [Portfolio Design System](https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD) — the Figma library generated from this repo
 - [forgekit.cloud](https://forgekit.cloud) — MCP tooling for Figma → React design systems
 - [LinkedIn](https://www.linkedin.com/in/effinrich)
 - [npm](https://www.npmjs.com/~effinrich)
