@@ -83,7 +83,7 @@ A matching **Figma library** is _generated from_ that code — every variable, t
 
 > **Figma →** [Portfolio Design System](https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD)
 
-**Code Connect** links the two: each `src/components/ui/<name>.figma.tsx` binds a Figma component node to its code component with prop mappings, so Figma's Dev Mode surfaces the real import and API. Config lives in [`figma.config.json`](figma.config.json). Validate with `bun run figma:check`; `bun run figma:publish` pushes the mappings (needs `@figma/code-connect` installed, the library published to a team library, and a Figma plan that supports Code Connect).
+**Code Connect** links the two: each `src/components/ui/<name>.figma.tsx` binds a Figma component node to its code component with prop mappings, so Figma's Dev Mode surfaces the real import and API. Config lives in [`figma.config.json`](figma.config.json). Validate with `bun run figma:check`; `bun run figma:publish` pushes the mappings (requires the library published to a team library and a Figma plan that supports Code Connect).
 
 Sync is **one direction — code → Figma**. When tokens or components change, regenerate the Figma library rather than hand-editing Figma and syncing back.
 
