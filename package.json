@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",

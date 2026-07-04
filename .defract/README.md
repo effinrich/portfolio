@@ -4,11 +4,13 @@ This project uses [defract](https://defract.dev) for structured AI-assisted deve
 
 ## Tasks
 
-| Task                                                | Stage   | Status    |
-| --------------------------------------------------- | ------- | --------- |
-| Extract project card data into typed array          | review  | active    |
-| Add Sonner toast story                              | release | completed |
-| Add Storybook story for the dropdown-menu component | release | completed |
+| Task                                                  | Stage   | Status    |
+| ----------------------------------------------------- | ------- | --------- |
+| Fix and commit dropdown-menu Storybook story          | scope   | active    |
+| Follow-up: Extract project card data into typed array | scope   | active    |
+| Add Sonner toast story                                | release | completed |
+| Add Storybook story for the dropdown-menu component   | release | completed |
+| Extract project card data into typed array            | release | completed |
 
 ## Reading without defract
 

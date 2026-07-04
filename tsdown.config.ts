@@ -9,11 +9,12 @@ import { defineConfig } from "tsdown"
  * publish or share across packages.
  */
 export default defineConfig({
-  entry: [],
+  entry: ["src/index.ts"],
   format: ["esm"],
   dts: true,
   clean: true,
   sourcemap: true,
   target: "es2022",
   outDir: "dist",
+  external: ["react", "react-dom", "react/jsx-runtime"],
 })

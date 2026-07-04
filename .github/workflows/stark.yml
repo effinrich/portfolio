@@ -22,7 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-
     name: Accessibility Audit
     steps:
       - name: Checkout code
