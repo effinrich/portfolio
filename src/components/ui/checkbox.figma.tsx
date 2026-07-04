@@ -7,5 +7,5 @@ figma.connect(Checkbox, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?nod
   props: {
     checked: figma.enum("State", { Checked: true, Unchecked: false }),
   },
-  example: ({ checked }) => <Checkbox checked={checked} aria-label="Accept terms" />,
+  example: ({ checked }) => <Checkbox defaultChecked={checked} aria-label="Accept terms" />,
 })
