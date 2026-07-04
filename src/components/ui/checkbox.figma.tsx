@@ -5,7 +5,7 @@ import { Checkbox } from "./checkbox"
 
 figma.connect(Checkbox, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-id=58-9", {
   props: {
-    checked: figma.enum("State", { Checked: true, Unchecked: false }),
-  },
-  example: ({ checked }) => <Checkbox defaultChecked={checked} aria-label="Accept terms" />,
+  example: ({ checked }) => (
+    <Checkbox checked={checked} onCheckedChange={() => {}} aria-label="Accept terms" />
+  ),
 })
