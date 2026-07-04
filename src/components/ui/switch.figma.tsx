@@ -5,7 +5,7 @@ import { Switch } from "./switch"
 
 figma.connect(Switch, "https://www.figma.com/design/rerk57DjD30s7oz4zHXwhD?node-id=51-9", {
   props: {
-    checked: figma.enum("State", { On: true, Off: false }),
-  },
-  example: ({ checked }) => <Switch defaultChecked={checked} aria-label="Enable setting" />,
+  example: ({ checked }) => (
+    <Switch checked={checked} onCheckedChange={() => {}} aria-label="Enable setting" />
+  ),
 })
