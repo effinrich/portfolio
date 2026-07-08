@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "supergoal": {
+      "source": {
+        "source": "github",
+        "repo": "robzilla1738/supergoal"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "supergoal@supergoal": true
+  }
+}

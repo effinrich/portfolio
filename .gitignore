@@ -49,8 +49,9 @@ supabase/exports/
 .kombai
 .omc
 .omc/*
-.claude
 .claude/*
+!.claude/settings.json
+.supergoal/
 .design-sync/sb-reference/
 .design-sync/learnings/
 .design-sync/.cache/
