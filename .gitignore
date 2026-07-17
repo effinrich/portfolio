@@ -60,3 +60,4 @@ supabase/exports/
 .ds-sync/
 ds-bundle/
 storybook-static
+.codegraph/
