@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /login
 
-Sitemap: https://richtillman.xyz/sitemap.xml
+Sitemap: /sitemap.xml
