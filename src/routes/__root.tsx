@@ -93,6 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { property: "og:locale", content: "en_US" },
         { property: "og:type", content: "website" },
         { property: "og:title", content: DEFAULT_TITLE },
+        { property: "og:description", content: DEFAULT_DESCRIPTION }
         { property: "og:description", content: DEFAULT_DESCRIPTION },
         { property: "og:image", content: image },
         { property: "og:image:alt", content: `${SITE_NAME} — Principal Frontend Engineer` },
