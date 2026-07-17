@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /login
 
-Sitemap: https://richtillman.lovable.app/sitemap.xml
+Sitemap: https://richtillman.xyz/sitemap.xml

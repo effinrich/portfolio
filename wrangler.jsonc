@@ -16,5 +16,6 @@
     "VITE_SUPABASE_PROJECT_ID": "gcpldojnytxtxufpuunb",
     "VITE_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_sORMNNz4QWLo-jh3-c_dfw_PU0w3Eac",
     "VITE_SUPABASE_URL": "https://gcpldojnytxtxufpuunb.supabase.co",
+    "VITE_SITE_URL": "https://richtillman.xyz",
   },
 }

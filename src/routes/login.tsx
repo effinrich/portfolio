@@ -2,6 +2,7 @@ import { useState } from "react"
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router"
 import { useMutation } from "@tanstack/react-query"
 import { supabase } from "@/integrations/supabase/client"
+import { buildPageHead } from "@/lib/seo"
 
 type Mode = "signin" | "signup"
 
@@ -12,9 +13,13 @@ export const Route = createFileRoute("/login")({
     if (data.session) throw redirect({ to: "/admin" })
   },
   component: LoginPage,
-  head: () => ({
-    meta: [{ title: "Sign in — Admin" }, { name: "robots", content: "noindex" }],
-  }),
+  head: () =>
+    buildPageHead({
+      title: "Sign in — Admin",
+      description: "Admin sign-in for Rich Tillman portfolio contact inbox.",
+      path: "/login",
+      noIndex: true,
+    }),
 })
 
 function LoginPage() {

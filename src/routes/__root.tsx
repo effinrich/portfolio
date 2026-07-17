@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-router"
 
 import appCss from "../styles.css?url"
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, absoluteUrl, ogImageUrl } from "@/lib/seo"
 
 function NotFoundComponent() {
   return (
@@ -73,54 +74,48 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Rich Tillman | Portfolio" },
-      {
-        name: "description",
-        content:
-          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills.",
-      },
-      { name: "author", content: "Lovable" },
-      {
-        name: "google-site-verification",
-        content: "0QrQ6qf8RzeNY4c8FnIZ1K9o7kPfbXRr39oQ3nNoPSw",
-      },
-      { property: "og:title", content: "Rich Tillman | Portfolio" },
-      {
-        property: "og:description",
-        content:
-          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Rich Tillman | Portfolio" },
-      {
-        name: "twitter:description",
-        content:
-          "Refero's Showcase is a dynamic developer portfolio displaying projects and skills.",
-      },
-      {
-        property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png",
-      },
-      {
-        name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a99dfce-3a11-47df-8a24-864abac296fa/id-preview-80c8a4bc--1df124a5-6d7e-4dec-a999-69e30b4d794e.lovable.app-1778228543530.png",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
+  head: () => {
+    const image = ogImageUrl()
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title: DEFAULT_TITLE },
+        { name: "description", content: DEFAULT_DESCRIPTION },
+        { name: "author", content: SITE_NAME },
+        { name: "theme-color", content: "#1a1b22" },
+        { name: "color-scheme", content: "dark" },
+        {
+          name: "google-site-verification",
+          content: "0QrQ6qf8RzeNY4c8FnIZ1K9o7kPfbXRr39oQ3nNoPSw",
+        },
+        { property: "og:site_name", content: SITE_NAME },
+        { property: "og:locale", content: "en_US" },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: absoluteUrl("/") },
+        { property: "og:title", content: DEFAULT_TITLE },
+        { property: "og:description", content: DEFAULT_DESCRIPTION },
+        { property: "og:image", content: image },
+        { property: "og:image:alt", content: `${SITE_NAME} — Principal Frontend Engineer` },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: DEFAULT_TITLE },
+        { name: "twitter:description", content: DEFAULT_DESCRIPTION },
+        { name: "twitter:image", content: image },
+        {
+          name: "twitter:image:alt",
+          content: `${SITE_NAME} — Principal Frontend Engineer`,
+        },
+      ],
+      links: [
+        { rel: "stylesheet", href: appCss },
+        { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+        { rel: "sitemap", href: "/sitemap.xml", type: "application/xml" },
+      ],
+    }
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

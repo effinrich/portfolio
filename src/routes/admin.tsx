@@ -2,6 +2,7 @@ import { Suspense, useDeferredValue, useEffect, useRef, useState } from "react"
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router"
 import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { supabase } from "@/integrations/supabase/client"
+import { buildPageHead } from "@/lib/seo"
 
 type Submission = {
   id: string
@@ -123,9 +124,13 @@ function repliesQueryOptions(submissionId: string) {
 export const Route = createFileRoute("/admin")({
   loader: ({ context }) => context.queryClient.ensureQueryData(authQueryOptions),
   component: AdminPage,
-  head: () => ({
-    meta: [{ title: "Admin — Contact Submissions" }, { name: "robots", content: "noindex" }],
-  }),
+  head: () =>
+    buildPageHead({
+      title: "Admin — Contact Submissions",
+      description: "Admin inbox for portfolio contact submissions.",
+      path: "/admin",
+      noIndex: true,
+    }),
 })
 
 function AdminPage() {

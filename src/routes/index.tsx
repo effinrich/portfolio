@@ -8,6 +8,7 @@ import { Experience } from "@/components/portfolio/experience"
 import { Projects } from "@/components/portfolio/projects"
 import { Stack } from "@/components/portfolio/stack"
 import { Contact } from "@/components/portfolio/contact"
+import { buildPageHead, personJsonLd, websiteJsonLd } from "@/lib/seo"
 
 const searchSchema = z.object({
   contact: z.enum(["ok", "error", "invalid"]).optional(),
@@ -16,22 +17,11 @@ const searchSchema = z.object({
 export const Route = createFileRoute("/")({
   validateSearch: searchSchema,
   component: Index,
-  head: () => ({
-    meta: [
-      { title: "Rich Tillman — Principal Frontend Engineer & Design Systems Architect" },
-      {
-        name: "description",
-        content:
-          "Rich Tillman is a Principal Frontend Engineer building React design systems, MCP-driven developer tooling, and AI-native workflows. Creator of ForgeKit.",
-      },
-      { property: "og:title", content: "Rich Tillman — Principal Frontend Engineer" },
-      {
-        property: "og:description",
-        content:
-          "Shipping React UI platforms, design systems, and AI developer tooling. Creator of ForgeKit MCP servers (5,703+ installs).",
-      },
-    ],
-  }),
+  head: () =>
+    buildPageHead({
+      path: "/",
+      jsonLd: [websiteJsonLd, personJsonLd],
+    }),
 })
 
 function Index() {

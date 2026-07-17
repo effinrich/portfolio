@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { SITE_URL } from "@/lib/seo"
 
-const BASE_URL = import.meta.env.VITE_SITE_URL ?? "https://richtillman.lovable.app"
+const BASE_URL = SITE_URL
 
 interface SitemapEntry {
   path: string
@@ -13,11 +14,13 @@ export const Route = createFileRoute("/sitemap.xml")({
     handlers: {
       GET: async () => {
         const entries: SitemapEntry[] = [{ path: "/", changefreq: "weekly", priority: "1.0" }]
+        const lastmod = new Date().toISOString().slice(0, 10)
 
         const urls = entries.map((e) =>
           [
             `  <url>`,
             `    <loc>${BASE_URL}${e.path}</loc>`,
+            `    <lastmod>${lastmod}</lastmod>`,
             e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
             e.priority ? `    <priority>${e.priority}</priority>` : null,
             `  </url>`,
