@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-router"
 
 import appCss from "../styles.css?url"
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, absoluteUrl, ogImageUrl } from "@/lib/seo"
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, ogImageUrl } from "@/lib/seo"
 
 function NotFoundComponent() {
   return (
@@ -92,7 +92,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { property: "og:site_name", content: SITE_NAME },
         { property: "og:locale", content: "en_US" },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: absoluteUrl("/") },
         { property: "og:title", content: DEFAULT_TITLE },
         { property: "og:description", content: DEFAULT_DESCRIPTION },
         { property: "og:image", content: image },
