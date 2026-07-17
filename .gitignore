@@ -45,6 +45,7 @@ tsconfig.tsbuildinfo
 # Supabase data exports — may contain real submission PII, never commit
 supabase/exports/
 
+.codegraph/
 .qodo
 .kombai
 .omc
