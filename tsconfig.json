@@ -20,5 +20,5 @@
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx"
   ],
-  "exclude": ["node_modules", "dist", ".output", ".vinxi"]
+  "exclude": ["node_modules", "dist", ".output", ".vinxi", "src/**/*.figma.tsx"]
 }

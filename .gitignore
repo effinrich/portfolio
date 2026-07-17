@@ -45,10 +45,17 @@ tsconfig.tsbuildinfo
 # Supabase data exports — may contain real submission PII, never commit
 supabase/exports/
 
-resume
 .qodo
 .kombai
 .omc
 .omc/*
-.claude
 .claude/*
+!.claude/settings.json
+.supergoal/
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.design-sync/node_modules
+.ds-sync/
+ds-bundle/
+storybook-static

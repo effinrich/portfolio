@@ -1,0 +1,11 @@
+{
+  "projectId": "d07f3750-7d7b-482b-ac33-739d649f5725",
+  "pkg": "portfolio",
+  "globalName": "PortfolioDS",
+  "shape": "storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "storybookConfigDir": ".storybook",
+  "buildCmd": "bun run bundle && bun -e 'import { copyFileSync, existsSync } from \"node:fs\"; if (existsSync(\"dist/index.d.mts\")) copyFileSync(\"dist/index.d.mts\", \"dist/index.d.ts\")'",
+  "extraEntries": ["./.design-sync/ds-preview-surface.tsx"],
+  "provider": { "component": "DesignSurface" }
+}

@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "generator": "defract-design-system-extractor",
+    "source": "src/styles.css (:root custom properties + @theme inline), DESIGN.md",
+    "extractedAt": "2026-06-14T00:00:00Z"
+  },
+  "colors": {
+    "background": {
+      "value": "oklch(0.16 0.01 260)",
+      "type": "color",
+      "description": "Page background — near-black, cool indigo tint"
+    },
+    "foreground": {
+      "value": "oklch(0.97 0.005 260)",
+      "type": "color",
+      "description": "Body text — off-white"
+    },
+    "surface": {
+      "value": "oklch(0.2 0.012 260)",
+      "type": "color",
+      "description": "Cards, nav chip background"
+    },
+    "surface-2": {
+      "value": "oklch(0.235 0.014 260)",
+      "type": "color",
+      "description": "Hover / elevated surface"
+    },
+    "card": {
+      "value": "oklch(0.2 0.012 260)",
+      "type": "color"
+    },
+    "card-foreground": {
+      "value": "oklch(0.97 0.005 260)",
+      "type": "color"
+    },
+    "popover": {
+      "value": "oklch(0.2 0.012 260)",
+      "type": "color"
+    },
+    "popover-foreground": {
+      "value": "oklch(0.97 0.005 260)",
+      "type": "color"
+    },
+    "primary": {
+      "value": "oklch(0.86 0.17 95)",
+      "type": "color",
+      "description": "Warm gold — brand accent"
+    },
+    "primary-foreground": {
+      "value": "oklch(0.18 0.02 260)",
+      "type": "color",
+      "description": "Dark text on gold"
+    },
+    "secondary": {
+      "value": "oklch(0.27 0.015 260)",
+      "type": "color"
+    },
+    "secondary-foreground": {
+      "value": "oklch(0.97 0.005 260)",
+      "type": "color"
+    },
+    "muted": {
+      "value": "oklch(0.24 0.012 260)",
+      "type": "color"
+    },
+    "muted-foreground": {
+      "value": "oklch(0.7 0.02 260)",
+      "type": "color"
+    },
+    "accent": {
+      "value": "oklch(0.78 0.16 200)",
+      "type": "color",
+      "description": "Cyan — secondary accent"
+    },
+    "accent-foreground": {
+      "value": "oklch(0.18 0.02 260)",
+      "type": "color"
+    },
+    "destructive": {
+      "value": "oklch(0.65 0.22 27)",
+      "type": "color"
+    },
+    "destructive-foreground": {
+      "value": "oklch(0.98 0 0)",
+      "type": "color"
+    },
+    "border": {
+      "value": "oklch(0.3 0.015 260 / 60%)",
+      "type": "color",
+      "description": "Translucent — picks up bg hue"
+    },
+    "input": {
+      "value": "oklch(0.3 0.015 260)",
+      "type": "color"
+    },
+    "ring": {
+      "value": "oklch(0.86 0.17 95)",
+      "type": "color",
+      "description": "Focus ring — matches primary"
+    },
+    "grid-color": {
+      "value": "oklch(1 0 0 / 4%)",
+      "type": "color",
+      "description": "Grid background pattern"
+    }
+  },
+  "typography": {
+    "fontFamilies": {
+      "sans": "\"Inter\", ui-sans-serif, system-ui, sans-serif",
+      "mono": "\"JetBrains Mono\", ui-monospace, \"SF Mono\", Menlo, monospace"
+    },
+    "fontFeatureSettings": {
+      "body": "\"ss01\", \"cv11\""
+    },
+    "fontSizes": {},
+    "fontWeights": {},
+    "lineHeights": {},
+    "letterSpacing": {}
+  },
+  "spacing": {},
+  "breakpoints": {},
+  "shadows": {
+    "glow-primary": {
+      "value": "0 0 60px -10px oklch(0.86 0.17 95 / 35%)",
+      "type": "shadow",
+      "description": "Gold halo for CTAs"
+    },
+    "glow-accent": {
+      "value": "0 0 60px -10px oklch(0.78 0.16 200 / 35%)",
+      "type": "shadow",
+      "description": "Cyan halo"
+    },
+    "shadow-soft": {
+      "value": "0 1px 0 0 oklch(1 0 0 / 6%) inset, 0 20px 60px -20px oklch(0 0 0 / 50%)",
+      "type": "shadow",
+      "description": "Inset top highlight + large drop shadow — used by .card-elevated"
+    }
+  },
+  "borders": {
+    "radii": {
+      "base": {
+        "value": "0.625rem",
+        "type": "borderRadius",
+        "description": "Base radius (--radius)"
+      },
+      "sm": {
+        "value": "calc(0.625rem - 4px)",
+        "type": "borderRadius"
+      },
+      "md": {
+        "value": "calc(0.625rem - 2px)",
+        "type": "borderRadius"
+      },
+      "lg": {
+        "value": "0.625rem",
+        "type": "borderRadius"
+      },
+      "xl": {
+        "value": "calc(0.625rem + 4px)",
+        "type": "borderRadius"
+      }
+    }
+  },
+  "zIndex": {}
+}

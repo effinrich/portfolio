@@ -1,0 +1,36 @@
+defract:
+  version: "1.0"
+  theme: dark
+  repo:
+    name: portfolio
+    languages:
+      - typescript
+    frameworks:
+      - react
+    test_runner: vitest
+    run_command: bun run dev
+    ci_cd: github-actions
+  defaults:
+    mode: human-in-the-loop
+    branch_strategy: worktree
+    design_tool: pencil
+    base_branch: main
+    auto_push_enabled: true
+    offline_override: true
+    completion_mode: merge
+    worktree_assets:
+      - .dev.vars
+      - .env.local
+  agents: null
+  concurrency: null
+  context_monitor:
+    sensitivity: attentive
+    max_nudge_frequency: 120
+    auto_update_artifacts: false
+  design_system: null
+  permissions:
+    tier1_read_inspections: true
+    tier2_scoped_filesystem: true
+    tier3_workflow_writes: true
+  team: null
+  user: null

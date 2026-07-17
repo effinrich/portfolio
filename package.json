@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -17,7 +18,9 @@
     "prepare": "lefthook install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic"
+    "chromatic": "chromatic",
+    "figma:check": "figma connect parse",
+    "figma:publish": "figma connect publish"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.26.0",
@@ -79,6 +82,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
+    "@figma/code-connect": "^1.3.5",
     "@codecompose/typescript-config": "^3.2.0",
     "@storybook/addon-a11y": "^10.4.0",
     "@storybook/addon-docs": "^10.4.0",
