@@ -59,3 +59,10 @@ supabase/exports/
 .ds-sync/
 ds-bundle/
 storybook-static
+
+
+
+.nx/cache
+.nx/workspace-data
+.nx/migrate-runs
+.nx/polygraph
