@@ -1,4 +1,5 @@
 import { SectionHeading } from "./section-heading"
+import { projects as careerProjects } from "@/data/career"
 import figmaMcpImg from "@/assets/project-figma-mcp.jpg"
 import storybookMcpImg from "@/assets/project-storybook-mcp.jpg"
 import forgekitCliImg from "@/assets/project-forgekit-cli.jpg"
@@ -6,66 +7,65 @@ import tidyAppImg from "@/assets/project-tidy-app.jpg"
 
 type Accent = "primary" | "accent"
 
-type Project = {
-  title: string
-  tag: string
-  desc: string
-  metric: string
-  href: string
-  cta: string
+// Presentation for each project — images (build-time asset imports), accent
+// color, CTA label, and badge. Facts (tag, description, metric, url) come from
+// the shared career source of truth and are merged in by project name below.
+type Presentation = {
   accent: Accent
   image: string
   imageAlt: string
+  cta: string
   badge?: string
 }
 
-const projects: Project[] = [
-  {
-    title: "ForgeKit Figma MCP",
-    tag: "MCP · Open Source",
-    desc: "MCP server that extracts Figma variables and design tokens, generating typed theme configs for Chakra, Tailwind, and shadcn — bridging design and AI-driven codegen.",
-    metric: "5,703+ installs",
-    href: "https://www.npmjs.com/package/forgekit-figma-mcp",
-    cta: "View on npm",
+const presentation: Partial<Record<string, Presentation>> = {
+  "ForgeKit Figma MCP": {
     accent: "primary",
     image: figmaMcpImg,
     imageAlt: "Figma MCP server extracting design tokens into a typed TypeScript theme file.",
+    cta: "View on npm",
     badge: "Featured",
   },
-  {
-    title: "ForgeKit Storybook MCP",
-    tag: "MCP · Open Source",
-    desc: "Exposes Storybook metadata and argTypes to AI coding agents — automating story generation, docs scaffolding, and component testing across design systems.",
-    metric: "Active production use",
-    href: "https://www.npmjs.com/package/forgekit-storybook-mcp",
-    cta: "View on npm",
+  "ForgeKit Storybook MCP": {
     accent: "accent",
     image: storybookMcpImg,
     imageAlt: "Storybook MCP scaffolding component stories from metadata.",
+    cta: "View on npm",
   },
-  {
-    title: "ForgeKit Core CLI",
-    tag: "Developer Tooling",
-    desc: "Scaffolds production-ready Nx monorepos with React, Storybook, Vitest, Playwright, and CI/CD — Figma token sync baked in from day one.",
-    metric: "Chakra · shadcn · Tamagui",
-    href: "https://forgekit.cloud",
-    cta: "forgekit.cloud",
+  "ForgeKit Core CLI": {
     accent: "primary",
     image: forgekitCliImg,
     imageAlt: "ForgeKit interactive CLI scaffolding a new monorepo project.",
+    cta: "forgekit.cloud",
   },
-  {
-    title: "Tidy App",
-    tag: "React Native · Expo",
-    desc: "Offline-first, ADHD-friendly home management app. Resilient data layer (Zustand + TanStack Query), Supabase, and full Figma Code Connect mappings.",
-    metric: "TestFlight beta",
-    href: "#",
-    cta: "Case study soon",
+  "Tidy App": {
     accent: "accent",
     image: tidyAppImg,
     imageAlt: "Tidy iOS app showing task list and calendar views on two iPhones.",
+    cta: "Case study soon",
   },
-]
+}
+
+const projects = careerProjects.map((p) => {
+  const pres = presentation[p.name]
+  if (!pres) {
+    throw new Error(
+      `Missing presentation for project "${p.name}". Add an entry to \`presentation\` in projects.tsx (image, accent, cta, badge) to match career.json.`,
+    )
+  }
+  return {
+    title: p.name,
+    tag: p.tag,
+    desc: p.description,
+    metric: p.metric,
+    href: p.url,
+    accent: pres.accent,
+    image: pres.image,
+    imageAlt: pres.imageAlt,
+    cta: pres.cta,
+    badge: pres.badge,
+  }
+})
 
 function ArrowIcon() {
   return (
