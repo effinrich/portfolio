@@ -1,12 +1,9 @@
 /**
- * Typed accessor for the career source of truth (career.json).
+ * @portfolio/career — the single source of truth for career facts.
  *
- * career.json is the single source of truth for career *facts* — identity,
- * hero chips/stats, roles, and project descriptions. It feeds the portfolio
- * (this app), the résumé generator, and LinkedIn copy, so they can't drift.
- *
- * Presentation that isn't a fact — project images, accent colors, CTA labels,
- * badges — stays in the components, keyed by project `name`.
+ * career.json feeds the portfolio app, the résumé generator, and LinkedIn copy,
+ * so they can't drift. Presentation that isn't a fact (project images, accent
+ * colors, CTA labels, badges) stays in the consuming app, keyed by project name.
  */
 import data from "./career.json"
 
@@ -57,7 +54,7 @@ export const hero = career.hero
 export const roles = career.roles
 export const projects = career.projects
 
-/** Look up a project's facts by name (for merging with component-local presentation). */
+/** Look up a project's facts by name (for merging with app-local presentation). */
 export function projectByName(name: string): ProjectFacts | undefined {
   return career.projects.find((p) => p.name === name)
 }

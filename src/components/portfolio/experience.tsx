@@ -1,5 +1,5 @@
 import { SectionHeading } from "./section-heading"
-import { roles } from "@/data/career"
+import { roles } from "@portfolio/career"
 
 export function Experience() {
   return (
