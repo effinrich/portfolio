@@ -7,7 +7,7 @@ export function Hero() {
       <div className="container-x relative">
         <div className="flex flex-wrap items-center gap-2 text-xs">
           {hero.chips.map((chip, i) => (
-            <span key={`${i}-${chip}`} className={i === 0 ? "chip" : "chip font-mono"}>
+            <span key={chip} className={i === 0 ? "chip" : "chip font-mono"}>
               {i === 0 ? <span className="pill-dot animate-float-glow" /> : null}
               {chip}
             </span>
