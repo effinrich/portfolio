@@ -47,9 +47,10 @@ export interface CareerData {
   projects: ProjectFacts[]
 }
 
-// Explicit annotation (not a cast) so TypeScript verifies career.json still
-// matches CareerData on every refactor.
-const career: CareerData = data
+// `satisfies` validates career.json against CareerData without widening the
+// binding to the interface. (Note: TS JSON-module imports widen string literals,
+// so project-name exhaustiveness is enforced at runtime in projects.tsx, not here.)
+const career = data satisfies CareerData
 
 export const identity = career.identity
 export const hero = career.hero
