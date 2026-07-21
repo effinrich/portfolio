@@ -48,6 +48,11 @@ const presentation: Record<string, Presentation> = {
 
 const projects = careerProjects.map((p) => {
   const pres = presentation[p.name]
+  if (!pres) {
+    throw new Error(
+      `Missing presentation for project "${p.name}". Add an entry to \`presentation\` in projects.tsx (image, accent, cta, badge) to match career.json.`,
+    )
+  }
   return {
     title: p.name,
     tag: p.tag,

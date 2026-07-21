@@ -47,7 +47,9 @@ export interface CareerData {
   projects: ProjectFacts[]
 }
 
-const career = data as unknown as CareerData
+// Explicit annotation (not a cast) so TypeScript verifies career.json still
+// matches CareerData on every refactor.
+const career: CareerData = data
 
 export const identity = career.identity
 export const hero = career.hero

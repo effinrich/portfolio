@@ -7,7 +7,7 @@ export function Hero() {
       <div className="container-x relative">
         <div className="flex flex-wrap items-center gap-2 text-xs">
           {hero.chips.map((chip, i) => (
-            <span key={chip} className={i === 0 ? "chip" : "chip font-mono"}>
+            <span key={`${i}-${chip}`} className={i === 0 ? "chip" : "chip font-mono"}>
               {i === 0 ? <span className="pill-dot animate-float-glow" /> : null}
               {chip}
             </span>
@@ -68,7 +68,7 @@ export function Hero() {
         {/* Quick stats */}
         <dl className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4">
           {hero.stats.map((s) => (
-            <div key={s.value} className="bg-background p-5">
+            <div key={`${s.value}-${s.label}`} className="bg-background p-5">
               <dt className="font-mono text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
                 {s.value}
               </dt>
