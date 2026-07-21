@@ -45,8 +45,8 @@ export interface CareerData {
 }
 
 // `satisfies` validates career.json against CareerData without widening the
-// binding to the interface. (Note: TS JSON-module imports widen string literals,
-// so project-name exhaustiveness is enforced at runtime in projects.tsx, not here.)
+// binding to the interface. (TS JSON-module imports widen string literals, so
+// project-name exhaustiveness is enforced at runtime in the app, not here.)
 const career = data satisfies CareerData
 
 export const identity = career.identity
