@@ -1,17 +1,17 @@
+import { hero } from "@/data/career"
+
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
       <div className="absolute inset-0 grid-bg pointer-events-none" aria-hidden />
       <div className="container-x relative">
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="chip">
-            <span className="pill-dot animate-float-glow" />
-            Remote
-          </span>
-          <span className="chip font-mono">React + TypeScript</span>
-          <span className="chip font-mono">Storybook · Chromatic</span>
-          <span className="chip font-mono">Nx monorepos at scale</span>
-          <span className="chip font-mono">5,703+ npm installs</span>
+          {hero.chips.map((chip, i) => (
+            <span key={chip} className={i === 0 ? "chip" : "chip font-mono"}>
+              {i === 0 ? <span className="pill-dot animate-float-glow" /> : null}
+              {chip}
+            </span>
+          ))}
         </div>
 
         <h1 className="mt-6 text-balance text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
@@ -67,17 +67,12 @@ export function Hero() {
 
         {/* Quick stats */}
         <dl className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4">
-          {[
-            ["5,703+", "npm installs · ForgeKit MCP"],
-            ["200+", "component design system"],
-            ["500K+", "users on shipped RN apps"],
-            ["$400K/mo", "revenue uplift · NARS AR"],
-          ].map(([k, v]) => (
-            <div key={k} className="bg-background p-5">
+          {hero.stats.map((s) => (
+            <div key={s.value} className="bg-background p-5">
               <dt className="font-mono text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                {k}
+                {s.value}
               </dt>
-              <dd className="mt-1 text-xs leading-relaxed text-muted-foreground">{v}</dd>
+              <dd className="mt-1 text-xs leading-relaxed text-muted-foreground">{s.label}</dd>
             </div>
           ))}
         </dl>
