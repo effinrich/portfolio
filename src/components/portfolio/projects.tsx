@@ -18,7 +18,7 @@ type Presentation = {
   badge?: string
 }
 
-const presentation: Record<string, Presentation> = {
+const presentation: Partial<Record<string, Presentation>> = {
   "ForgeKit Figma MCP": {
     accent: "primary",
     image: figmaMcpImg,
