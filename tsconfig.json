@@ -10,12 +10,14 @@
     "noUncheckedIndexedAccess": false,
     "erasableSyntaxOnly": false,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@portfolio/career": ["./libs/career/src/index.ts"]
     }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "libs/**/*.ts",
     "vite.config.ts",
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx"

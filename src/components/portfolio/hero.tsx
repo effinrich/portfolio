@@ -1,4 +1,4 @@
-import { hero } from "@/data/career"
+import { hero } from "@portfolio/career"
 
 export function Hero() {
   return (

@@ -1,5 +1,5 @@
 import { SectionHeading } from "./section-heading"
-import { projects as careerProjects } from "@/data/career"
+import { projects as careerProjects } from "@portfolio/career"
 import figmaMcpImg from "@/assets/project-figma-mcp.jpg"
 import storybookMcpImg from "@/assets/project-storybook-mcp.jpg"
 import forgekitCliImg from "@/assets/project-forgekit-cli.jpg"
