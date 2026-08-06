@@ -4,11 +4,12 @@ Elizabethton, TN • richtillman@pm.me • 843-834-0041 • linkedin.com/in/effi
 
 ## Summary
 
-Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design systems and Storybook-driven development. Founder of ForgeKit, an open-source Figma-to-React CLI + MCP suite (5,700+ npm installs). IC-to-Director experience across five 0-to-1 startups. Seeking Principal/Senior Frontend, Product Engineer, and design-systems/dev-tooling roles.
+Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design systems and Storybook-driven development. Founder of ForgeKit — open-source Figma/Storybook → React dev tooling; its Storybook MCP server (forgekit-storybook-mcp) has 6,900+ npm installs. IC-to-Director experience across five 0-to-1 startups. Seeking Principal/Senior Frontend, Product Engineer, and design-systems/dev-tooling roles.
 
 ## Work Experience
 
 ### Senior Frontend Engineer, AI Training & Evaluations
+
 **Mercor / micro1 / Handshake AI** — November 2025 – June 2026
 
 - Designed programming prompts and evaluation rubrics scoring AI output on advanced frontend tasks—React architecture, TypeScript patterns, Storybook-driven development—with measurable model-quality gains traced to prompt design.
@@ -19,6 +20,7 @@ Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design sys
 - Utilized debug traces in agentic systems for Claude and OpenAI prompt and rubric checks.
 
 ### Staff Frontend Engineer & Tech Lead → Engineering Director
+
 **Redesign Health** — July 2022 – May 2024
 
 - Promoted twice to Engineering Director; managed direct reports and coordinated async delivery across three cross-functional teams (15+ members) via Jira and Slack while staying hands-on, improving alignment and keeping releases on schedule.
@@ -28,6 +30,7 @@ Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design sys
 - Devised a fixture-based mock-API strategy that unblocked a high-stakes demo under a 2-day deadline with zero integration friction while the backend built real endpoints in parallel.
 
 ### Senior Frontend Engineer & Tech Lead
+
 **Pineapple Corporation** — January 2022 – July 2022
 
 - Orchestrated Nx monorepo adoption across 8+ React/TypeScript applications—35% version-control efficiency gain via shared libraries and Nx affected commands.
@@ -36,6 +39,7 @@ Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design sys
 - Led Redux Toolkit adoption across monorepo projects, standardizing data flow.
 
 ### Founding Frontend Engineer
+
 **PHC Global** — July 2021 – January 2022
 
 - Built the foundational Nx monorepo for a B2B fintech dashboard (Next.js, React, 30+ shared libraries, gRPC middleware)—40% better developer experience.
@@ -43,6 +47,7 @@ Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design sys
 - Cut infrastructure costs 30% and time-to-market by 8 weeks with a scalable GCP backend (gRPC, Helm, Kubernetes).
 
 ### Lead Frontend Engineer
+
 **Freebird** — September 2016 – January 2021
 
 - Built one of the earliest production React UI libraries on Storybook—200 components across B2B, B2C, and React Native—eliminating separate iOS and Android teams.
@@ -50,6 +55,7 @@ Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design sys
 - Shipped and maintained B2B, B2C, and internal dashboards (React, NestJS) plus a React Native app, delivering real-time data views that sharpened decision-making.
 
 ### Lead Web Developer
+
 **FaceCake Marketing Technologies** — Los Angeles, CA — October 2010 – September 2016
 
 - Pioneered early browser-based AR try-on apps (JavaScript, Knockout.js, Pixi.js, computer vision)—the company's first web-AR capability, years before mainstream WebAR.
@@ -60,6 +66,7 @@ Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design sys
 ## Projects
 
 ### Tidy App — tidyapp.me
+
 December 2025 – April 2026
 
 - Offline-first, ADHD-friendly home-management app in React Native + Expo + TypeScript.
@@ -70,18 +77,21 @@ December 2025 – April 2026
 - 90% test coverage with Jest + RTL + Storybook interaction tests.
 
 ### ForgeKit Figma MCP — npmjs.com
+
 January 2026 – February 2026
 
 - MCP server extracting Figma variables and design tokens.
 - Generates typed theme configs for Chakra UI, Tailwind, and shadcn—enabling AI-driven design-to-code workflows.
 
 ### ForgeKit Storybook MCP — npmjs.com
+
 February 2026 – March 2026
 
 - MCP server exposing Storybook metadata, argTypes, and usage patterns to AI coding agents.
 - Automates story generation, docs scaffolding, and component-testing workflows.
 
 ### ForgeKit Core CLI — forgekit.cloud
+
 June 2024 – November 2025
 
 - TypeScript CLI scaffolding production-ready Nx monorepos with React 18, Storybook 10+, Vitest, Playwright, and GitHub Actions CI/CD.

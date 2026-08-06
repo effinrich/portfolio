@@ -19,10 +19,10 @@
       "React + TypeScript",
       "Storybook · Chromatic",
       "Nx monorepos at scale",
-      "5,703+ npm installs"
+      "6,900+ Storybook MCP installs"
     ],
     "stats": [
-      { "value": "5,703+", "label": "npm installs · ForgeKit MCP" },
+      { "value": "6,900+", "label": "npm installs · Storybook MCP" },
       { "value": "200+", "label": "component design system" },
       { "value": "500K+", "label": "users on shipped RN apps" },
       { "value": "$400K/mo", "label": "revenue uplift · NARS AR" }
@@ -34,7 +34,7 @@
       "role": "Founder & Principal Engineer",
       "period": "Jan 2026 — Present",
       "location": "Remote",
-      "blurb": "Published the first MCP servers purpose-built for Figma → React design system workflows. 5,703+ external npm installs and active production adoption.",
+      "blurb": "Publish open-source MCP servers for Figma/Storybook → React design-system workflows. forgekit-storybook-mcp has 6,900+ npm installs and active production adoption.",
       "tags": ["MCP", "Nx", "Storybook", "Figma Code Connect"]
     },
     {
@@ -83,14 +83,14 @@
       "name": "ForgeKit Figma MCP",
       "tag": "MCP · Open Source",
       "description": "MCP server that extracts Figma variables and design tokens, generating typed theme configs for Chakra, Tailwind, and shadcn — bridging design and AI-driven codegen.",
-      "metric": "5,703+ installs",
+      "metric": "Chakra · Tailwind · shadcn tokens",
       "url": "https://www.npmjs.com/package/forgekit-figma-mcp"
     },
     {
       "name": "ForgeKit Storybook MCP",
       "tag": "MCP · Open Source",
       "description": "Exposes Storybook metadata and argTypes to AI coding agents — automating story generation, docs scaffolding, and component testing across design systems.",
-      "metric": "Active production use",
+      "metric": "6,900+ npm installs",
       "url": "https://www.npmjs.com/package/forgekit-storybook-mcp"
     },
     {
