@@ -12,7 +12,8 @@ an Engineering Director, across five 0-to-1 startups.
 
 A few highlights: the NARS Cosmetics web-AR try-on (~$400K/month revenue lift),
 a 50+ component design system that cut dev time 30% across a 10–15 engineer org,
-and ForgeKit — my open-source Figma-to-React CLI + MCP suite (7,000+ npm installs).
+and ForgeKit — my open-source Figma/Storybook → React dev tooling, whose Storybook
+MCP server (forgekit-storybook-mcp) has 6,900+ npm installs.
 
 Right now I live at the intersection of design systems, frontend, and AI-assisted
 development — building the tools I wish I had, and helping teams fold Claude Code,
