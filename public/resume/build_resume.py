@@ -18,8 +18,9 @@ NAME = "Rich Tillman"
 CONTACT = ("Elizabethton, TN  |  richtillman@pm.me  |  843-834-0041  |  "
            "linkedin.com/in/effinrich  |  github.com/effinrich  |  richtillman.xyz")
 SUMMARY = ("Principal Frontend Engineer (15 yrs) specializing in React/TypeScript design systems and "
-           "Storybook-driven development. Founder of ForgeKit, an open-source Figma-to-React CLI + MCP "
-           "suite (5,700+ npm installs). IC-to-Director experience across five 0-to-1 startups. Seeking "
+           "Storybook-driven development. Founder of ForgeKit — open-source Figma/Storybook → React dev "
+           "tooling; its Storybook MCP server (forgekit-storybook-mcp) has 6,900+ npm installs. "
+           "IC-to-Director experience across five 0-to-1 startups. Seeking "
            "Principal/Senior Frontend, Product Engineer, and design-systems/dev-tooling roles.")
 
 # Each job: (title, company, dates, [bullets])
@@ -79,7 +80,7 @@ PROJECTS = [
         (None, "Supabase Auth/PostgREST/Realtime; RevenueCat monetization; Figma Code Connect integration."),
         (None, "90% test coverage with Jest + React Testing Library + Storybook interaction tests."),
     ]),
-    ("ForgeKit — forgekit.cloud • npmjs.com", "Open-source Figma-to-React CLI + MCP suite (5,700+ npm installs)", "June 2024 – March 2026", [
+    ("ForgeKit — forgekit.cloud • npmjs.com", "Open-source Figma/Storybook → React dev tooling; Storybook MCP server (forgekit-storybook-mcp) at 6,900+ npm installs", "June 2024 – March 2026", [
         ("Core CLI", "TypeScript CLI scaffolding production-ready Nx monorepos with React 18, Storybook 10+, Vitest, Playwright, and GitHub Actions CI/CD; targets Chakra UI, shadcn/ui, and Tamagui across web and universal React Native; used recursively to scaffold ForgeKit itself."),
         ("Figma MCP", "MCP server extracting Figma variables and design tokens; generates typed theme configs for Chakra UI, Tailwind, and shadcn—enabling AI-driven design-to-code workflows."),
         ("Storybook MCP", "MCP server exposing Storybook metadata, argTypes, and usage patterns to AI coding agents; automates story generation, docs scaffolding, and component-testing workflows."),
