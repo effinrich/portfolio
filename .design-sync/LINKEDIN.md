@@ -1,23 +1,11 @@
 # LinkedIn — About
 
-I build the front end — and have for 15 years. It started with browser-based
-AR try-on apps back when computer-vision-in-the-browser was borderline witchcraft
-(~2011), and it's run through 200-component React UI libraries, design systems
-teams actually ship on, and lately the developer tooling around them.
+Frontend engineer, 15 years. I've spent that time building the things users actually touch — from browser-based AR (compiling OpenCV to JavaScript for real-time computer vision before WebAR existed) to 200-component React design systems, Nx and Turborepo monorepos at scale, and the developer tooling that ties it all together.
 
-What I'm good at: React and TypeScript where design meets product — Storybook-driven
-design systems, accessible components, and the Chromatic + feature-architecture
-workflows that keep designers and engineers in sync. I've done it as an IC and as
-an Engineering Director, across five 0-to-1 startups.
+My core is React and TypeScript where design meets product. Storybook-driven component libraries, accessible UI systems, Chromatic visual regression, feature-based architecture — the workflows that keep designers and engineers building from the same source of truth. I've run this as a hands-on IC and as an Engineering Director, across five 0-to-1 startups.
 
-A few highlights: the NARS Cosmetics web-AR try-on (~$400K/month revenue lift),
-a 50+ component design system that cut dev time 30% across a 10–15 engineer org,
-and ForgeKit — my open-source Figma/Storybook → React dev tooling, whose Storybook
-MCP server (forgekit-storybook-mcp) has 6,900+ npm installs.
+Some of the work: the NARS Cosmetics web-AR try-on app (~$400K/month revenue lift, full lifecycle ownership). A 50+ component design system at Redesign Health that cut dev time 30% across a 10-15 engineer org. Cross-platform React Native architecture serving 500K+ monthly users. Nx monorepos with 30+ shared libraries powering fintech dashboards. And ForgeKit — my open-source CLI and MCP server suite bridging Figma to React to Storybook, with 6,900+ npm installs in production.
 
-Right now I live at the intersection of design systems, frontend, and AI-assisted
-development — building the tools I wish I had, and helping teams fold Claude Code,
-Cursor, and MCP into real production work.
+I work across React 19, Next.js, TypeScript, Tailwind CSS, Zustand, TanStack Query, GraphQL, Supabase, and the current AI-assisted development stack — Claude Code, Cursor, and Model Context Protocol. I build with the newest tools because I've been adopting them early my entire career, not because they're trending.
 
-Open to Principal / Senior Frontend, Product Engineer, and design-systems /
-developer-tooling roles.
+Open to Principal / Senior Frontend, Product Engineer, and design-systems / developer-tooling roles.
