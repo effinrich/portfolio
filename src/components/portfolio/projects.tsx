@@ -24,13 +24,13 @@ const presentation: Partial<Record<string, Presentation>> = {
     image: figmaMcpImg,
     imageAlt: "Figma MCP server extracting design tokens into a typed TypeScript theme file.",
     cta: "View on npm",
-    badge: "Featured",
   },
   "ForgeKit Storybook MCP": {
     accent: "accent",
     image: storybookMcpImg,
     imageAlt: "Storybook MCP scaffolding component stories from metadata.",
     cta: "View on npm",
+    badge: "Featured",
   },
   "ForgeKit Core CLI": {
     accent: "primary",
