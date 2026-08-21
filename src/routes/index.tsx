@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Shipping React UI platforms, design systems, and AI developer tooling. Creator of ForgeKit MCP servers (5,703+ installs).",
+          "Shipping React UI platforms, design systems, and AI developer tooling. Creator of ForgeKit — its Storybook MCP server has 6,900+ npm installs.",
       },
     ],
   }),
